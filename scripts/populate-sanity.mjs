@@ -188,8 +188,8 @@ async function main() {
         _key: "proj1",
         name: "Dossera JAMS",
         tagline: "Sovereign Judicial Archive Management System",
-        slug: { _type: "slug", current: "dossera-jams" },
-        projectUrl: "https://dossera-jams.surge.sh",
+        slug: { _type: "slug", current: "dossera" },
+        projectUrl: "https://dossera.surge.sh",
         repository: "https://github.com/ZakariaMirinioui/Dossera",
         description: [
           {

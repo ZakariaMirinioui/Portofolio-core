@@ -9,6 +9,8 @@ import { urlFor } from "@/lib/sanity.image";
 import { sanityFetch } from "@/lib/sanity.client";
 import { BiLinkExternal, BiLogoGithub } from "react-icons/bi";
 
+export const revalidate = 3600;
+
 type Props = {
   params: {
     project: string;

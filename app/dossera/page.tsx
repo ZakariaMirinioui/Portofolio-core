@@ -1,6 +1,10 @@
 import { Metadata } from "next";
 import { Slide } from "../animation/Slide";
 import PageHeading from "../components/shared/PageHeading";
+import DosseraContactForm from "../components/sections/DosseraContactForm";
+import TestimonialsCarousel from "../components/sections/TestimonialsCarousel";
+import { testimonialsQuery } from "@/lib/sanity.query";
+import { sanityFetch } from "@/lib/sanity.client";
 import {
   HiOutlineShieldCheck,
   HiOutlineDocumentText,
@@ -9,6 +13,8 @@ import {
   HiOutlineCog,
   HiOutlineGlobe,
 } from "react-icons/hi";
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "Dossera | Zakaria Mirinioui",
@@ -118,7 +124,13 @@ const techStack = [
   { name: "Tesseract.js", category: "OCR" },
 ];
 
-export default function Dossera() {
+import type { TestimonialType } from "@/types";
+
+export default async function Dossera() {
+  const testimonials = await sanityFetch({
+    query: testimonialsQuery,
+    tags: ["testimonial"],
+  }) as TestimonialType[];
   return (
     <main className="max-w-7xl mx-auto md:px-16 px-6">
       <PageHeading
@@ -129,12 +141,11 @@ export default function Dossera() {
       {/* Status Badge */}
       <Slide delay={0.1}>
         <div className="flex items-center gap-3 mb-12">
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium dark:bg-green-900/30 bg-green-100 dark:text-green-400 text-green-700 border dark:border-green-800 border-green-300">
-            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium dark:bg-green-900/30 bg-transparent dark:text-green-400 text-green-700 border dark:border-green-800 border-green-300">
             Operational System — JAMS v2.4
           </span>
           <a
-            href="https://dossera-jams.surge.sh"
+            href="https://dossera.surge.sh"
             target="_blank"
             rel="noreferrer noopener"
             className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium dark:bg-primary-bg bg-zinc-100 dark:text-white text-zinc-700 border dark:border-zinc-700 border-zinc-200 hover:dark:border-primary-color hover:border-secondary-color transition-colors"
@@ -390,37 +401,20 @@ export default function Dossera() {
         </section>
       </Slide>
 
-      {/* Contact CTA */}
-      <Slide delay={0.45}>
+      {/* Testimonials */}
+      <Slide delay={0.5}>
         <section className="mb-20">
-          <div className="dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-lg p-8 text-center">
-            <h2 className="text-2xl font-incognito font-bold tracking-tight mb-4">
-              Ready to Digitize Your Archive?
-            </h2>
-            <p className="dark:text-zinc-400 text-zinc-600 mb-6 max-w-2xl mx-auto">
-              Whether you&apos;re a court, law firm, notary office, or
-              government institution — we can help you transform your paper
-              archives into a secure, searchable, and compliant digital system.
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-4">
-              <a
-                href="mailto:zakmirinioui@gmail.com?subject=Dossera%20JAMS%20-%20Demo%20Request"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-md dark:bg-primary-color bg-secondary-color dark:text-zinc-900 text-white font-semibold hover:opacity-90 transition-opacity"
-              >
-                Request a Demo
-              </a>
-              <a
-                href="https://dossera-jams.surge.sh"
-                target="_blank"
-                rel="noreferrer noopener"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-md dark:bg-zinc-800 bg-zinc-200 dark:text-white text-zinc-900 font-semibold border dark:border-zinc-700 border-zinc-300 hover:dark:border-zinc-500 hover:border-zinc-400 transition-colors"
-              >
-                View Documentation →
-              </a>
-            </div>
-          </div>
+          <h2 className="text-2xl font-incognito font-bold tracking-tight mb-8 text-center">
+            Trusted by Legal Institutions
+          </h2>
+          <TestimonialsCarousel testimonials={testimonials} />
         </section>
       </Slide>
+
+      {/* Contact Form */}
+      <section className="mb-20">
+        <DosseraContactForm />
+      </section>
     </main>
   );
 }

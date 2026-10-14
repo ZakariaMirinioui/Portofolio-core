@@ -22,6 +22,59 @@ const options = {
   ogImage: "/og.png",
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      name: "Zakaria Mirinioui",
+      url: "https://zakaria-mirinioui.dev",
+      image: "/og.png",
+      sameAs: [
+        "https://github.com/ZakariaMirinioui",
+        "https://linkedin.com/in/zakaria-mirinioui",
+      ],
+      jobTitle: "Solutions Architect & Agency Founder",
+      worksFor: {
+        "@type": "Organization",
+        name: "PWADCTeam",
+        url: "https://pwadcteam.com",
+      },
+      knowsAbout: [
+        "Full Stack Development",
+        "React",
+        "Next.js",
+        "Node.js",
+        "Java",
+        "Spring Boot",
+        "PostgreSQL",
+        "Docker",
+        "Kubernetes",
+        "System Architecture",
+        "Digital Transformation",
+        "SaaS Development",
+        "Legacy Modernization",
+      ],
+    },
+    {
+      "@type": "Organization",
+      name: "PWADCTeam",
+      url: "https://pwadcteam.com",
+      logo: "https://zakaria-mirinioui.dev/logo.svg",
+      sameAs: [
+        "https://github.com/ZakariaMirinioui",
+      ],
+      description: "Digital solutions agency building sovereign systems for government, healthcare, legal, and wellness sectors.",
+      foundingDate: "2022",
+      address: {
+        "@type": "PostalAddress",
+        addressCountry: "MA",
+        addressLocality: "Casablanca",
+      },
+    },
+  ],
+};
+
 export const metadata: Metadata = {
   title: options.title,
   metadataBase: new URL(options.url),
@@ -56,12 +109,21 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <Script
+          id="json-ld"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body
         className={`${incognito.variable} ${inter.className} ${gitlabmono.variable} dark:bg-zinc-900 bg-white dark:text-white text-zinc-700`}
       >
         <Providers>
           <Navbar />
-          {children}
+          <main id="main-content" tabIndex={-1}>
+            {children}
+          </main>
           <Footer />
         </Providers>
       </body>

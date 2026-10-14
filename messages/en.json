@@ -1,0 +1,324 @@
+{
+  "common": {
+    "skipToContent": "Skip to main content",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "readMore": "Read more",
+    "viewAll": "View all",
+    "contact": "Contact",
+    "email": "Email",
+    "phone": "Phone",
+    "name": "Name",
+    "organization": "Organization",
+    "role": "Role",
+    "message": "Message",
+    "submit": "Submit",
+    "sending": "Sending...",
+    "success": "Success!",
+    "thankYou": "Thank you for your inquiry. We'll be in touch within 24 hours.",
+    "anotherRequest": "Submit Another Request",
+    "required": "*",
+    "optional": "(optional)",
+    "live": "Live",
+    "code": "Code",
+    "caseStudy": "Case Study",
+    "featured": "Featured"
+  },
+  "navigation": {
+    "about": "About",
+    "projects": "Projects",
+    "services": "Services",
+    "dossera": "Dossera",
+    "home": "Home"
+  },
+  "home": {
+    "hero": {
+      "headline": "Solutions Architect & Agency Founder",
+      "subheadline": "I help institutions and businesses digitize with sovereign, secure systems — from judicial archives to multi-tenant SaaS platforms."
+    },
+    "stats": {
+      "projectsDelivered": "Projects Delivered",
+      "businessesServed": "Businesses Served",
+      "endUsers": "End Users",
+      "uptimeSLA": "Uptime SLA",
+      "efficiencyGain": "Avg. Efficiency Gain",
+      "countriesDeployed": "Countries Deployed"
+    },
+    "valueProps": {
+      "title": "What I Build",
+      "enterpriseSystems": {
+        "title": "Enterprise Systems",
+        "description": "Sovereign, on-premise platforms for courts, government institutions, and regulated industries. Full data sovereignty, military-grade security, and legal compliance.",
+        "highlights": ["Judicial Archive Systems", "Government Digitization", "Security & Compliance"],
+        "cta": "View Dossera Case Study"
+      },
+      "saasProducts": {
+        "title": "SaaS Products",
+        "description": "Five live multi-tenant platforms serving 100+ businesses across healthcare, education, legal, and wellness. From concept to recurring revenue.",
+        "highlights": ["Healthcare (25+ clinics)", "Education (15+ schools)", "Legal (30+ firms)", "Wellness (50+ centers)"],
+        "cta": "Explore Products"
+      },
+      "customEngineering": {
+        "title": "Custom Engineering",
+        "description": "End-to-end development for startups and enterprises. React, Node.js, Java, cloud-native, on-prem, and everything in between. Architecture to deployment.",
+        "highlights": ["Full-Stack Development", "Legacy Modernization", "CTO-as-a-Service"],
+        "cta": "View Services"
+      }
+    },
+    "caseStudyTeaser": {
+      "label": "Featured Case Study",
+      "readCaseStudy": "Read Full Case Study",
+      "viewLive": "View Live"
+    },
+    "servicesOverview": {
+      "title": "How I Can Help",
+      "viewAll": "View all services →"
+    },
+    "testimonials": {
+      "title": "Trusted by Clients"
+    },
+    "clientLogos": {
+      "title": "Trusted by Leading Institutions"
+    }
+  },
+  "about": {
+    "title": "About",
+    "subtitle": "I'm {name}. I live in {location}, where I build the future.",
+    "downloadResume": "Download Resume",
+    "viewLinkedIn": "View LinkedIn",
+    "contactEmail": "Contact via email",
+    "usage": "Usage",
+    "usageDescription": "Tools, technologies and gadgets I use on a daily basis but not limited to.",
+    "heroes": {
+      "title": "Heroes",
+      "description": "Inspired by Rafael Condo's heroes list, here's my own curated lineup of code conjurers and digital dynamos that I'm absolutely stoked to meet someday. \"In no particular order\""
+    }
+  },
+  "projects": {
+    "title": "Projects",
+    "description": "Enterprise-grade systems, multi-tenant SaaS platforms, and open-source tools. Each project represents a real-world challenge solved with modern architecture and measurable impact.",
+    "featured": "Featured Work",
+    "categories": {
+      "all": "All Projects",
+      "judicial": "Judicial / Legal Tech",
+      "healthcare": "Healthcare SaaS",
+      "education": "Education SaaS",
+      "professional-services": "Professional Services SaaS",
+      "wellness": "Wellness / Beauty SaaS",
+      "ecommerce": "E-commerce / Marketplace",
+      "enterprise": "Enterprise / Internal Tools",
+      "open-source": "Open Source",
+      "rd": "R&D / Experiment"
+    },
+    "status": {
+      "production": "Production",
+      "active": "Active Development",
+      "maintenance": "Maintenance",
+      "archived": "Archived",
+      "prototype": "Prototype"
+    },
+    "emptyState": "No projects found in this category"
+  },
+  "projectDetail": {
+    "backToProjects": "← Back to Projects",
+    "live": "Live",
+    "code": "Code",
+    "caseStudy": "Case Study"
+  },
+  "caseStudy": {
+    "backToProject": "← Back to Project",
+    "caseStudyLabel": "Case Study",
+    "sections": {
+      "clientContext": "Client Context",
+      "challenge": "The Challenge",
+      "constraints": "Key Constraints",
+      "approach": "Our Approach",
+      "architecture": "Architecture Overview",
+      "diagrams": "Architecture Diagrams",
+      "technologies": "Key Technologies",
+      "adrs": "Architecture Decision Records",
+      "outcomes": "Outcomes & Impact",
+      "metrics": "Key Metrics",
+      "testimonials": "Client Feedback",
+      "lessons": "Lessons Learned"
+    },
+    "table": {
+      "technology": "Technology",
+      "category": "Category",
+      "reason": "Why This Choice?"
+    },
+    "cta": {
+      "title": "Have a Similar Challenge?",
+      "description": "If you're facing a complex digital transformation, need a sovereign system, or want to discuss architecture decisions — I'd love to hear about it.",
+      "startConversation": "Start a Conversation",
+      "viewServices": "View Services"
+    }
+  },
+  "services": {
+    "title": "Services",
+    "description": "From sovereign digital transformation for government institutions to multi-tenant SaaS platforms and fractional CTO engagements — I bring battle-tested experience from production systems serving real users.",
+    "cta": {
+      "title": "Ready to Start Your Project?",
+      "description": "Whether you need a complete digital transformation, a new SaaS product, or senior technical leadership — let's discuss how I can help.",
+      "startConversation": "Start a Conversation",
+      "viewWork": "View Past Work"
+    },
+    "sections": {
+      "deliverables": "What We Deliver",
+      "process": "Our Process",
+      "engagementModels": "Engagement Models",
+      "techStack": "Typical Tech Stack"
+    },
+    "engagementModels": {
+      "fixedPrice": "Fixed Scope / Fixed Price",
+      "timeMaterials": "Time & Materials",
+      "dedicatedTeam": "Dedicated Team",
+      "retainer": "Retainer / Advisory",
+      "milestone": "Milestone-based"
+    },
+    "testimonials": {
+      "title": "Client Feedback"
+    },
+    "clientLogos": {
+      "title": "Our Clients"
+    }
+  },
+  "dossera": {
+    "title": "Dossera JAMS",
+    "subtitle": "Sovereign Judicial Archive Management System — Digitizing justice for courts, law firms, notary offices, and legal institutions across Morocco and beyond.",
+    "status": "Operational System — JAMS v2.4",
+    "liveDemo": "View Live Demo →",
+    "description": {
+      "intro": "Dossera JAMS (Judicial Archive Management System) is a sovereign, on-premise platform digitizing judicial archives for courts, law firms, notary offices, and government institutions across Morocco. Built with a decoupled client-server architecture, it transforms how judicial institutions manage, search, and secure their critical documents.",
+      "role": "As Technical Project Lead & Full Stack Developer, I architected and delivered the entire system — from translating complex legal requirements into technical specifications to deploying a production-ready platform serving real users daily.",
+      "results": "The system is successfully deployed in production at the Court of First Instance of Khouribga, with a second deployment validated at the Court of Appeal. It delivers measurable results: a 30% reduction in administrative processing time and complete data confidentiality for sensitive judicial documents."
+    },
+    "features": {
+      "title": "Core Capabilities",
+      "ocr": {
+        "title": "Intelligent OCR",
+        "description": "Multilingual document scanning (Arabic/French) powered by Tesseract.js with 98%+ accuracy. Transform paper archives into searchable digital assets instantly."
+      },
+      "search": {
+        "title": "Hybrid Semantic Search",
+        "description": "Combining Meilisearch full-text indexing with pgvector semantic vector search for instant, context-aware document retrieval across your entire archive."
+      },
+      "archiving": {
+        "title": "Immutable Archiving",
+        "description": "MinIO S3-compatible object storage with AES-256 encryption at rest. Certified retention with SHA-256 digital signatures for legal compliance."
+      },
+      "rbac": {
+        "title": "RBAC & Audit Trail",
+        "description": "Role-based access control (Magistrate, Clerk, Administrator, Auditor) with immutable timestamped logging of every action for complete accountability."
+      },
+      "cache": {
+        "title": "3-Tier Cache Architecture",
+        "description": "L1 LRU in-memory (< 1ms), L2 Redis Cluster, L3 PostgreSQL/MinIO. Achieving 99.9% cache hit rate for lightning-fast document access."
+      },
+      "onPremise": {
+        "title": "100% On-Premise",
+        "description": "Zero mandatory cloud dependency. Full data sovereignty with Proxmox VE hypervisor, pfSense firewall, and 5 isolated VLANs for maximum security."
+      }
+    },
+    "deployments": {
+      "title": "Production Deployments",
+      "khouribga": {
+        "court": "Court of First Instance of Khouribga",
+        "status": "Active Production",
+        "description": "First production deployment serving dozens of daily users. Successfully digitized judicial procedures, achieving a 30% reduction in administrative processing time."
+      },
+      "appeal": {
+        "court": "Court of Appeal",
+        "status": "Production Ready",
+        "description": "Full deployment validated with Proxmox VE, pfSense 5-VLAN architecture, complete SOC stack, and comprehensive team training delivered."
+      }
+    },
+    "services": {
+      "title": "Our Services",
+      "description": "We help legal institutions digitize their archives with a comprehensive, secure, and sovereign solution. From initial assessment to full deployment and training — we handle the entire transformation.",
+      "courts": {
+        "title": "Courts & Tribunals",
+        "description": "Complete digitization of judicial archives with intelligent OCR, semantic search, and immutable storage. Compliant with Moroccan Law 09-08 and GDPR."
+      },
+      "lawFirms": {
+        "title": "Law Firms & Legal Departments",
+        "description": "Streamline case management with instant document retrieval, role-based access, and comprehensive audit trails for complete accountability."
+      },
+      "notary": {
+        "title": "Notary Offices",
+        "description": "Secure archiving of notarial acts with certified digital signatures, automated indexing, and multi-language search capabilities."
+      },
+      "government": {
+        "title": "Government Institutions",
+        "description": "Enterprise-grade document management with military-grade security, real-time monitoring, and full data sovereignty on your own infrastructure."
+      }
+    },
+    "architecture": {
+      "title": "Technical Architecture",
+      "security": {
+        "title": "Security Stack",
+        "network": "Network: pfSense firewall, 5 isolated VLANs (Staff, Archives, DMZ, SOC, Honeypot)",
+        "monitoring": "Monitoring: Wazuh SIEM, CrowdSec, T-Pot honeypot, Prometheus + Grafana",
+        "compliance": "Compliance: GDPR, Moroccan Law 09-08, SHA-256 signatures, AES-256 encryption"
+      }
+    },
+    "timeline": {
+      "title": "Deployment Timeline",
+      "week1": {
+        "title": "Week 1 — Infrastructure Setup",
+        "description": "Proxmox VE hypervisor deployment, pfSense firewall configuration, VLAN segmentation, and network routing."
+      },
+      "week2": {
+        "title": "Weeks 2-3 — Application Deployment",
+        "description": "JAMS application stack deployment, database initialization, OCR configuration, search engine indexing, and security hardening."
+      },
+      "week4": {
+        "title": "Week 4 — Training & Handover",
+        "description": "Comprehensive team training, Wazuh SIEM integration, disaster recovery plan (PRA) delivery, and production validation."
+      }
+    },
+    "cta": {
+      "title": "Ready to Digitize Your Archive?",
+      "description": "Whether you're a court, law firm, notary office, or government institution — we can help you transform your paper archives into a secure, searchable, and compliant digital system.",
+      "requestDemo": "Request a Demo",
+      "viewDocs": "View Documentation →"
+    },
+    "contactForm": {
+      "title": "Request a Demo",
+      "description": "Interested in Dossera JAMS for your institution? Fill out the form below and we'll schedule a personalized demonstration.",
+      "fields": {
+        "name": "Full Name",
+        "email": "Email Address",
+        "organization": "Organization",
+        "role": "Your Role",
+        "phone": "Phone (optional)",
+        "message": "Message"
+      },
+      "roles": {
+        "magistrate": "Magistrate / Judge",
+        "clerk": "Clerk / Registrar",
+        "lawyer": "Lawyer / Legal Advisor",
+        "itDirector": "IT Director",
+        "admin": "Administrator",
+        "other": "Other"
+      },
+      "submit": "Request Demo",
+      "submitting": "Sending...",
+      "success": "Thank You!",
+      "successDescription": "Your demo request has been received. Our team will review your inquiry and get back to you within 24 hours.",
+      "anotherRequest": "Submit Another Request",
+      "privacy": "By submitting, you agree to be contacted about Dossera JAMS. We respect your privacy and will never share your information."
+    },
+    "testimonials": {
+      "title": "Trusted by Legal Institutions"
+    }
+  },
+  "footer": {
+    "builtWith": "Built with:",
+    "copyright": "Copyright © Zakaria Mirinioui {year} All rights Reserved"
+  }
+}
