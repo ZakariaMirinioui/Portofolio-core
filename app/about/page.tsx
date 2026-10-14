@@ -11,6 +11,8 @@ import { Slide } from "../animation/Slide";
 import { sanityFetch } from "@/lib/sanity.client";
 import RefLink from "../components/shared/RefLink";
 
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: "About | Zakaria Mirinioui",
   metadataBase: new URL("https://zakaria-mirinioui.dev/about"),
