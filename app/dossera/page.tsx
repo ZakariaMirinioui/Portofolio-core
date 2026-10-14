@@ -129,12 +129,11 @@ export default function Dossera() {
       {/* Status Badge */}
       <Slide delay={0.1}>
         <div className="flex items-center gap-3 mb-12">
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium dark:bg-green-900/30 bg-green-100 dark:text-green-400 text-green-700 border dark:border-green-800 border-green-300">
-            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium dark:bg-green-900/30 bg-transparent dark:text-green-400 text-green-700 border dark:border-green-800 border-green-300">
             Operational System — JAMS v2.4
           </span>
           <a
-            href="https://dossera-jams.surge.sh"
+            href="https://dossera.surge.sh"
             target="_blank"
             rel="noreferrer noopener"
             className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium dark:bg-primary-bg bg-zinc-100 dark:text-white text-zinc-700 border dark:border-zinc-700 border-zinc-200 hover:dark:border-primary-color hover:border-secondary-color transition-colors"
@@ -410,7 +409,7 @@ export default function Dossera() {
                 Request a Demo
               </a>
               <a
-                href="https://dossera-jams.surge.sh"
+                href="https://dossera.surge.sh"
                 target="_blank"
                 rel="noreferrer noopener"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-md dark:bg-zinc-800 bg-zinc-200 dark:text-white text-zinc-900 font-semibold border dark:border-zinc-700 border-zinc-300 hover:dark:border-zinc-500 hover:border-zinc-400 transition-colors"
