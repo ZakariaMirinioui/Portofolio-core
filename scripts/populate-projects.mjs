@@ -179,8 +179,8 @@ async function createProjects() {
     },
     {
       _type: "project",
-      name: "StyleBook",
-      slug: { current: "stylebook" },
+      name: "PWADC Salon",
+      slug: { current: "pwadc-salon" },
       tagline: "Salon & spa booking and business management platform",
       category: "wellness",
       status: "production",
@@ -212,8 +212,8 @@ async function createProjects() {
     },
     {
       _type: "project",
-      name: "SpaFlow",
-      slug: { current: "spaflow" },
+      name: "Salon Hub",
+      slug: { current: "salon-hub" },
       tagline: "Premium spa & wellness center management suite",
       category: "wellness",
       status: "production",
