@@ -68,7 +68,7 @@ export default async function About() {
                   height={400}
                   quality={100}
                   alt={profile?.fullName ?? "Zakaria Mirinioui"}
-                  placeholder="blur"
+                  sizes="(max-width: 768px) 100vw, 400px"
                   priority
                 />
 
@@ -129,6 +129,73 @@ export default async function About() {
         </section>
         <Slide delay={0.14}>
           <Usage />
+        </Slide>
+        <Slide delay={0.15}>
+          <section className="max-w-2xl mt-16">
+            <div className="mb-8">
+              <h2 className="text-4xl mb-4 font-bold tracking-tight">Highlights</h2>
+              <p className="dark:text-zinc-400 text-zinc-600 max-w-xl">
+                Freelance Full Stack Developer since 2021 — from requirements to production,
+                with enterprise experience in justice, secure logistics, and industry.
+              </p>
+            </div>
+            <ul className="space-y-3 text-sm dark:text-zinc-400 text-zinc-600">
+              <li className="flex items-start gap-3">
+                <span className="w-1.5 h-1.5 rounded-full dark:bg-primary-color bg-secondary-color flex-shrink-0 mt-2" />
+                Technical Project Lead — Judicial archive platform deployed in Moroccan courts (30% admin time reduction)
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="w-1.5 h-1.5 rounded-full dark:bg-primary-color bg-secondary-color flex-shrink-0 mt-2" />
+                Founder of PWADC Team — 5 live multi-tenant SaaS products + digital marketplace (pwadcteam.com)
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="w-1.5 h-1.5 rounded-full dark:bg-primary-color bg-secondary-color flex-shrink-0 mt-2" />
+                Backend & API specialist (Brink&apos;s Morocco) — REST/GraphQL Spring Boot, realtime React, SQL optimization
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="w-1.5 h-1.5 rounded-full dark:bg-primary-color bg-secondary-color flex-shrink-0 mt-2" />
+                IT Support & Automation (OCP Group) — Python/Bash reporting in high-availability industrial environment
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="w-1.5 h-1.5 rounded-full dark:bg-primary-color bg-secondary-color flex-shrink-0 mt-2" />
+                DUT Génie Informatique — EST Béni Mellal (2023–2025) · Java EE n-tier, Oracle/MySQL
+              </li>
+            </ul>
+          </section>
+        </Slide>
+        <Slide delay={0.16}>
+          <section className="max-w-2xl mt-16">
+            <div className="mb-8">
+              <h2 className="text-4xl mb-4 font-bold tracking-tight">Certifications</h2>
+              <p className="dark:text-zinc-400 text-zinc-600 max-w-xl">
+                Business analysis, project management, and hands-on technical credentials.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {[
+                "Business Analysis (PMI)",
+                "Project Management (PMI/NASBA)",
+                "SQL Advanced (HackerRank)",
+                "JavaScript Intermediate (HackerRank)",
+                "Frontend Development (HackerRank)",
+                "Cybersecurity Fundamentals (Fortinet)",
+                "Oracle Cloud AI Foundations",
+                "Digital Skills: AI (Accenture)",
+                "Certified Web Analyst (CWA)",
+                "English C1 Advanced (EF SET)",
+              ].map((cert) => (
+                <span
+                  key={cert}
+                  className="px-3 py-1 rounded-md text-sm font-medium dark:bg-zinc-800 bg-zinc-100 dark:text-zinc-300 text-zinc-700 border dark:border-zinc-700 border-zinc-200"
+                >
+                  {cert}
+                </span>
+              ))}
+            </div>
+            <p className="mt-6 text-sm dark:text-zinc-400 text-zinc-600">
+              Languages — Arabic (native) · French (fluent) · English (C1 advanced)
+            </p>
+          </section>
         </Slide>
         <Heroes />
       </div>
