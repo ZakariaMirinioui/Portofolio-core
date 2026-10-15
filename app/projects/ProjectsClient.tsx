@@ -1,11 +1,12 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Star } from "@phosphor-icons/react";
 import type { ProjectType } from "@/types";
 import EmptyState from "../components/shared/EmptyState";
+import ProjectLogo from "../components/shared/ProjectLogo";
 import { Slide } from "../animation/Slide";
 import { BiLinkExternal, BiLogoGithub, BiBookOpen } from "react-icons/bi";
 import { trackProjectViewed, trackGithubLinkClicked, trackLiveDemoClicked } from "../lib/analytics";
@@ -32,12 +33,12 @@ const STATUS_LABELS: Record<string, string> = {
   prototype: "Prototype",
 };
 
-const STATUS_COLORS: Record<string, string> = {
-  production: "dark:bg-green-900/30 bg-green-100 dark:text-green-400 text-green-700 border-green-300 dark:border-green-800",
-  active: "dark:bg-blue-900/30 bg-blue-100 dark:text-blue-400 text-blue-700 border-blue-300 dark:border-blue-800",
-  maintenance: "dark:bg-amber-900/30 bg-amber-100 dark:text-amber-400 text-amber-700 border-amber-300 dark:border-amber-800",
-  archived: "dark:bg-zinc-900/30 bg-zinc-100 dark:text-zinc-400 text-zinc-700 border-zinc-300 dark:border-zinc-800",
-  prototype: "dark:bg-purple-900/30 bg-purple-100 dark:text-purple-400 text-purple-700 border-purple-300 dark:border-purple-800",
+const STATUS_DOT: Record<string, string> = {
+  production: "bg-green-500",
+  active: "bg-blue-500",
+  maintenance: "bg-amber-500",
+  archived: "bg-zinc-500",
+  prototype: "bg-purple-500",
 };
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -106,36 +107,34 @@ function FeaturedProjectCard({ project }: { project: ProjectType }) {
       aria-label={`View details of ${project.name}`}
       className="group cursor-pointer dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-xl p-6 hover:dark:border-zinc-600 hover:border-zinc-300 focus:outline-none focus:ring-2 focus:ring-primary-color focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-zinc-900 transition-colors h-full flex flex-col"
     >
-      <div className="flex items-start justify-between mb-4">
-        <div className="flex items-center gap-3">
-          {project.logo ? (
-            <Image
-              src={project.logo}
-              width={48}
-              height={48}
-              alt={project.name}
-              className="dark:bg-zinc-800 bg-zinc-100 rounded-lg p-2"
-            />
-          ) : (
-            <div className="dark:bg-zinc-800 bg-zinc-100 rounded-lg p-2 text-2xl">🚀</div>
-          )}
-          <div>
-            <h3 className="font-incognito font-semibold text-lg">{project.name}</h3>
-            <div className="flex items-center gap-2 mt-1">
-              <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border ${STATUS_COLORS[status]}`}>
+      <div className="flex items-start justify-between gap-3 mb-4">
+        <div className="flex items-center gap-3 min-w-0">
+          <ProjectLogo
+            src={project.logo}
+            name={project.name}
+            category={category}
+            wellClassName="h-14 max-w-[11rem]"
+            iconSize={28}
+          />
+          <div className="min-w-0">
+            <h3 className="font-incognito font-semibold text-lg flex items-center gap-1.5">
+              {project.featured && (
+                <Star size={16} weight="fill" className="text-amber-500 shrink-0" aria-label="Featured project" />
+              )}
+              {project.name}
+            </h3>
+            <p className="flex items-center gap-2 mt-1 text-xs">
+              <span className={`h-1.5 w-1.5 rounded-full shrink-0 ${STATUS_DOT[status] || "bg-zinc-500"}`} aria-hidden="true" />
+              <span className="font-medium dark:text-zinc-300 text-zinc-700">
                 {STATUS_LABELS[status] || status}
               </span>
-              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium dark:bg-zinc-800 bg-zinc-100 dark:text-zinc-400 text-zinc-600 border dark:border-zinc-700 border-zinc-200">
+              <span className="dark:text-zinc-600 text-zinc-400" aria-hidden="true">·</span>
+              <span className="uppercase tracking-wider dark:text-zinc-500 text-zinc-500">
                 {CATEGORY_LABELS[category] || category}
               </span>
-            </div>
+            </p>
           </div>
         </div>
-        {project.featured && (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium dark:bg-amber-900/30 bg-amber-100 dark:text-amber-400 text-amber-700 border dark:border-amber-800 border-amber-300">
-            ⭐ Featured
-          </span>
-        )}
       </div>
 
       <p className="text-sm dark:text-zinc-400 text-zinc-600 leading-relaxed mb-4 flex-1">
@@ -288,26 +287,25 @@ function ProjectCard({ project }: { project: ProjectType }) {
       aria-label={`View details of ${project.name}`}
       className="group cursor-pointer dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-lg p-4 hover:dark:border-zinc-600 hover:border-zinc-300 focus:outline-none focus:ring-2 focus:ring-primary-color focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-zinc-900 transition-colors flex flex-col h-full"
     >
-      <div className="flex items-start justify-between mb-3">
-        {project.logo ? (
-          <Image
-            src={project.logo}
-            width={40}
-            height={40}
-            alt={project.name}
-            className="dark:bg-zinc-800 bg-zinc-100 rounded-md p-1.5 flex-shrink-0"
-          />
-        ) : (
-          <div className="dark:bg-zinc-800 bg-zinc-100 rounded-md p-1.5 text-xl flex-shrink-0">📦</div>
-        )}
-        <div className="flex items-center gap-1.5 ml-auto">
-          <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border ${STATUS_COLORS[status]}`}>
-            {STATUS_LABELS[status] || status}
-          </span>
+      <div className="flex items-center gap-3 mb-3">
+        <ProjectLogo
+          src={project.logo}
+          name={project.name}
+          category={category}
+          wellClassName="h-11 max-w-[9rem]"
+          iconSize={22}
+        />
+        <div className="min-w-0">
+          <h3 className="font-incognito font-semibold text-base group-hover:underline truncate">{project.name}</h3>
+          <p className="flex items-center gap-1.5 text-[11px]">
+            <span className={`h-1.5 w-1.5 rounded-full shrink-0 ${STATUS_DOT[status] || "bg-zinc-500"}`} aria-hidden="true" />
+            <span className="font-medium dark:text-zinc-300 text-zinc-700">
+              {STATUS_LABELS[status] || status}
+            </span>
+          </p>
         </div>
       </div>
 
-      <h3 className="font-incognito font-semibold text-base mb-1 group-hover:underline">{project.name}</h3>
       <p className="text-xs dark:text-zinc-400 text-zinc-600 leading-relaxed mb-3 flex-1">{project.tagline}</p>
 
       {project.techStack && project.techStack.length > 0 && (

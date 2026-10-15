@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Slide } from "../../animation/Slide";
-import { featuredProjectsQuery } from "@/lib/sanity.query";
 import type { ProjectType } from "@/types";
 import { sanityFetch } from "@/lib/sanity.client";
+import ProjectLogo from "../shared/ProjectLogo";
 import { BiLinkExternal, BiBookOpen } from "react-icons/bi";
 
 export default async function CaseStudyTeaser() {
@@ -13,6 +13,9 @@ export default async function CaseStudyTeaser() {
       name,
       "slug": slug.current,
       tagline,
+      projectUrl,
+      category,
+      "logo": logo.asset->url,
       "coverImage": coverImage.asset->url,
       techStack,
       metrics,
@@ -107,8 +110,14 @@ export default async function CaseStudyTeaser() {
                 />
               )}
               {!featured.coverImage && (
-                <div className="absolute inset-0 dark:bg-zinc-800 bg-zinc-200 flex items-center justify-center">
-                  <span className="text-6xl opacity-30">🏛️</span>
+                <div className="absolute inset-0 dark:bg-zinc-800 bg-zinc-100 flex items-center justify-center p-12">
+                  <ProjectLogo
+                    src={typeof featured.logo === "string" ? featured.logo : undefined}
+                    name={featured.name}
+                    category={featured.category}
+                    wellClassName="h-24 max-w-[22rem]"
+                    iconSize={48}
+                  />
                 </div>
               )}
             </div>

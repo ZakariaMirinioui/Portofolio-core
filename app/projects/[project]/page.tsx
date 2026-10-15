@@ -8,6 +8,7 @@ import { Slide } from "../../animation/Slide";
 import { urlFor } from "@/lib/sanity.image";
 import { sanityFetch } from "@/lib/sanity.client";
 import { BiLinkExternal, BiLogoGithub } from "react-icons/bi";
+import ProjectLogo from "@/app/components/shared/ProjectLogo";
 
 export const revalidate = 3600;
 
@@ -69,15 +70,15 @@ export default async function Project({ params }: Props) {
         <div className="max-w-3xl mx-auto">
           <div className="flex items-start justify-between flex-wrap mb-4">
             <div className="mb-4">
-              {project.logo && (
-                <Image
+              <div className="mb-4">
+                <ProjectLogo
                   src={project.logo}
-                  width={56}
-                  height={56}
-                  alt={`${project.name} logo`}
-                  className="dark:bg-zinc-800 bg-zinc-100 rounded-lg p-2 mb-4"
+                  name={project.name}
+                  category={project.category}
+                  wellClassName="h-16 max-w-[15rem]"
+                  iconSize={32}
                 />
-              )}
+              </div>
               <h1 className="font-incognito font-black tracking-tight sm:text-5xl text-3xl max-w-md">
                 {project.name}
               </h1>

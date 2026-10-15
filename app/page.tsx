@@ -1,4 +1,4 @@
-import { profileQuery, testimonialsQuery, featuredTestimonialsQuery } from "@/lib/sanity.query";
+import { profileQuery, featuredTestimonialsQuery } from "@/lib/sanity.query";
 import type { ProfileType, TestimonialType } from "@/types";
 import HeroSvg from "./assets/icons/HeroSvg";
 import Job from "./components/pages/Job";
@@ -16,10 +16,9 @@ import ClientLogos from "./components/sections/ClientLogos";
 export const revalidate = 3600;
 
 export default async function Home() {
-  const [profile, featuredTestimonials, allTestimonials] = await Promise.all([
+  const [profile, featuredTestimonials] = await Promise.all([
     sanityFetch({ query: profileQuery, tags: ["profile"] }) as Promise<ProfileType | null>,
     sanityFetch({ query: featuredTestimonialsQuery, tags: ["testimonial"] }) as Promise<TestimonialType[]>,
-    sanityFetch({ query: testimonialsQuery, tags: ["testimonial"] }) as Promise<TestimonialType[]>,
   ]);
 
   return (
