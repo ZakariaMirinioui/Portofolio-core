@@ -54,6 +54,7 @@ const project = defineType({
           { title: "Professional Services SaaS", value: "professional-services" },
           { title: "Wellness / Beauty SaaS", value: "wellness" },
           { title: "E-commerce / Marketplace", value: "ecommerce" },
+          { title: "Mobile Apps", value: "mobile" },
           { title: "Enterprise / Internal Tools", value: "enterprise" },
           { title: "Open Source", value: "open-source" },
           { title: "R&D / Experiment", value: "rd" },

@@ -284,6 +284,100 @@ async function createProjects() {
     },
 
     // ============================================
+    // SECUDRIVE - Mobile ride-hailing app
+    // ============================================
+    {
+      _type: "project",
+      name: "SECUDRIVE",
+      slug: { current: "secudrive" },
+      tagline: "Secure ride-hailing mobile app for riders & drivers",
+      category: "mobile",
+      status: "active",
+      featured: true,
+      clientType: "own-product",
+      role: "founder",
+      teamSize: 2,
+      duration: "Ongoing",
+      techStack: ["Flutter", "Dart", "Supabase", "GetX", "Google Maps", "PostgreSQL", "Lottie"],
+      metrics: [
+        { label: "App Screens", value: "35+", description: "Rider + driver flows in one codebase" },
+        { label: "Platforms", value: "3", description: "Android, iOS and Web from a single codebase" },
+        { label: "Auth", value: "PKCE", description: "Supabase auth with secure PKCE flow" },
+        { label: "Live Tracking", value: "Real-time", description: "Maps, geolocation, routing & ETAs" },
+      ],
+      projectUrl: "",
+      repository: "",
+      description: [
+        {
+          _type: "block",
+          style: "normal",
+          children: [
+            {
+              _type: "span",
+              text: "SECUDRIVE is a secure ride-hailing mobile app built with Flutter, covering both sides of the marketplace in a single codebase: riders can request rides with live tracking, saved places and spending analytics, while drivers get earnings dashboards, performance insights, vehicle management and ride history."
+            }
+          ]
+        },
+        {
+          _type: "block",
+          style: "normal",
+          children: [
+            {
+              _type: "span",
+              text: "The backend runs on Supabase (auth with PKCE, Postgres, realtime), navigation and state are handled with GetX, and the maps experience uses Google Maps with geolocation, geocoding and route polylines. Mobile demo available on request."
+            }
+          ]
+        }
+      ],
+    },
+    // ============================================
+    // PWADC TEAM MARKETPLACE
+    // ============================================
+    {
+      _type: "project",
+      name: "PWADC Team Marketplace",
+      slug: { current: "pwadc-marketplace" },
+      tagline: "Trilingual marketplace to buy & sell scripts, themes & apps",
+      category: "ecommerce",
+      status: "production",
+      featured: true,
+      clientType: "own-product",
+      role: "founder",
+      teamSize: 3,
+      duration: "Ongoing (2023 - Present)",
+      techStack: ["Laravel", "PHP", "MySQL", "JavaScript", "Bootstrap"],
+      metrics: [
+        { label: "Products Listed", value: "200+", description: "Scripts, themes, Flutter apps & templates" },
+        { label: "Languages", value: "3", description: "English, French and Arabic storefront" },
+        { label: "Currencies", value: "3", description: "MAD, EUR and USD checkout" },
+        { label: "Own Products", value: "5", description: "Shipped with live preview links" },
+      ],
+      projectUrl: "https://pwadcteam.com",
+      repository: "",
+      description: [
+        {
+          _type: "block",
+          style: "normal",
+          children: [
+            {
+              _type: "span",
+              text: "PWADC Team Marketplace (pwadcteam.com) is a trilingual digital marketplace to buy and sell scripts, themes, Flutter apps and templates, with multi-currency checkout (MAD/EUR/USD), author storefronts, carts, collections and a become-an-author program."
+            }
+          ]
+        },
+        {
+          _type: "block",
+          style: "normal",
+          children: [
+            {
+              _type: "span",
+              text: "My verified author storefront lists the ClinicFlow, EduManage, LegalFlow and StyleBook systems — each shipping with a live preview link. As founder I run the full commercial loop: development, packaging, documentation, live demos and post-sale support."
+            }
+          ]
+        }
+      ],
+    },
+    // ============================================
     // GITHUB HIGHLIGHTS - Open Source
     // ============================================
     {
