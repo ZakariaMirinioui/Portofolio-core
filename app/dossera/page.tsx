@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { Slide } from "../animation/Slide";
 import PageHeading from "../components/shared/PageHeading";
 import DosseraContactForm from "../components/sections/DosseraContactForm";
+import DosseraLogo from "../components/sections/DosseraLogo";
 import TestimonialsCarousel from "../components/sections/TestimonialsCarousel";
 import { testimonialsQuery } from "@/lib/sanity.query";
 import { sanityFetch } from "@/lib/sanity.client";
@@ -141,20 +142,7 @@ export default async function Dossera() {
       {/* Status Badge */}
       <Slide delay={0.1}>
         <div className="flex items-center gap-3 mb-12">
-          <div className="flex items-center gap-2">
-            <span className="sr-only">Dossera JAMS</span>
-            <picture>
-              <source
-                srcSet="/dossera-darkmode.png"
-                media="(prefers-color-scheme: dark)"
-              />
-              <img
-                src="/dossera-lightmode.png"
-                alt="Dossera JAMS Logo"
-                className="h-8 w-auto transition-opacity duration-300"
-              />
-            </picture>
-          </div>
+          <DosseraLogo />
           <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium dark:bg-green-900/30 bg-transparent dark:text-green-400 text-green-700 border dark:border-green-800 border-green-300">
             Operational System — JAMS v2.4
           </span>
