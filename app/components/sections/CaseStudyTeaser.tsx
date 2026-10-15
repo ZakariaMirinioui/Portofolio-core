@@ -115,6 +115,7 @@ export default async function CaseStudyTeaser() {
                     src={typeof featured.logo === "string" ? featured.logo : undefined}
                     name={featured.name}
                     category={featured.category}
+                    slug={featured.slug}
                     wellClassName="h-24 max-w-[22rem]"
                     iconSize={48}
                   />
