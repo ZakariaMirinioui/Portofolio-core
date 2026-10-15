@@ -3,7 +3,7 @@ import {
   BiLogoGithub,
   BiLogoLinkedinSquare,
 } from "react-icons/bi";
-import { FaSquareXTwitter } from "react-icons/fa6";
+import { FiInstagram } from "react-icons/fi";
 
 export const socialLinks = [
   {
@@ -15,9 +15,9 @@ export const socialLinks = [
   },
   {
     id: 2,
-    name: "X",
-    url: "https://twitter.com/zakaria_mirin",
-    icon: FaSquareXTwitter,
+    name: "Instagram",
+    url: "https://www.instagram.com/zakaria_mirinioui/",
+    icon: FiInstagram,
     status: "social",
   },
   {

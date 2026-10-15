@@ -75,12 +75,12 @@ async function createProjects() {
     },
 
     // ============================================
-    // PWADCTEAM SUITE - 5 SaaS Products
+    // PWADCTEAM SUITE - 5 SaaS Products (Professional Names)
     // ============================================
     {
       _type: "project",
-      name: "Doctor.pwadcteam.com",
-      slug: { current: "doctor-pwadcteam" },
+      name: "ClinicFlow",
+      slug: { current: "clinicflow" },
       tagline: "Multi-tenant clinic management SaaS for healthcare providers",
       category: "healthcare",
       status: "production",
@@ -113,8 +113,8 @@ async function createProjects() {
     },
     {
       _type: "project",
-      name: "School.pwadcteam.com",
-      slug: { current: "school-pwadcteam" },
+      name: "EduManage",
+      slug: { current: "edumanage" },
       tagline: "School management system for educational institutions",
       category: "education",
       status: "production",
@@ -146,8 +146,8 @@ async function createProjects() {
     },
     {
       _type: "project",
-      name: "Avocat.pwadcteam.com",
-      slug: { current: "avocat-pwadcteam" },
+      name: "LegalFlow",
+      slug: { current: "legalflow" },
       tagline: "Law firm case management and legal practice automation",
       category: "professional-services",
       status: "production",
@@ -179,8 +179,8 @@ async function createProjects() {
     },
     {
       _type: "project",
-      name: "Salon.pwadcteam.com",
-      slug: { current: "salon-pwadcteam" },
+      name: "StyleBook",
+      slug: { current: "stylebook" },
       tagline: "Salon & spa booking and business management platform",
       category: "wellness",
       status: "production",
@@ -212,8 +212,8 @@ async function createProjects() {
     },
     {
       _type: "project",
-      name: "Spa.pwadcteam.com",
-      slug: { current: "spa-pwadcteam" },
+      name: "SpaFlow",
+      slug: { current: "spaflow" },
       tagline: "Premium spa & wellness center management suite",
       category: "wellness",
       status: "production",

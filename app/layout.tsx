@@ -100,6 +100,11 @@ export const metadata: Metadata = {
     "Morocco Developer",
     "Enterprise Applications",
   ],
+  icons: {
+    icon: "/logo.svg",
+    shortcut: "/logo.svg",
+    apple: "/logo.svg",
+  },
 };
 
 export default function RootLayout({

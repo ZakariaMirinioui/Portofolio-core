@@ -35,7 +35,7 @@ export default function Navbar() {
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <Link href="/" aria-label="Zakaria Mirinioui - Home">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.svg" width={35} height={35} alt="" className="dark:invert" aria-hidden="true" />
+            <img src="/logo.svg" width={42} height={42} alt="" className="dark:invert" aria-hidden="true" />
           </Link>
 
           <nav className="md:block hidden" aria-label="Main navigation">
