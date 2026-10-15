@@ -113,7 +113,8 @@ export default function MobileMenu() {
         role="dialog"
         aria-modal="true"
         aria-label="Navigation menu"
-        className={`md:hidden fixed left-0 top-0 z-10 h-full w-full transform duration-[600ms] ease-[cubic-bezier(0.7,0,0,1)] dark:bg-zinc-900 bg-white ${navShow ? "translate-x-0 rounded-none" : "translate-x-full"
+        aria-hidden={!navShow}
+        className={`md:hidden fixed left-0 top-0 z-10 h-full w-full transform duration-[600ms] ease-[cubic-bezier(0.7,0,0,1)] dark:bg-zinc-900 bg-white ${navShow ? "translate-x-0 rounded-none visible pointer-events-auto" : "translate-x-full invisible pointer-events-none"
           }`}
       >
         <div className="flex items-center justify-between mt-6 px-8">

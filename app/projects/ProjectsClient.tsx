@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import type { ProjectType } from "@/types";
 import EmptyState from "../components/shared/EmptyState";
 import { Slide } from "../animation/Slide";
@@ -17,6 +18,7 @@ const CATEGORIES = [
   { value: "professional-services", label: "Professional Services SaaS" },
   { value: "wellness", label: "Wellness / Beauty SaaS" },
   { value: "ecommerce", label: "E-commerce / Marketplace" },
+  { value: "mobile", label: "Mobile Apps" },
   { value: "enterprise", label: "Enterprise / Internal Tools" },
   { value: "open-source", label: "Open Source" },
   { value: "rd", label: "R&D / Experiment" },
@@ -45,6 +47,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   "professional-services": "Legal Tech",
   wellness: "Wellness",
   ecommerce: "E-commerce",
+  mobile: "Mobile",
   enterprise: "Enterprise",
   "open-source": "Open Source",
   rd: "R&D",
@@ -82,14 +85,26 @@ export default function ProjectsClient({
 }
 
 function FeaturedProjectCard({ project }: { project: ProjectType }) {
+  const router = useRouter();
   const hasCaseStudy = !!project.caseStudy;
   const status = project.status || "production";
   const category = project.category || "enterprise";
 
+  const goToDetails = () => {
+    trackProjectViewed({ project_slug: project.slug, source_page: "/projects" });
+    router.push(`/projects/${project.slug}`);
+  };
+
   return (
-    <Link
-      href={`/projects/${project.slug}`}
-      className="group dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-xl p-6 hover:dark:border-zinc-600 hover:border-zinc-300 transition-colors h-full flex flex-col"
+    <article
+      onClick={goToDetails}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" && e.target === e.currentTarget) goToDetails();
+      }}
+      tabIndex={0}
+      role="link"
+      aria-label={`View details of ${project.name}`}
+      className="group cursor-pointer dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-xl p-6 hover:dark:border-zinc-600 hover:border-zinc-300 focus:outline-none focus:ring-2 focus:ring-primary-color focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-zinc-900 transition-colors h-full flex flex-col"
     >
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">
@@ -151,7 +166,10 @@ function FeaturedProjectCard({ project }: { project: ProjectType }) {
             href={project.projectUrl}
             target="_blank"
             rel="noreferrer noopener"
-            onClick={() => trackLiveDemoClicked({ project_slug: project.slug })}
+            onClick={(e) => {
+              e.stopPropagation();
+              trackLiveDemoClicked({ project_slug: project.slug });
+            }}
             className="inline-flex items-center gap-1.5 text-sm font-medium dark:text-primary-color text-secondary-color hover:underline"
           >
             <BiLinkExternal className="text-base" />
@@ -163,7 +181,10 @@ function FeaturedProjectCard({ project }: { project: ProjectType }) {
             href={project.repository}
             target="_blank"
             rel="noreferrer noopener"
-            onClick={() => trackGithubLinkClicked({ repo: project.name })}
+            onClick={(e) => {
+              e.stopPropagation();
+              trackGithubLinkClicked({ repo: project.name });
+            }}
             className="inline-flex items-center gap-1.5 text-sm font-medium dark:text-zinc-400 text-zinc-600 hover:dark:text-white hover:text-zinc-900"
           >
             <BiLogoGithub className="text-base" />
@@ -173,15 +194,25 @@ function FeaturedProjectCard({ project }: { project: ProjectType }) {
         {hasCaseStudy && (
           <Link
             href={`/projects/${project.slug}/case-study`}
-            onClick={() => trackProjectViewed({ project_slug: project.slug, source_page: window.location.pathname })}
+            onClick={(e) => {
+              e.stopPropagation();
+              trackProjectViewed({ project_slug: project.slug, source_page: "/projects" });
+            }}
             className="inline-flex items-center gap-1.5 text-sm font-medium dark:text-blue-400 text-blue-600 hover:underline"
           >
             <BiBookOpen className="text-base" />
             Case Study
           </Link>
         )}
+        <button
+          onClick={goToDetails}
+          className="ml-auto inline-flex items-center gap-1 text-sm font-medium dark:text-zinc-400 text-zinc-600 hover:dark:text-white hover:text-zinc-900 hover:underline"
+          aria-label={`View details of ${project.name}`}
+        >
+          Details →
+        </button>
       </div>
-    </Link>
+    </article>
   );
 }
 
@@ -236,14 +267,26 @@ function ProjectsList({ projects }: { projects: ProjectType[] }) {
 }
 
 function ProjectCard({ project }: { project: ProjectType }) {
+  const router = useRouter();
   const hasCaseStudy = !!project.caseStudy;
   const status = project.status || "production";
   const category = project.category || "enterprise";
 
+  const goToDetails = () => {
+    trackProjectViewed({ project_slug: project.slug, source_page: "/projects" });
+    router.push(`/projects/${project.slug}`);
+  };
+
   return (
-    <Link
-      href={`/projects/${project.slug}`}
-      className="group dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-lg p-4 hover:dark:border-zinc-600 hover:border-zinc-300 transition-colors flex flex-col h-full"
+    <article
+      onClick={goToDetails}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" && e.target === e.currentTarget) goToDetails();
+      }}
+      tabIndex={0}
+      role="link"
+      aria-label={`View details of ${project.name}`}
+      className="group cursor-pointer dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-lg p-4 hover:dark:border-zinc-600 hover:border-zinc-300 focus:outline-none focus:ring-2 focus:ring-primary-color focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-zinc-900 transition-colors flex flex-col h-full"
     >
       <div className="flex items-start justify-between mb-3">
         {project.logo ? (
@@ -291,7 +334,10 @@ function ProjectCard({ project }: { project: ProjectType }) {
             href={project.projectUrl}
             target="_blank"
             rel="noreferrer noopener"
-            onClick={() => trackLiveDemoClicked({ project_slug: project.slug })}
+            onClick={(e) => {
+              e.stopPropagation();
+              trackLiveDemoClicked({ project_slug: project.slug });
+            }}
             className="inline-flex items-center gap-1 text-xs font-medium dark:text-primary-color text-secondary-color hover:underline"
           >
             <BiLinkExternal className="text-sm" />
@@ -303,7 +349,10 @@ function ProjectCard({ project }: { project: ProjectType }) {
             href={project.repository}
             target="_blank"
             rel="noreferrer noopener"
-            onClick={() => trackGithubLinkClicked({ repo: project.name })}
+            onClick={(e) => {
+              e.stopPropagation();
+              trackGithubLinkClicked({ repo: project.name });
+            }}
             className="inline-flex items-center gap-1 text-xs font-medium dark:text-zinc-400 text-zinc-600 hover:dark:text-white hover:text-zinc-900"
           >
             <BiLogoGithub className="text-sm" />
@@ -313,7 +362,10 @@ function ProjectCard({ project }: { project: ProjectType }) {
         {hasCaseStudy && (
           <Link
             href={`/projects/${project.slug}/case-study`}
-            onClick={() => trackProjectViewed({ project_slug: project.slug, source_page: window.location.pathname })}
+            onClick={(e) => {
+              e.stopPropagation();
+              trackProjectViewed({ project_slug: project.slug, source_page: "/projects" });
+            }}
             className="inline-flex items-center gap-1 text-xs font-medium dark:text-blue-400 text-blue-600 hover:underline"
           >
             <BiBookOpen className="text-sm" />
@@ -321,6 +373,6 @@ function ProjectCard({ project }: { project: ProjectType }) {
           </Link>
         )}
       </div>
-    </Link>
+    </article>
   );
 }
