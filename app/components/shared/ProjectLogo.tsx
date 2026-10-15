@@ -1,0 +1,75 @@
+"use client";
+
+import Image from "next/image";
+import {
+  Scales,
+  Heartbeat,
+  GraduationCap,
+  Briefcase,
+  Scissors,
+  ShoppingBag,
+  DeviceMobile,
+  Buildings,
+  Code,
+  Flask,
+  Cube,
+  type Icon as PhosphorIcon,
+} from "@phosphor-icons/react";
+
+const CATEGORY_ICONS: Record<string, PhosphorIcon> = {
+  judicial: Scales,
+  healthcare: Heartbeat,
+  education: GraduationCap,
+  "professional-services": Briefcase,
+  wellness: Scissors,
+  ecommerce: ShoppingBag,
+  mobile: DeviceMobile,
+  enterprise: Buildings,
+  "open-source": Code,
+  rd: Flask,
+};
+
+type ProjectLogoProps = {
+  src?: string | null;
+  name: string;
+  category?: string;
+  /** well height + max width, e.g. "h-11 max-w-[9rem]" */
+  wellClassName?: string;
+  iconSize?: number;
+};
+
+export default function ProjectLogo({
+  src,
+  name,
+  category,
+  wellClassName = "h-14 max-w-[11rem]",
+  iconSize = 28,
+}: ProjectLogoProps) {
+  const FallbackIcon = (category && CATEGORY_ICONS[category]) || Cube;
+
+  return (
+    <span
+      className={`flex min-w-[3.5rem] items-center justify-center rounded-lg bg-white p-2 ring-1 ring-zinc-200 dark:ring-zinc-700 ${wellClassName}`}
+      role="img"
+      aria-label={`${name} logo`}
+    >
+      {src ? (
+        <Image
+          src={src}
+          width={320}
+          height={96}
+          alt=""
+          aria-hidden="true"
+          className="h-full w-auto max-w-full object-contain"
+        />
+      ) : (
+        <FallbackIcon
+          size={iconSize}
+          weight="duotone"
+          className="text-secondary-color dark:text-primary-color"
+          aria-hidden="true"
+        />
+      )}
+    </span>
+  );
+}
