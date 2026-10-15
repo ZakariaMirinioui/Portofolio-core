@@ -63,7 +63,7 @@ export default async function About() {
               <div className="sticky top-10">
                 <Image
                   className="rounded-xl mb-4 object-cover max-h-96 min-h-96 bg-top"
-                  src="/personal-img-formal.png"
+                  src="/personal-img-formal.webp"
                   width={400}
                   height={400}
                   quality={100}
