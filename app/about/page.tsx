@@ -3,11 +3,11 @@ import { Metadata } from "next";
 import { profileQuery } from "@/lib/sanity.query";
 import type { ProfileType } from "@/types";
 import { PortableText } from "@portabletext/react";
-import { BiEnvelope, BiLinkExternal, BiSolidDownload } from "react-icons/bi";
+import { BiEnvelope, BiLinkExternal, BiPhone, BiSolidDownload } from "react-icons/bi";
 import { FiGithub, FiInstagram } from "react-icons/fi";
 import { CustomPortableText } from "../components/shared/CustomPortableText";
-import Heroes from "../components/pages/Heroes";
 import Usage from "../components/pages/Usage";
+import AboutCV from "../components/sections/AboutCV";
 import { Slide } from "../animation/Slide";
 import { sanityFetch } from "@/lib/sanity.client";
 import RefLink from "../components/shared/RefLink";
@@ -18,12 +18,12 @@ export const metadata: Metadata = {
   title: "About | Zakaria Mirinioui",
   metadataBase: new URL("https://zakaria-mirinioui.dev/about"),
   description:
-    "Learn more about Zakaria Mirinioui's skills, experience and technical background in full stack development and digital solutions",
+    "Full Stack Developer & IT Analyst (Java, PHP, JS) — experience across justice, secure logistics and industry, plus freelance SaaS products. Certifications, stack and background.",
   openGraph: {
     title: "About | Zakaria Mirinioui",
     url: "https://zakaria-mirinioui.dev/about",
     description:
-      "Learn more about Zakaria Mirinioui's skills, experience and technical background in full stack development and digital solutions",
+      "Full Stack Developer & IT Analyst (Java, PHP, JS) — experience across justice, secure logistics and industry, plus freelance SaaS products. Certifications, stack and background.",
     images: "/og.png",
   },
 };
@@ -41,8 +41,8 @@ export default async function About() {
           <div className="order-2 lg:order-none">
             <Slide>
               <h1 className="font-incognito font-semibold tracking-tight sm:text-5xl text-3xl lg:leading-tight basis-1/2 mb-8">
-                I&apos;m {profile?.fullName ?? "John Doe"}. I live in{" "}
-                {profile?.location ?? "'X'"}, where I build the future.
+                I&apos;m {profile?.fullName ?? "Zakaria Mirinioui"}. I live in{" "}
+                {profile?.location ?? "Khouribga, Morocco"}, where I build the future.
               </h1>
 
               <div className="dark:text-zinc-400 text-zinc-600 leading-relaxed">
@@ -52,7 +52,7 @@ export default async function About() {
                     components={CustomPortableText}
                   />
                 ) : (
-                  "Your bio information will show up here"
+                  "Certified Full Stack Developer blending technical expertise (Java, JS, SQL) with advanced Business Analysis skills. Proven track record digitalizing critical processes in the Justice and Secure Logistics sectors — high-performance software aligned with core business objectives."
                 )}
               </div>
             </Slide>
@@ -66,7 +66,7 @@ export default async function About() {
                   src="/personal-img-formal.webp"
                   width={400}
                   height={400}
-                  quality={100}
+                  quality={85}
                   alt={profile?.fullName ?? "Zakaria Mirinioui"}
                   sizes="(max-width: 768px) 100vw, 400px"
                   priority
@@ -116,88 +116,31 @@ export default async function About() {
                   </div>
 
                   <a
-                    href={`mailto:${profile?.email}`}
+                    href={`mailto:${profile?.email ?? "zakmirinioui@gmail.com"}`}
                     className="flex items-center justify-center gap-x-2 hover:text-primary-color"
                   >
                     <BiEnvelope className="text-lg" />
-                    {profile?.email ?? "Email address not available"}
+                    {profile?.email ?? "zakmirinioui@gmail.com"}
+                  </a>
+
+                  <a
+                    href="tel:+212629258876"
+                    className="flex items-center justify-center gap-x-2 hover:text-primary-color"
+                  >
+                    <BiPhone className="text-lg" />
+                    +212 629 258 876
                   </a>
                 </div>
               </div>
             </Slide>
           </aside>
         </section>
+
         <Slide delay={0.14}>
           <Usage />
         </Slide>
-        <Slide delay={0.15}>
-          <section className="max-w-2xl mt-16">
-            <div className="mb-8">
-              <h2 className="text-4xl mb-4 font-bold tracking-tight">Highlights</h2>
-              <p className="dark:text-zinc-400 text-zinc-600 max-w-xl">
-                Freelance Full Stack Developer since 2021 — from requirements to production,
-                with enterprise experience in justice, secure logistics, and industry.
-              </p>
-            </div>
-            <ul className="space-y-3 text-sm dark:text-zinc-400 text-zinc-600">
-              <li className="flex items-start gap-3">
-                <span className="w-1.5 h-1.5 rounded-full dark:bg-primary-color bg-secondary-color flex-shrink-0 mt-2" />
-                Technical Project Lead — Judicial archive platform deployed in Moroccan courts (30% admin time reduction)
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="w-1.5 h-1.5 rounded-full dark:bg-primary-color bg-secondary-color flex-shrink-0 mt-2" />
-                Founder of PWADC Team — 5 live multi-tenant SaaS products + digital marketplace (pwadcteam.com)
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="w-1.5 h-1.5 rounded-full dark:bg-primary-color bg-secondary-color flex-shrink-0 mt-2" />
-                Backend & API specialist (Brink&apos;s Morocco) — REST/GraphQL Spring Boot, realtime React, SQL optimization
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="w-1.5 h-1.5 rounded-full dark:bg-primary-color bg-secondary-color flex-shrink-0 mt-2" />
-                IT Support & Automation (OCP Group) — Python/Bash reporting in high-availability industrial environment
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="w-1.5 h-1.5 rounded-full dark:bg-primary-color bg-secondary-color flex-shrink-0 mt-2" />
-                DUT Génie Informatique — EST Béni Mellal (2023–2025) · Java EE n-tier, Oracle/MySQL
-              </li>
-            </ul>
-          </section>
-        </Slide>
-        <Slide delay={0.16}>
-          <section className="max-w-2xl mt-16">
-            <div className="mb-8">
-              <h2 className="text-4xl mb-4 font-bold tracking-tight">Certifications</h2>
-              <p className="dark:text-zinc-400 text-zinc-600 max-w-xl">
-                Business analysis, project management, and hands-on technical credentials.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {[
-                "Business Analysis (PMI)",
-                "Project Management (PMI/NASBA)",
-                "SQL Advanced (HackerRank)",
-                "JavaScript Intermediate (HackerRank)",
-                "Frontend Development (HackerRank)",
-                "Cybersecurity Fundamentals (Fortinet)",
-                "Oracle Cloud AI Foundations",
-                "Digital Skills: AI (Accenture)",
-                "Certified Web Analyst (CWA)",
-                "English C1 Advanced (EF SET)",
-              ].map((cert) => (
-                <span
-                  key={cert}
-                  className="px-3 py-1 rounded-md text-sm font-medium dark:bg-zinc-800 bg-zinc-100 dark:text-zinc-300 text-zinc-700 border dark:border-zinc-700 border-zinc-200"
-                >
-                  {cert}
-                </span>
-              ))}
-            </div>
-            <p className="mt-6 text-sm dark:text-zinc-400 text-zinc-600">
-              Languages — Arabic (native) · French (fluent) · English (C1 advanced)
-            </p>
-          </section>
-        </Slide>
-        <Heroes />
+
+        <AboutCV />
       </div>
     </main>
   );

@@ -275,5 +275,3 @@ export const clientsQuery = groq`*[_type == "client" && isPublic == true] | orde
     authorOrganization,
   },
 }`;
-
-export const heroesQuery = groq`*[_type == "heroe"] | order(_createdAt asc) { _id, _createdAt, name, url, met }`;
