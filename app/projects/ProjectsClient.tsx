@@ -113,6 +113,7 @@ function FeaturedProjectCard({ project }: { project: ProjectType }) {
             src={project.logo}
             name={project.name}
             category={category}
+            slug={project.slug}
             wellClassName="h-14 max-w-[11rem]"
             iconSize={28}
           />
@@ -292,6 +293,7 @@ function ProjectCard({ project }: { project: ProjectType }) {
           src={project.logo}
           name={project.name}
           category={category}
+          slug={project.slug}
           wellClassName="h-11 max-w-[9rem]"
           iconSize={22}
         />

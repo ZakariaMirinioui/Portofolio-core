@@ -7,7 +7,7 @@ import { CustomPortableText } from "@/app/components/shared/CustomPortableText";
 import { Slide } from "../../animation/Slide";
 import { urlFor } from "@/lib/sanity.image";
 import { sanityFetch } from "@/lib/sanity.client";
-import { BiLinkExternal, BiLogoGithub } from "react-icons/bi";
+import { BiLinkExternal, BiLogoGithub, BiLock } from "react-icons/bi";
 import ProjectLogo from "@/app/components/shared/ProjectLogo";
 
 export const revalidate = 3600;
@@ -70,12 +70,13 @@ export default async function Project({ params }: Props) {
         <div className="max-w-3xl mx-auto">
           <div className="flex items-start justify-between flex-wrap mb-4">
             <div className="mb-4">
-              <div className="mb-4">
+              <div className="mb-4 w-fit">
                 <ProjectLogo
                   src={project.logo}
                   name={project.name}
                   category={project.category}
-                  wellClassName="h-16 max-w-[15rem]"
+                  slug={project.slug}
+                  wellClassName="h-16 w-fit max-w-[15rem]"
                   iconSize={32}
                 />
               </div>
@@ -118,9 +119,19 @@ export default async function Project({ params }: Props) {
                   GitHub
                 </a>
               ) : (
-                <span className="flex items-center gap-x-2 dark:bg-primary-bg bg-secondary-bg dark:text-white text-zinc-700 border border-transparent rounded-md px-4 py-2 opacity-80">
-                  <BiLogoGithub aria-hidden="true" />
-                  No Repo
+                <span
+                  className="group/private relative flex cursor-help items-center gap-x-2 dark:bg-primary-bg bg-secondary-bg dark:text-white text-zinc-700 border border-transparent rounded-md px-4 py-2"
+                  title="Private repository — source code cannot be exposed under client confidentiality"
+                >
+                  <BiLock aria-hidden="true" />
+                  Private
+                  <span
+                    role="tooltip"
+                    className="pointer-events-none absolute left-1/2 top-full z-10 mt-2 w-56 -translate-x-1/2 rounded-md border dark:border-zinc-700 border-zinc-200 dark:bg-zinc-800 bg-white px-3 py-2 text-xs font-normal leading-relaxed dark:text-zinc-300 text-zinc-600 opacity-0 shadow-lg transition-opacity duration-200 group-hover/private:opacity-100 group-focus-within/private:opacity-100"
+                  >
+                    Source code is private and cannot be exposed under client
+                    confidentiality. A live walkthrough is available on request.
+                  </span>
                 </span>
               )}
 

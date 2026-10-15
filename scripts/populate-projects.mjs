@@ -382,38 +382,6 @@ async function createProjects() {
     // ============================================
     {
       _type: "project",
-      name: "Sanity-Portfolio-Starter",
-      slug: { current: "sanity-portfolio-starter" },
-      tagline: "Open-source portfolio template with Next.js 14, Sanity, Tailwind",
-      category: "open-source",
-      status: "active",
-      featured: false,
-      clientType: "open-source",
-      role: "fullstack",
-      teamSize: 1,
-      duration: "2024",
-      techStack: ["Next.js 14", "Sanity", "Tailwind CSS", "TypeScript", "Framer Motion"],
-      metrics: [
-        { label: "GitHub Stars", value: "120+", description: "Community adoption" },
-        { label: "Forks", value: "35+", description: "Used as starter by developers" },
-      ],
-      projectUrl: "https://github.com/ZakariaMirinioui/sanity-portfolio-starter",
-      repository: "https://github.com/ZakariaMirinioui/sanity-portfolio-starter",
-      description: [
-        {
-          _type: "block",
-          style: "normal",
-          children: [
-            {
-              _type: "span",
-              text: "Production-ready portfolio starter featuring: Sanity CMS integration, dark mode, GitHub contribution graph, project showcase, blog-ready, SEO optimized, Vercel deployment configured. Used as foundation for this portfolio."
-            }
-          ]
-        }
-      ],
-    },
-    {
-      _type: "project",
       name: "Meilisearch-Arabic-OCR-Pipeline",
       slug: { current: "meilisearch-arabic-ocr-pipeline" },
       tagline: "Arabic/French OCR + semantic search pipeline for legal docs",
