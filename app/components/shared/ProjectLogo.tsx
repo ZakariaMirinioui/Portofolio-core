@@ -29,10 +29,13 @@ const CATEGORY_ICONS: Record<string, PhosphorIcon> = {
   rd: Flask,
 };
 
+const MID_TONE_SLUGS = ["salon-hub"];
+
 type ProjectLogoProps = {
   src?: string | null;
   name: string;
   category?: string;
+  slug?: string;
   /** well height + max width, e.g. "h-11 max-w-[9rem]" */
   wellClassName?: string;
   iconSize?: number;
@@ -42,14 +45,20 @@ export default function ProjectLogo({
   src,
   name,
   category,
+  slug,
   wellClassName = "h-14 max-w-[11rem]",
   iconSize = 28,
 }: ProjectLogoProps) {
   const FallbackIcon = (category && CATEGORY_ICONS[category]) || Cube;
+  const midTone = slug ? MID_TONE_SLUGS.includes(slug) : false;
 
   return (
     <span
-      className={`flex min-w-[3.5rem] items-center justify-center rounded-lg bg-white p-2 ring-1 ring-zinc-200 dark:ring-zinc-700 ${wellClassName}`}
+      className={`flex min-w-[3.5rem] items-center justify-center rounded-lg p-2 ring-1 ${
+        midTone
+          ? "bg-zinc-400 ring-zinc-500 dark:bg-zinc-500 dark:ring-zinc-400"
+          : "bg-white ring-zinc-200 dark:ring-zinc-700"
+      } ${wellClassName}`}
       role="img"
       aria-label={`${name} logo`}
     >

@@ -139,21 +139,38 @@ export default async function Dossera() {
         description="Sovereign Judicial Archive Management System — Digitizing justice for courts, law firms, notary offices, and legal institutions across Morocco and beyond."
       />
 
-      {/* Status Badge */}
+      {/* Product identity */}
       <Slide delay={0.1}>
-        <div className="flex items-center gap-3 mb-12">
-          <DosseraLogo />
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium dark:bg-green-900/30 bg-transparent dark:text-green-400 text-green-700 border dark:border-green-800 border-green-300">
-            Operational System — JAMS v2.4
-          </span>
-          <a
-            href="https://dossera.surge.sh"
-            target="_blank"
-            rel="noreferrer noopener"
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium dark:bg-primary-bg bg-zinc-100 dark:text-white text-zinc-700 border dark:border-zinc-700 border-zinc-200 hover:dark:border-primary-color hover:border-secondary-color transition-colors"
-          >
-            View Live Demo →
-          </a>
+        <div className="mb-12">
+          <DosseraLogo heightClassName="h-12 md:h-14" />
+          <p className="flex items-center gap-2 mt-4 text-sm">
+            <span className="h-2 w-2 rounded-full bg-green-500" aria-hidden="true" />
+            <span className="font-medium dark:text-zinc-200 text-zinc-800">
+              Operational System — JAMS v2.4
+            </span>
+          </p>
+          <div className="flex flex-wrap items-center gap-3 mt-5">
+            <a
+              href="https://dossera.surge.sh"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md dark:bg-primary-color bg-secondary-color dark:text-zinc-900 text-white text-sm font-semibold hover:opacity-90 transition-opacity"
+            >
+              View Live Demo →
+            </a>
+            <a
+              href="mailto:zakmirinioui@gmail.com?subject=Dossera%20JAMS%20-%20Demo%20Request"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md dark:bg-zinc-800 bg-zinc-200 dark:text-white text-zinc-900 text-sm font-semibold border dark:border-zinc-700 border-zinc-300 hover:dark:border-zinc-500 hover:border-zinc-400 transition-colors"
+            >
+              Request a Demo
+            </a>
+            <a
+              href="tel:+212629258876"
+              className="inline-flex items-center gap-2 text-sm font-medium dark:text-primary-color text-secondary-color hover:underline"
+            >
+              or call +212 629 258 876
+            </a>
+          </div>
         </div>
       </Slide>
 
@@ -240,10 +257,12 @@ export default async function Dossera() {
                   <h3 className="text-lg font-incognito font-semibold">
                     {deployment.court}
                   </h3>
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium dark:bg-green-900/30 bg-green-100 dark:text-green-400 text-green-700">
-                    <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
-                    {deployment.status}
-                  </span>
+                  <p className="flex items-center gap-1.5 text-xs shrink-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-green-500" aria-hidden="true" />
+                    <span className="font-medium dark:text-green-400 text-green-700">
+                      {deployment.status}
+                    </span>
+                  </p>
                 </div>
                 <p className="text-sm dark:text-zinc-400 text-zinc-600 leading-relaxed">
                   {deployment.description}
