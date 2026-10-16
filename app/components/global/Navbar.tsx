@@ -2,31 +2,9 @@ import Link from "next/link";
 import Theme from "./Theme";
 import UnmountStudio from "./Unmount";
 import MobileMenu from "./MobileMenu";
+import NavLinks from "./NavLinks";
 
 export default function Navbar() {
-  const data = [
-    {
-      title: "Home",
-      href: "/",
-    },
-    {
-      title: "About",
-      href: "/about",
-    },
-    {
-      title: "Projects",
-      href: "/projects",
-    },
-    {
-      title: "Services",
-      href: "/services",
-    },
-    {
-      title: "Dossera",
-      href: "/dossera",
-    },
-  ];
-
   return (
     <UnmountStudio>
       <a
@@ -42,20 +20,7 @@ export default function Navbar() {
             <img src="/logo.svg" width={48} height={48} alt="" className="dark:invert" aria-hidden="true" />
           </Link>
 
-          <nav className="md:block hidden" aria-label="Main navigation">
-            <ul className="flex items-center gap-x-8">
-              {data.map((link, id) => (
-                <li key={id}>
-                  <Link
-                    href={link.href}
-                    className="font-incognito dark:text-white text-zinc-600 dark:hover:text-primary-color hover:text-zinc-900 duration-300 text-base focus:outline-none focus:ring-2 focus:ring-primary-color focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-zinc-900 rounded-md px-2 py-1"
-                  >
-                    {link.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <NavLinks />
 
           <div className="flex items-center gap-x-4">
             <Theme />
