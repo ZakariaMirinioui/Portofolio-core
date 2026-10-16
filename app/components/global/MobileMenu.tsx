@@ -7,6 +7,7 @@ import {
   HiBeaker,
   HiOutlineX,
   HiUser,
+  HiHome,
   HiDocumentText,
 } from "react-icons/hi";
 
@@ -15,6 +16,11 @@ export default function MobileMenu() {
   const menuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const data = [
+    {
+      title: "Home",
+      href: "/",
+      icon: HiHome,
+    },
     {
       title: "About",
       href: "/about",
