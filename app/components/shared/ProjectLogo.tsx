@@ -29,7 +29,9 @@ const CATEGORY_ICONS: Record<string, PhosphorIcon> = {
   rd: Flask,
 };
 
-const MID_TONE_SLUGS = ["salon-hub"];
+// Slugs whose marks carry white/light text and need a mid-tone well
+// instead of the default white one. Keep empty unless such a mark ships.
+const MID_TONE_SLUGS: string[] = [];
 
 type ProjectLogoProps = {
   src?: string | null;
