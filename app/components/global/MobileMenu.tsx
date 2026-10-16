@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import { RxHamburgerMenu } from "react-icons/rx";
 import {
   HiBeaker,
@@ -10,8 +11,10 @@ import {
   HiHome,
   HiDocumentText,
 } from "react-icons/hi";
+import { directionFor, goToPage } from "../transitions/PageTransition";
 
 export default function MobileMenu() {
+  const pathname = usePathname();
   const [navShow, setNavShow] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -124,7 +127,16 @@ export default function MobileMenu() {
           }`}
       >
         <div className="flex items-center justify-between mt-6 px-8">
-          <Link href="/" onClick={onToggleNav} aria-label="Zakaria Mirinioui - Home">
+          <Link
+            href="/"
+            onClick={(e) => {
+              if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+              e.preventDefault();
+              onToggleNav();
+              goToPage({ href: "/", title: "Home", direction: directionFor(pathname, "/") });
+            }}
+            aria-label="Zakaria Mirinioui - Home"
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/logo.svg" width={85} height={85} alt="" className="dark:invert" aria-hidden="true" />
           </Link>
@@ -144,7 +156,13 @@ export default function MobileMenu() {
               key={link.title}
               href={link.href}
               className="flex items-center gap-x-2 font-incognito font-semibold text-lg dark:shadow-line-dark shadow-line-light p-6 group focus:outline-none focus:ring-2 focus:ring-primary-color focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-zinc-900 rounded-lg"
-              onClick={onToggleNav}
+              onClick={(e) => {
+                if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                e.preventDefault();
+                const target = { href: link.href, title: link.title };
+                onToggleNav();
+                goToPage({ ...target, direction: directionFor(pathname, link.href) });
+              }}
             >
               <link.icon
                 className="text-zinc-500 group-hover:dark:text-white group-hover:text-zinc-800 duration-300"
