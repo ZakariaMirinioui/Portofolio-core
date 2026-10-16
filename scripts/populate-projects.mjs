@@ -79,8 +79,8 @@ async function createProjects() {
     // ============================================
     {
       _type: "project",
-      name: "ClinicFlow",
-      slug: { current: "clinicflow" },
+      name: "PWADC Clinic",
+      slug: { current: "pwadc-clinic" },
       tagline: "Multi-tenant clinic management SaaS for healthcare providers",
       category: "healthcare",
       status: "production",
@@ -146,8 +146,8 @@ async function createProjects() {
     },
     {
       _type: "project",
-      name: "LegalFlow",
-      slug: { current: "legalflow" },
+      name: "PWADC Advocate",
+      slug: { current: "pwadc-advocate" },
       tagline: "Law firm case management and legal practice automation",
       category: "professional-services",
       status: "production",
