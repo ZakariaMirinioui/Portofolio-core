@@ -3,6 +3,7 @@ import { Slide } from "../animation/Slide";
 import PageHeading from "../components/shared/PageHeading";
 import DosseraContactForm from "../components/sections/DosseraContactForm";
 import DosseraLogo from "../components/sections/DosseraLogo";
+import NextPageTeaser from "../components/sections/NextPageTeaser";
 import TestimonialsCarousel from "../components/sections/TestimonialsCarousel";
 import { testimonialsQuery } from "@/lib/sanity.query";
 import { sanityFetch } from "@/lib/sanity.client";
@@ -436,6 +437,12 @@ export default async function Dossera() {
       <section className="mb-20">
         <DosseraContactForm />
       </section>
+
+      <NextPageTeaser
+        href="/"
+        title="Home"
+        description="Back to the start — the full journey in one loop."
+      />
     </main>
   );
 }

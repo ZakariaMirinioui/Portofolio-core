@@ -12,6 +12,7 @@ import CaseStudyTeaser from "./components/sections/CaseStudyTeaser";
 import ServicesOverview from "./components/sections/ServicesOverview";
 import TestimonialsCarousel from "./components/sections/TestimonialsCarousel";
 import ClientLogos from "./components/sections/ClientLogos";
+import NextPageTeaser from "./components/sections/NextPageTeaser";
 
 export const revalidate = 3600;
 
@@ -57,6 +58,11 @@ export default async function Home() {
       </section>
       <ContributionGraph />
       <Job />
+      <NextPageTeaser
+        href="/about"
+        title="About"
+        description="The engineer behind the systems — background, arsenal and credentials."
+      />
     </main>
   );
 }

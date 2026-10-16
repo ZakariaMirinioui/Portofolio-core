@@ -15,6 +15,7 @@ import {
 import Link from "next/link";
 import TestimonialsCarousel from "../components/sections/TestimonialsCarousel";
 import ClientLogos from "../components/sections/ClientLogos";
+import NextPageTeaser from "../components/sections/NextPageTeaser";
 
 export const revalidate = 3600;
 
@@ -114,6 +115,12 @@ export default async function ServicesPage() {
           </div>
         </section>
       </Slide>
+
+      <NextPageTeaser
+        href="/dossera"
+        title="Dossera"
+        description="The sovereign judicial platform running in production."
+      />
     </main>
   );
 }

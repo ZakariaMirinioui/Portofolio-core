@@ -3,6 +3,7 @@ import { projectsQuery, featuredProjectsQuery } from "@/lib/sanity.query";
 import type { ProjectType } from "@/types";
 import { sanityFetch } from "@/lib/sanity.client";
 import PageHeading from "../components/shared/PageHeading";
+import NextPageTeaser from "../components/sections/NextPageTeaser";
 import ProjectsClient from "./ProjectsClient";
 
 export const revalidate = 3600;
@@ -35,6 +36,11 @@ export default async function ProjectsPage() {
       />
 
       <ProjectsClient projects={projects} featuredProjects={featuredProjects} />
+      <NextPageTeaser
+        href="/services"
+        title="Services"
+        description="How engagements run — process, deliverables and models."
+      />
     </main>
   );
 }

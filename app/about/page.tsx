@@ -8,6 +8,7 @@ import { FiGithub, FiInstagram } from "react-icons/fi";
 import { CustomPortableText } from "../components/shared/CustomPortableText";
 import Usage from "../components/pages/Usage";
 import AboutCV from "../components/sections/AboutCV";
+import NextPageTeaser from "../components/sections/NextPageTeaser";
 import { Slide } from "../animation/Slide";
 import { sanityFetch } from "@/lib/sanity.client";
 import RefLink from "../components/shared/RefLink";
@@ -141,6 +142,11 @@ export default async function About() {
         </Slide>
 
         <AboutCV />
+        <NextPageTeaser
+          href="/projects"
+          title="Projects"
+          description="Flagship systems, live SaaS products and open-source tools."
+        />
       </div>
     </main>
   );
