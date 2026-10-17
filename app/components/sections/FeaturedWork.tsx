@@ -15,9 +15,9 @@ const works = [
   },
 ];
 
-export default function FeaturedWork() {
+export default function FeaturedWork({ className }: { className?: string }) {
   return (
-    <section>
+    <section className={className}>
       <div className="mb-8">
         <h2 className="text-4xl mb-4 font-incognito font-bold tracking-tight">
           Featured work

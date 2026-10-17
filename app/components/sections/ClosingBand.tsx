@@ -1,9 +1,15 @@
 import Link from "next/link";
 import CvDownload from "@/app/components/cv-download/CvDownload";
 
-export default function ClosingBand() {
+export default function ClosingBand({
+  className,
+}: {
+  className?: string;
+}) {
   return (
-    <section className="dark:bg-primary-bg bg-zinc-50 border border-zinc-200 dark:border-zinc-800 rounded-lg p-6 md:p-8">
+    <section
+      className={`dark:bg-primary-bg bg-zinc-50 border border-zinc-200 dark:border-zinc-800 rounded-lg p-6 md:p-8 ${className ?? ""}`}
+    >
       <p className="dark:text-zinc-300 text-zinc-700 leading-relaxed mb-6 max-w-lg">
         Ready to discuss a project? Grab my CV, drop me a line, or browse the
         work.

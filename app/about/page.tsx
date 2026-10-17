@@ -62,15 +62,18 @@ export default async function About() {
       <Slide>
         <div className="grid gap-y-12 lg:gap-x-10 lg:grid-cols-[1.55fr_1fr]">
           <div className="lg:col-start-1">
-            <AboutHero profile={profile ?? fallbackProfile} />
-            <KpiStrip />
-            <ExperienceTimeline />
-            <FeaturedWork />
-            <StackGrid />
-            <ClosingBand />
+            <AboutHero
+              profile={profile ?? fallbackProfile}
+              className="mb-12 lg:mb-16"
+            />
+            <KpiStrip className="mb-12 lg:mb-16" />
+            <ExperienceTimeline className="mb-12 lg:mb-16" />
+            <FeaturedWork className="mb-12 lg:mb-16" />
+            <StackGrid className="mb-12 lg:mb-16" />
+            <ClosingBand className="mb-12 lg:mb-16" />
           </div>
           <aside
-            className="top-24 lg:sticky lg:top-24 lg:row-span-[50]"
+            className="top-24 lg:sticky lg:top-24"
             aria-label="About sidebar"
           >
             <AboutSidebar profile={profile ?? fallbackProfile} />

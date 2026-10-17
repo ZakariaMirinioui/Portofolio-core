@@ -5,9 +5,15 @@ import type { ProfileType } from "@/types";
 import CvDownload from "@/app/components/cv-download/CvDownload";
 import { Slide } from "@/app/animation/Slide";
 
-export default function AboutHero({ profile }: { profile: ProfileType }) {
+export default function AboutHero({
+  profile,
+  className,
+}: {
+  profile: ProfileType;
+  className?: string;
+}) {
   return (
-    <section className="mb-2">
+    <section className={className}>
       <Slide>
         <h1 className="font-incognito font-semibold tracking-tight sm:text-5xl text-3xl lg:leading-tight mb-6">
           I&apos;m {profile.fullName ?? "Zakaria Mirinioui"}. I live in Casablanca & El Jadida, Morocco, where I build the future.

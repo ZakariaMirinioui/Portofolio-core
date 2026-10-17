@@ -72,9 +72,9 @@ const groups = [
   },
 ];
 
-export default function StackGrid() {
+export default function StackGrid({ className }: { className?: string }) {
   return (
-    <section>
+    <section className={className}>
       <div className="mb-8">
         <h2 className="text-4xl mb-4 font-incognito font-bold tracking-tight">
           Stack

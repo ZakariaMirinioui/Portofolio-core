@@ -13,9 +13,9 @@ const kpis = [
   },
 ];
 
-export default function KpiStrip() {
+export default function KpiStrip({ className }: { className?: string }) {
   return (
-    <section>
+    <section className={className}>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {kpis.map((kpi, index) => (
           <div
