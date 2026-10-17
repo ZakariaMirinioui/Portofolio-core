@@ -3,6 +3,7 @@ import Theme from "./Theme";
 import UnmountStudio from "./Unmount";
 import MobileMenu from "./MobileMenu";
 import NavLinks from "./NavLinks";
+import CvDownload from "@/app/components/cv-download/CvDownload";
 
 export default function Navbar() {
   return (
@@ -23,6 +24,7 @@ export default function Navbar() {
           <NavLinks />
 
           <div className="flex items-center gap-x-4">
+            <CvDownload variant="compact" className="hidden md:flex" />
             <Theme />
             <MobileMenu />
           </div>

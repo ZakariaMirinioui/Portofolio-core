@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Metadata } from "next";
-import { singleProjectQuery } from "@/lib/sanity.query";
+import { projectsQuery, singleProjectQuery } from "@/lib/sanity.query";
 import type { ProjectType } from "@/types";
 import { PortableText } from "@portabletext/react";
 import { CustomPortableText } from "@/app/components/shared/CustomPortableText";
@@ -11,6 +11,15 @@ import { BiLinkExternal, BiLogoGithub, BiLock } from "react-icons/bi";
 import ProjectLogo from "@/app/components/shared/ProjectLogo";
 
 export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  const projects = await sanityFetch<Array<{ slug: string }>>({
+    query: projectsQuery,
+    tags: ["project"],
+  });
+
+  return projects.map((project) => ({ project: project.slug }));
+}
 
 type Props = {
   params: {
@@ -35,13 +44,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `${project.name} | Project`,
-    metadataBase: new URL(`https://zakaria-mirinioui.dev/projects/${project.slug || slug}`),
+    metadataBase: new URL(`https://zakariamirinioui.surge.sh/projects/${project.slug || slug}`),
     description: project.tagline,
     openGraph: {
       images: project.coverImage?.image
         ? urlFor(project.coverImage.image).width(1200).height(630).url()
         : fallbackImage,
-      url: `https://zakaria-mirinioui.dev/projects/${project.slug || slug}`,
+      url: `https://zakariamirinioui.surge.sh/projects/${project.slug || slug}`,
       title: project.name,
       description: project.tagline,
     },
