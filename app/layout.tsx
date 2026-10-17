@@ -18,7 +18,7 @@ const options = {
   title: "Zakaria Mirinioui | Full Stack Developer & Digital Solutions Architect",
   description:
     "Full Stack Developer specializing in enterprise Java solutions, modern web architecture, and digital transformation for judicial and secure logistics sectors.",
-  url: "https://zakaria-mirinioui.dev",
+  url: "https://zakariamirinioui.surge.sh",
   ogImage: "/og.png",
 };
 
@@ -28,7 +28,7 @@ const jsonLd = {
     {
       "@type": "Person",
       name: "Zakaria Mirinioui",
-      url: "https://zakaria-mirinioui.dev",
+      url: "https://zakariamirinioui.surge.sh",
       image: "/og.png",
       sameAs: [
         "https://github.com/ZakariaMirinioui",
@@ -60,7 +60,7 @@ const jsonLd = {
       "@type": "Organization",
       name: "PWADCTeam",
       url: "https://pwadcteam.com",
-      logo: "https://zakaria-mirinioui.dev/logo.svg",
+      logo: "https://zakariamirinioui.surge.sh/logo.svg",
       sameAs: [
         "https://github.com/ZakariaMirinioui",
       ],
@@ -69,7 +69,7 @@ const jsonLd = {
       address: {
         "@type": "PostalAddress",
         addressCountry: "MA",
-        addressLocality: "Casablanca",
+        addressLocality: "Casablanca & El Jadida",
       },
     },
   ],

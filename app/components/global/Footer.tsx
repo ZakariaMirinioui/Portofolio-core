@@ -1,6 +1,5 @@
 import Image from "next/image";
 import sanitylogo from "@/public/sanity.png";
-import vercellogo from "@/public/vercel.svg";
 import nextjslogo from "@/public/nextjs.svg";
 import UnmountStudio from "./Unmount";
 
@@ -42,22 +41,6 @@ export default function Footer() {
                     alt="nextjs logo"
                   />{" "}
                   Next.js
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://vercel.com"
-                  rel="noreferrer noopener"
-                  target="_blank"
-                  className="flex items-center gap-x-2 dark:text-white text-zinc-600 hover:underline"
-                >
-                  <Image
-                    src={vercellogo}
-                    width={20}
-                    height={20}
-                    alt="vercel logo"
-                  />{" "}
-                  Vercel
                 </a>
               </li>
             </ul>

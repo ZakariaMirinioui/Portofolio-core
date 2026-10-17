@@ -3,7 +3,7 @@ import { sanityFetch } from "@/lib/sanity.client";
 import { projectsQuery, caseStudiesQuery, servicesQuery } from "@/lib/sanity.query";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://zakaria-mirinioui.dev";
+  const baseUrl = "https://zakariamirinioui.surge.sh";
 
   const [projects, caseStudies, services] = await Promise.all([
     sanityFetch({ query: projectsQuery, tags: ["project"] }) as Promise<Array<{ slug: string; _updatedAt: string }>>,
