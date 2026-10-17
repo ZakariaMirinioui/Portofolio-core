@@ -13,6 +13,18 @@ import { Slide } from "../../animation/Slide";
 
 const experience = [
   {
+    period: "2021 — Present",
+    role: "Full-Stack Freelance Developer",
+    org: "Independent Projects — Freelance",
+    points: [
+      "Design and deliver complete web and mobile applications (Java/Spring Boot, Node.js, React, Next.js) for direct clients, from requirements gathering through to production deployment.",
+      "Flagship project: JAMS (Judicial Archive Management System) — a platform for managing physical and digital archives, compliant with the Moroccan Ministry of Justice’s archiving charter. Features a hybrid search engine (Meilisearch + pgvector), OCR, and an end-to-end document processing pipeline.",
+      "Build business-process automation workflows with n8n, covering tool integrations and data processing for client teams.",
+      "Manage the full client relationship independently: scoping and estimating needs, delivery, and post-launch support.",
+      "Core member of PWADEC Team, contributing to design and development work alongside other engineers.",
+    ],
+  },
+  {
     period: "Jul — Oct 2025",
     role: "Technical Project Lead & Full Stack Developer",
     org: "Palais de Justice, Khouribga — Public Sector",
