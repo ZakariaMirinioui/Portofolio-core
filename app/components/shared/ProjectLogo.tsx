@@ -31,7 +31,8 @@ const CATEGORY_ICONS: Record<string, PhosphorIcon> = {
 
 // Slugs whose marks carry white/light text and need a mid-tone well
 // instead of the default white one. Keep empty unless such a mark ships.
-const MID_TONE_SLUGS: string[] = [];
+// Slugs whose marks carry white/light text and need a mid-tone well
+const MID_TONE_SLUGS = ["salon-hub", "dossera-jams"];
 
 type ProjectLogoProps = {
   src?: string | null;

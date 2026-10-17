@@ -16,7 +16,7 @@ export default async function CaseStudyTeaser() {
       projectUrl,
       category,
       "logo": logo.asset->url,
-      "coverImage": coverImage.asset->url,
+      metrics,
     }`,
     tags: ["project"],
   });
@@ -27,24 +27,42 @@ export default async function CaseStudyTeaser() {
     <section className="mb-20">
       <Slide delay={0.14}>
         <div className="relative rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
-          <div className="absolute inset-0">
-            <Image
-              src={featured.coverImage && typeof featured.coverImage === "object" ? featured.coverImage.image : "/project.png"}
-              fill
-              alt=""
-              className="object-cover -z-10"
-              priority
-              placeholder="empty"
+          <svg
+            className="absolute inset-0 w-full h-full opacity-40 dark:opacity-20"
+            viewBox="0 0 1200 400"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M0,180 Q600,20 1200,180 L1200,400 L0,400 Z"
+              fill="currentColor"
             />
-          </div>
-          <div className="relative z-10 pt-16 pb-12 px-6 md:p-10 lg:px-16 lg:py-16 md:flex md:items-center md:gap-8 lg:grid lg:grid-cols-2 lg:gap-12">
-            <div className="lg:max-w-[28rem]">
+          </svg>
+          <div className="relative z-10 pt-12 pb-10 px-6 md:p-8 lg:px-10 lg:flex lg:items-start lg:gap-12">
+            <div className="lg:w-[30%]">
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-md text-sm font-medium dark:bg-zinc-900 bg-zinc-100 dark:text-zinc-400 text-zinc-700 border dark:border-zinc-800 border-zinc-200 mb-6">
+                Case study
+              </span>
               <h2 className="font-incognito text-3xl lg:text-4xl font-bold tracking-tight dark:text-zinc-900 text-zinc-950 mb-3">
                 {featured.name}
               </h2>
               <p className="text-base dark:text-zinc-400 text-zinc-600 leading-relaxed mb-8">
                 {featured.tagline}
               </p>
+              {featured.metrics && featured.metrics.length > 0 && (
+                <div className="grid grid-cols-2 gap-4 mb-8">
+                  {featured.metrics.slice(0, 4).map((metric) => (
+                    <div key={metric.label} className="rounded-md bg-zinc-50 dark:bg-zinc-800 p-3">
+                      <div className="text-xs font-medium dark:text-zinc-500 text-zinc-700 uppercase tracking-wider">
+                        {metric.label}
+                      </div>
+                      <div className="text-sm font-semibold dark:text-zinc-900 text-zinc-950">
+                        {metric.value}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
               <div className="flex flex-wrap gap-3">
                 <Link
                   href={`/projects/${featured.slug}`}
@@ -65,13 +83,19 @@ export default async function CaseStudyTeaser() {
                 )}
               </div>
             </div>
-            <div className="mt-8 lg:mt-0 lg:flex lg:items-center lg:justify-center">
+            <div className="mt-10 lg:mt-0 lg:flex-1 lg:flex lg:items-center lg:justify-center">
               <ProjectLogo
-                src={typeof featured.logo === "string" ? featured.logo : undefined}
+                src={
+                  featured.slug === "dossera-jams"
+                    ? "/dossera-darkmode.png"
+                    : typeof featured.logo === "string"
+                      ? featured.logo
+                      : undefined
+                }
                 name={featured.name}
                 category={featured.category}
                 slug={featured.slug}
-                wellClassName="h-16 w-fit max-w-[20rem]"
+                wellClassName="h-14 w-fit max-w-[22rem] drop-shadow-lg dark:drop-shadow-xl"
                 iconSize={32}
               />
             </div>
