@@ -5,8 +5,10 @@ import { github } from "@/app/data/contribution-graph-theme";
 import { useState, useEffect } from "react";
 import EmptyState from "../shared/EmptyState";
 import { IoIosAnalytics } from "react-icons/io";
+import { useTranslations } from "next-intl";
 
 export default function ContributionGraph() {
+  const t = useTranslations("github");
   const { theme, systemTheme } = useTheme();
   const [serverTheme, setServerTheme] = useState<"light" | "dark" | undefined>(
     undefined
@@ -26,8 +28,8 @@ export default function ContributionGraph() {
     return (
       <EmptyState
         icon={<IoIosAnalytics />}
-        title="Unable to load Contribution Graph"
-        message="We could not find any GitHub credentials added to the .env file. To display the graph, provide your username and the year you joined GitHub"
+        title={t("contributionGraphErrorTitle")}
+        message={t("contributionGraphErrorMessage")}
       />
     );
 

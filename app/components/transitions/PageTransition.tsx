@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "@/i18n/navigation";
 import { ArrowLeft, ArrowRight, ArrowUp } from "@phosphor-icons/react";
 
 export type TransitionDirection = "up" | "left" | "right";
@@ -10,6 +10,7 @@ export type TransitionTarget = {
   href: string;
   title: string;
   direction?: TransitionDirection;
+  locale?: string;
 };
 
 export const PAGE_TRANSITION_EVENT = "portfolio:page-transition";
@@ -32,8 +33,8 @@ export function goToPage(target: TransitionTarget) {
 
 type Phase = "idle" | "covering" | "revealing";
 
-const COVER_MS = 480;
-const REVEAL_MS = 550;
+const COVER_MS = 300;
+const REVEAL_MS = 320;
 
 const PARK_CLASS: Record<TransitionDirection, string> = {
   left: "-translate-x-full",
@@ -67,10 +68,20 @@ export default function PageTransitionOverlay() {
     const onStart = (e: Event) => {
       const detail = (e as CustomEvent<TransitionTarget>).detail;
       if (!detail?.href || phaseRef.current !== "idle") return;
-      if (detail.href === pathname) return;
+      // Same page (and no locale change) — nothing to do.
+      if (detail.href === pathname && !detail.locale) return;
+
+      const navigate = () => {
+        if (detail.locale) {
+          router.push(detail.href, { locale: detail.locale });
+        } else {
+          router.push(detail.href);
+        }
+      };
+
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (reduceMotion) {
-        router.push(detail.href);
+        navigate();
         return;
       }
       const dir = detail.direction || "up";
@@ -78,9 +89,7 @@ export default function PageTransitionOverlay() {
       setDirection(dir);
       setPhase("covering");
       document.body.style.overflow = "hidden";
-      timers.current.push(
-        window.setTimeout(() => router.push(detail.href), COVER_MS)
-      );
+      timers.current.push(window.setTimeout(navigate, COVER_MS));
     };
     window.addEventListener(PAGE_TRANSITION_EVENT, onStart);
     return () => window.removeEventListener(PAGE_TRANSITION_EVENT, onStart);

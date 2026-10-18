@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 import { jobQuery } from "@/lib/sanity.query";
 import type { JobType } from "@/types";
 import { formatDate } from "../../utils/date";
@@ -8,7 +9,8 @@ import RefLink from "../shared/RefLink";
 import EmptyState from "../shared/EmptyState";
 import { RiBriefcase3Fill } from "react-icons/ri";
 
-export default async function Job() {
+export default async function Job({ locale }: { locale: string }) {
+  const t = await getTranslations({ locale, namespace: "job" });
   const jobs: JobType[] = await sanityFetch({
     query: jobQuery,
     tags: ["job"],
@@ -19,7 +21,7 @@ export default async function Job() {
       <Slide delay={0.16}>
         <div className="mb-16">
           <h2 className="font-incognito text-4xl mb-4 font-bold tracking-tight">
-            Work Experience
+            {t("workExperienceTitle")}
           </h2>
         </div>
       </Slide>
@@ -40,7 +42,7 @@ export default async function Job() {
                     <Image
                       src={job.logo}
                       className="object-cover duration-300"
-                      alt={`${job.name} logo`}
+                      alt={t("logoAlt", { name: job.name })}
                       width={50}
                       height={50}
                     />
@@ -54,12 +56,12 @@ export default async function Job() {
                   <h3 className="text-xl font-semibold">{job.name}</h3>
                   <p>{job.jobTitle}</p>
                   <time className="text-sm text-zinc-500 mt-2 tracking-widest uppercase">
-                    {formatDate(job.startDate)} -{" "}
+                    {formatDate(job.startDate, locale)} -{" "}
                     {job.endDate ? (
-                      formatDate(job.endDate)
+                      formatDate(job.endDate, locale)
                     ) : (
                       <span className="dark:text-primary-color text-tertiary-color">
-                        Present
+                        {t("present")}
                       </span>
                     )}
                   </time>
@@ -74,8 +76,8 @@ export default async function Job() {
       ) : (
         <EmptyState
           icon={<RiBriefcase3Fill />}
-          title="Work Experience Not Provided"
-          message="We could not find any work experience at the moment. To add one, visit the Sanity studio to start editing the content."
+          title={t("notProvidedTitle")}
+          message={t("notProvidedMessage")}
         />
       )}
     </section>

@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import { ArrowDown } from "@phosphor-icons/react";
 import { Slide } from "../../animation/Slide";
 import { goToPage } from "../transitions/PageTransition";
@@ -14,13 +15,14 @@ type NextPageTeaserProps = {
 
 export default function NextPageTeaser({ href, title, description }: NextPageTeaserProps) {
   const router = useRouter();
+  const t = useTranslations("nextPageTeaser");
 
   useEffect(() => {
     router.prefetch(href);
   }, [router, href]);
 
   return (
-    <section className="mt-24 mb-8" aria-label={`Continue to ${title}`}>
+    <section className="mt-24 mb-8" aria-label={t("continueTo", { title })}>
       <Slide>
         <button
           type="button"
@@ -29,7 +31,7 @@ export default function NextPageTeaser({ href, title, description }: NextPageTea
         >
           <span className="min-w-0">
             <span className="font-incognito text-xl md:text-2xl font-bold tracking-tight">
-              Continue to {title}
+              {t("continueTo", { title })}
             </span>
             <span className="mt-1 block text-sm dark:text-zinc-400 text-zinc-600 leading-relaxed">
               {description}

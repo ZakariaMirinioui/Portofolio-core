@@ -1,46 +1,47 @@
 import { Slide } from "../../animation/Slide";
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import {
   HiOutlineShieldCheck,
   HiOutlineCodeBracket,
   HiOutlineBuildingOffice2,
 } from "react-icons/hi2";
 
-const pillars = [
-  {
-    icon: HiOutlineShieldCheck,
-    title: "Enterprise Systems",
-    description:
-      "Sovereign, on-premise platforms for courts, government institutions, and regulated industries. Full data sovereignty, military-grade security, and legal compliance.",
-    highlights: ["Judicial Archive Systems", "Government Digitization", "Security & Compliance"],
-    link: "/projects/dossera-jams",
-    linkText: "View Dossera Case Study",
-  },
-  {
-    icon: HiOutlineBuildingOffice2,
-    title: "SaaS Products",
-    description:
-      "Five live multi-tenant platforms serving 100+ businesses across healthcare, education, legal, and wellness. From concept to recurring revenue.",
-    highlights: ["Healthcare (25+ clinics)", "Education (15+ schools)", "Legal (30+ firms)", "Wellness (50+ centers)"],
-    link: "/projects",
-    linkText: "Explore Products",
-  },
-  {
-    icon: HiOutlineCodeBracket,
-    title: "Custom Engineering",
-    description:
-      "End-to-end development for startups and enterprises. React, Node.js, Java, cloud-native, on-prem, and everything in between. Architecture to deployment.",
-    highlights: ["Full-Stack Development", "Legacy Modernization", "CTO-as-a-Service"],
-    link: "/services",
-    linkText: "View Services",
-  },
-];
+export default async function ValueProps({ locale }: { locale: string }) {
+  const t = await getTranslations({ locale, namespace: "home.valueProps" });
 
-export default function ValueProps() {
+  const pillars = [
+    {
+      icon: HiOutlineShieldCheck,
+      title: t("enterpriseSystems.title"),
+      description: t("enterpriseSystems.description"),
+      highlights: t.raw("enterpriseSystems.highlights") as string[],
+      link: "/projects/dossera-jams",
+      linkText: t("enterpriseSystems.cta"),
+    },
+    {
+      icon: HiOutlineBuildingOffice2,
+      title: t("saasProducts.title"),
+      description: t("saasProducts.description"),
+      highlights: t.raw("saasProducts.highlights") as string[],
+      link: "/projects",
+      linkText: t("saasProducts.cta"),
+    },
+    {
+      icon: HiOutlineCodeBracket,
+      title: t("customEngineering.title"),
+      description: t("customEngineering.description"),
+      highlights: t.raw("customEngineering.highlights") as string[],
+      link: "/services",
+      linkText: t("customEngineering.cta"),
+    },
+  ];
+
   return (
     <section className="mt-24 mb-16">
       <Slide delay={0.1}>
         <h2 className="text-2xl font-incognito font-bold tracking-tight mb-8">
-          What I Build
+          {t("title")}
         </h2>
         <div className="grid lg:grid-cols-3 gap-5">
           {pillars.map((pillar, index) => (
@@ -66,12 +67,13 @@ export default function ValueProps() {
                   </li>
                 ))}
               </ul>
-              <a
+              <Link
+                locale={locale}
                 href={pillar.link}
                 className="inline-flex items-center gap-1.5 text-sm font-medium dark:text-primary-color text-secondary-color hover:underline"
               >
                 {pillar.linkText} →
-              </a>
+              </Link>
             </div>
           ))}
         </div>

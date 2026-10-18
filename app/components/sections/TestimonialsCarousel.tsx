@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { BiChevronLeft, BiChevronRight, BiLogoLinkedinSquare } from "react-icons/bi";
 import { Slide } from "../../animation/Slide";
+import { useTranslations } from "next-intl";
 import type { TestimonialType } from "@/types";
 import { trackEvent } from "../../lib/analytics";
 
@@ -19,6 +20,7 @@ export default function TestimonialsCarousel({
   interval = 5000 
 }: Props) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const t = useTranslations("testimonials");
 
   // Auto-play functionality
   useEffect(() => {
@@ -70,17 +72,17 @@ export default function TestimonialsCarousel({
         <div className="flex items-center justify-center gap-3 mt-6">
           <button
             onClick={goToPrevious}
-            aria-label="Previous testimonial"
+            aria-label={t("previous")}
             className="p-2 rounded-full dark:bg-primary-bg bg-zinc-100 dark:text-white text-zinc-900 hover:dark:bg-zinc-800 hover:bg-zinc-200 transition-colors"
           >
             <BiChevronLeft className="text-xl" />
           </button>
-          <div className="flex gap-1.5" role="tablist" aria-label="Testimonial slides">
+          <div className="flex gap-1.5" role="tablist" aria-label={t("slidesAriaLabel")}>
             {testimonials.map((_, index) => (
               <button
                 key={index}
                 onClick={() => goToSlide(index)}
-                aria-label={`Go to testimonial ${index + 1}`}
+                aria-label={t("goToSlide", { index: index + 1 })}
                 aria-selected={index === currentIndex}
                 role="tab"
                 className={`w-2 h-2 rounded-full transition-all ${
@@ -93,7 +95,7 @@ export default function TestimonialsCarousel({
           </div>
           <button
             onClick={goToNext}
-            aria-label="Next testimonial"
+            aria-label={t("next")}
             className="p-2 rounded-full dark:bg-primary-bg bg-zinc-100 dark:text-white text-zinc-900 hover:dark:bg-zinc-800 hover:bg-zinc-200 transition-colors"
           >
             <BiChevronRight className="text-xl" />
@@ -105,6 +107,7 @@ export default function TestimonialsCarousel({
 }
 
 function TestimonialCard({ testimonial }: { testimonial: TestimonialType }) {
+  const t = useTranslations("testimonials");
   return (
     <div className="dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-xl p-8 text-center max-w-3xl mx-auto">
       {/* Stars */}
@@ -137,7 +140,7 @@ function TestimonialCard({ testimonial }: { testimonial: TestimonialType }) {
             src={testimonial.authorImage.image}
             width={56}
             height={56}
-            alt={testimonial.authorName || "Client"}
+            alt={testimonial.authorName || t("fallbackAlt")}
             className="rounded-full border-2 dark:border-primary-color border-secondary-color"
           />
         ) : (
@@ -150,7 +153,7 @@ function TestimonialCard({ testimonial }: { testimonial: TestimonialType }) {
 
         <div className="text-left">
           <div className="font-incognito font-semibold dark:text-white text-zinc-900">
-            {testimonial.isAnonymous ? "Anonymous Client" : testimonial.authorName}
+            {testimonial.isAnonymous ? t("anonymousClient") : testimonial.authorName}
           </div>
           <div className="text-sm dark:text-zinc-400 text-zinc-600">
             {testimonial.authorRole}

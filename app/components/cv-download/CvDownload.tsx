@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { ArrowDown, Check } from "@phosphor-icons/react";
+import { useTranslations, useLocale } from "next-intl";
 
 import cvSizes from "@/app/data/cv-sizes.json";
 
@@ -17,10 +18,11 @@ interface CvDownloadProps {
   className?: string;
 }
 
-function formatSize(bytes?: number): string {
+function formatSize(bytes?: number, locale?: string): string {
   if (!bytes) return "";
-  if (bytes < 1024) return `${bytes} B`;
-  return `${(bytes / 1024).toFixed(1)} KB`;
+  const fr = locale === "fr";
+  if (bytes < 1024) return `${bytes} ${fr ? "o" : "B"}`;
+  return `${(bytes / 1024).toFixed(1)} ${fr ? "Ko" : "KB"}`;
 }
 
 export default function CvDownload({
@@ -30,6 +32,8 @@ export default function CvDownload({
   const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
+  const t = useTranslations("cv");
+  const locale = useLocale();
 
   const triggerRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -40,7 +44,7 @@ export default function CvDownload({
   const sizeByKey: Record<string, string> = {};
   for (const file of CV_FILES) {
     const bytes = (cvSizes as Record<string, number> | undefined)?.[file.key];
-    sizeByKey[file.key] = formatSize(bytes);
+    sizeByKey[file.key] = formatSize(bytes, locale);
   }
 
   useEffect(() => {
@@ -201,11 +205,11 @@ export default function CvDownload({
         {checked ? (
           <>
             <Check size={16} aria-hidden="true" />
-            <span className="dark:text-primary-color text-secondary-color">Saved</span>
+            <span className="dark:text-primary-color text-secondary-color">{t("saved")}</span>
           </>
         ) : (
           <>
-            Download CV
+            {t("download")}
             <ArrowDown size={16} aria-hidden="true" />
           </>
         )}
@@ -216,12 +220,11 @@ export default function CvDownload({
           ref={menuRef}
           role="menu"
           id={menuId}
-          aria-label="Download CV"
+          aria-label={t("menuAriaLabel")}
           className={menuClasses}
           onKeyDown={handleMenuKeyDown}
         >
           {CV_FILES.map((file, index) => {
-            const size = sizeByKey[file.key];
             return (
               <a
                 key={file.key}
@@ -230,17 +233,22 @@ export default function CvDownload({
                 href={file.href}
                 download
                 onClick={() => handleItemClick(file)}
-                className={`focus:outline-none focus:ring-2 focus:ring-primary-color focus:ring-offset-2 block px-4 py-3 text-sm ${
+                className={`focus:outline-none focus:ring-2 focus:ring-primary-color focus:ring-offset-2 flex items-center gap-3 rounded-md px-4 py-3 text-sm transition-colors ${
                   activeIndex === index
                     ? "dark:bg-primary-color bg-secondary-color dark:text-zinc-900 text-zinc-900"
                     : "dark:text-zinc-200 text-zinc-800 hover:dark:bg-zinc-800 hover:bg-zinc-100"
                 } min-h-11`}
               >
-                <span>{file.lang}</span>
-                <span className="ml-auto text-xs dark:text-zinc-500 text-zinc-500">
-                  PDF
-                  {size ? ` · ${size}` : ""}
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-zinc-100 text-xs font-bold text-zinc-700 dark:bg-zinc-800 dark:text-zinc-200">
+                  {file.key.toUpperCase()}
                 </span>
+                <span className="flex flex-col leading-tight">
+                  <span className="font-medium">
+                    {file.key === "en" ? "English version" : "Version française"}
+                  </span>
+                  <span className="text-xs dark:text-zinc-500 text-zinc-500">PDF</span>
+                </span>
+                <ArrowDown size={14} aria-hidden="true" className="ml-auto opacity-60" />
               </a>
             );
           })}

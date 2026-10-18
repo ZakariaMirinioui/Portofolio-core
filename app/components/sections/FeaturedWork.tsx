@@ -1,29 +1,28 @@
-import Link from "next/link";
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 
-const works = [
-  {
-    title: "JAMS &mdash; Judicial Archive Management System",
-    description:
-      "Physical and digital archives aligned with the Ministry of Justice archiving charter. Hybrid search (Meilisearch + pgvector), OCR and a document processing pipeline. Built for the Court of First Instance of Khouribga.",
-    chips: ["Meilisearch", "pgvector", "OCR"],
-  },
-  {
-    title: "PWADCteam Marketplace",
-    description:
-      "Ready-made ERP and POS systems with live demos, sold as boxed products or custom projects.",
-    chips: ["ERP", "POS", "Marketplace"],
-  },
-];
+export default async function FeaturedWork({
+  locale,
+  className,
+}: {
+  locale: string;
+  className?: string;
+}) {
+  const t = await getTranslations({ locale });
+  const works = t.raw("featuredWork") as Array<{
+    title: string;
+    description: string;
+    chips: string[];
+  }>;
 
-export default function FeaturedWork({ className }: { className?: string }) {
   return (
     <section className={className}>
       <div className="mb-8">
         <h2 className="text-4xl mb-4 font-incognito font-bold tracking-tight">
-          Featured work
+          {t("featuredWorkTitle")}
         </h2>
         <p className="dark:text-zinc-400 text-zinc-600 max-w-xl">
-          Case studies live on the Projects page.
+          {t("featuredWorkSubtitle")}
         </p>
       </div>
 
@@ -46,10 +45,11 @@ export default function FeaturedWork({ className }: { className?: string }) {
               ))}
             </div>
             <Link
+              locale={locale}
               href="/projects"
               className="inline-flex items-center gap-x-1.5 font-incognito font-semibold text-primary-color dark:text-secondary-color hover:underline text-sm"
             >
-              View project &rarr;
+              {t("featuredWorkViewProject")}
             </Link>
           </div>
         ))}

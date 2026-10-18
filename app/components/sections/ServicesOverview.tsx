@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { getTranslations } from "next-intl/server";
 import { Slide } from "../../animation/Slide";
 import { featuredServicesQuery } from "@/lib/sanity.query";
 import type { ServiceType } from "@/types";
@@ -17,7 +18,8 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   HiOutlineChartBar,
 };
 
-export default async function ServicesOverview() {
+export default async function ServicesOverview({ locale }: { locale: string }) {
+  const t = await getTranslations({ locale, namespace: "home.servicesOverview" });
   const services: ServiceType[] = await sanityFetch({
     query: featuredServicesQuery,
     tags: ["service"],
@@ -30,20 +32,23 @@ export default async function ServicesOverview() {
       <Slide delay={0.16}>
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-2xl font-incognito font-bold tracking-tight">
-            How I Can Help
+            {t("title")}
           </h2>
-          <Link
-            href="/services"
+              <Link
+                locale={locale}
+                href="/services"
             className="text-sm font-medium dark:text-primary-color text-secondary-color hover:underline"
           >
-            View all services →
+            {t("viewAll")}
           </Link>
         </div>
         <div className="grid md:grid-cols-2 gap-5">
           {services.map((service) => {
             const IconComponent = iconMap[service.icon || ""] || HiOutlineCog;
             return (
-              <Link
+          <Link
+            locale={locale}
+
                 key={service._id}
                 href="/services"
                 className="group dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-lg p-6 hover:dark:border-zinc-600 hover:border-zinc-300 transition-colors"

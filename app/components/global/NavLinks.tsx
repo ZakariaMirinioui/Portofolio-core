@@ -1,24 +1,25 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import { directionFor, goToPage } from "../transitions/PageTransition";
-
-export const NAV_LINKS = [
-  { title: "Home", href: "/" },
-  { title: "About", href: "/about" },
-  { title: "Projects", href: "/projects" },
-  { title: "Services", href: "/services" },
-  { title: "Dossera", href: "/dossera" },
-];
 
 export default function NavLinks() {
   const pathname = usePathname();
+  const t = useTranslations("navigation");
+
+  const links = [
+    { title: t("home"), href: "/" },
+    { title: t("about"), href: "/about" },
+    { title: t("projects"), href: "/projects" },
+    { title: t("services"), href: "/services" },
+    { title: t("dossera"), href: "/dossera" },
+  ];
 
   return (
-    <nav className="md:block hidden" aria-label="Main navigation">
+    <nav className="md:block hidden" aria-label={t("menuAriaLabel")}>
       <ul className="flex items-center gap-x-8">
-        {NAV_LINKS.map((link) => {
+        {links.map((link) => {
           const active = pathname === link.href;
           return (
             <li key={link.href}>

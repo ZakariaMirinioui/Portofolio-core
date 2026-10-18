@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
+import { useTranslations, useFormatter, useLocale } from "next-intl";
 import { GithubLogo, Cube, Clock, Buildings, Flame } from "@phosphor-icons/react";
 
 type Day = { date: string; count: number };
@@ -11,7 +12,7 @@ type AnalyticsData = {
   login: string;
   name: string | null;
   publicRepos: number;
-  joinedAt: string;
+  joinedYears: number;
   company: string | null;
   totalLastYear: number;
   rangeLabel: string;
@@ -48,8 +49,9 @@ async function fetchJSON(url: string) {
   return res.json();
 }
 
-function fmtDay(d: Date) {
-  return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+function makeFmtDay(locale: string) {
+  const fmt = new Intl.DateTimeFormat(locale, { month: "short", day: "numeric" });
+  return (d: Date) => fmt.format(d);
 }
 
 function fmtDayNum(d: Date) {
@@ -58,7 +60,7 @@ function fmtDayNum(d: Date) {
   return `${dd}/${mm}`;
 }
 
-function computeStreaks(days: Day[]) {
+function computeStreaks(days: Day[], fmt: (d: Date) => string) {
   let longest = 0;
   let longestStart = "";
   let longestEnd = "";
@@ -96,7 +98,7 @@ function computeStreaks(days: Day[]) {
     if (!a) return "—";
     const d1 = new Date(`${a}T00:00:00`);
     const d2 = new Date(`${b}T00:00:00`);
-    return a === b ? fmtDay(d1) : `${fmtDay(d1)} - ${fmtDay(d2)}`;
+    return a === b ? fmt(d1) : `${fmt(d1)} - ${fmt(d2)}`;
   };
 
   return {
@@ -145,13 +147,16 @@ function smoothPath(values: number[], w: number, h: number, padL: number, padB: 
 
 export default function GitHubAnalytics() {
   const { resolvedTheme } = useTheme();
+  const t = useTranslations("github");
+  const intl = useFormatter();
+  const locale = useLocale();
   const [data, setData] = useState<AnalyticsData | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const username = process.env.NEXT_PUBLIC_GITHUB_USERNAME;
     if (!username) {
-      setError("GitHub username is not configured.");
+      setError(t("usernameNotConfigured"));
       return;
     }
     let cancelled = false;
@@ -178,14 +183,15 @@ export default function GitHubAnalytics() {
               .map((d: any) => ({ date: d.date, count: Number(d.count) || 0 }))
               .sort((a: Day, b: Day) => (a.date < b.date ? -1 : 1))
           : [];
-        if (days.length === 0) throw new Error("No contribution data available.");
+        if (days.length === 0) throw new Error(t("noContributionData"));
 
         const total =
           typeof contrib?.total?.lastYear === "number"
             ? contrib.total.lastYear
             : days.reduce((a, d) => a + d.count, 0);
 
-        const streaks = computeStreaks(days);
+        const fmt = makeFmtDay(locale);
+        const streaks = computeStreaks(days, fmt);
         const weekly = toWeekly(days);
         const first = new Date(`${days[0].date}T00:00:00`);
         const last = new Date(`${days[days.length - 1].date}T00:00:00`);
@@ -228,10 +234,10 @@ export default function GitHubAnalytics() {
           login: user.login,
           name: user.name || user.login,
           publicRepos: user.public_repos ?? 0,
-          joinedAt: `${yearsAgo} year${yearsAgo === 1 ? "" : "s"} ago`,
-          company: user.company || "Freelance",
+          joinedYears: yearsAgo,
+          company: user.company || t("freelance"),
           totalLastYear: total,
-          rangeLabel: `${fmtDay(first)} - ${fmtDay(last)}`,
+          rangeLabel: `${fmt(first)} - ${fmt(last)}`,
           currentStreak: streaks.current,
           currentRange: streaks.currentRange,
           longestStreak: streaks.longest,
@@ -244,7 +250,7 @@ export default function GitHubAnalytics() {
         localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data: computed }));
         if (!cancelled) setData(computed);
       } catch (e) {
-        if (!cancelled) setError(e instanceof Error ? e.message : "Failed to load GitHub data.");
+        if (!cancelled) setError(e instanceof Error ? e.message : t("loadFailed"));
       }
     }
 
@@ -252,13 +258,14 @@ export default function GitHubAnalytics() {
     return () => {
       cancelled = true;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (error) {
     return (
       <div className="dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-lg p-6 text-center">
         <p className="text-sm dark:text-zinc-400 text-zinc-600">
-          GitHub analytics are temporarily unavailable ({error}).
+          {t("temporarilyUnavailable", { error })}
         </p>
         <button
           type="button"
@@ -268,7 +275,7 @@ export default function GitHubAnalytics() {
           }}
           className="mt-3 text-sm font-medium dark:text-primary-color text-secondary-color hover:underline"
         >
-          Retry
+          {t("retry")}
         </button>
       </div>
     );
@@ -276,7 +283,7 @@ export default function GitHubAnalytics() {
 
   if (!data) {
     return (
-      <div className="dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-lg p-6 animate-pulse" aria-busy="true" aria-label="Loading GitHub analytics">
+      <div className="dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-lg p-6 animate-pulse" aria-busy="true" aria-label={t("loadingAriaLabel")}>
         <div className="h-5 w-40 rounded dark:bg-zinc-800 bg-zinc-200 mb-4" />
         <div className="h-36 rounded dark:bg-zinc-800 bg-zinc-200 mb-6" />
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -323,15 +330,15 @@ export default function GitHubAnalytics() {
             <ul className="mt-4 space-y-2.5 text-sm dark:text-zinc-400 text-zinc-600">
               <li className="flex items-center gap-2.5">
                 <GithubLogo size={18} aria-hidden="true" />
-                {data.totalLastYear.toLocaleString()} Contributions on GitHub
+                {t("contributionsOnGitHub", { count: intl.number(data.totalLastYear) })}
               </li>
               <li className="flex items-center gap-2.5">
                 <Cube size={18} aria-hidden="true" />
-                {data.publicRepos} Public Repos
+                {t("publicRepos", { count: intl.number(data.publicRepos) })}
               </li>
               <li className="flex items-center gap-2.5">
                 <Clock size={18} aria-hidden="true" />
-                Joined GitHub {data.joinedAt}
+                {t("joinedGitHubYears", { count: data.joinedYears })}
               </li>
               <li className="flex items-center gap-2.5">
                 <Buildings size={18} aria-hidden="true" />
@@ -341,22 +348,22 @@ export default function GitHubAnalytics() {
           </div>
           <div>
             <p className="text-xs dark:text-zinc-500 text-zinc-500 text-right mb-2">
-              contributions in the last year
+              {t("contributionsLastYear")}
             </p>
-            <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" role="img" aria-label={`Contributions per week, peak ${max}`}>
+            <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" role="img" aria-label={t("weeklyChartAriaLabel", { max })}>
               <defs>
                 <linearGradient id="gh-area" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stopColor="#22c55e" stopOpacity="0.85" />
                   <stop offset="100%" stopColor="#22c55e" stopOpacity="0.08" />
                 </linearGradient>
               </defs>
-              {ticks.map((t) => {
-                const y = 4 + (H - PAD_B - 8) - (t / Math.max(max, 1)) * (H - PAD_B - 8);
+              {ticks.map((tk) => {
+                const y = 4 + (H - PAD_B - 8) - (tk / Math.max(max, 1)) * (H - PAD_B - 8);
                 return (
-                  <g key={t}>
+                  <g key={tk}>
                     <line x1={PAD_L} y1={y} x2={W - 4} y2={y} stroke={gridColor} strokeWidth="1" />
                     <text x={PAD_L - 6} y={y + 3.5} textAnchor="end" fontSize="10" fill={axisColor}>
-                      {t}
+                      {tk}
                     </text>
                   </g>
                 );
@@ -381,15 +388,15 @@ export default function GitHubAnalytics() {
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-lg lg:divide-x divide-zinc-200 dark:divide-zinc-800">
         <div className="p-6 text-center">
           <p className="font-incognito text-4xl font-bold tracking-tight">
-            {data.totalLastYear.toLocaleString()}
+            {intl.number(data.totalLastYear)}
           </p>
-          <p className="mt-2 text-sm dark:text-zinc-300 text-zinc-700">Total Contributions</p>
+          <p className="mt-2 text-sm dark:text-zinc-300 text-zinc-700">{t("totalContributions")}</p>
           <p className="mt-1 text-xs dark:text-green-400 text-green-700">{data.rangeLabel}</p>
         </div>
         <div className="p-6 text-center">
           <div className="relative mx-auto w-fit">
             <Flame size={20} weight="fill" className="absolute -top-2 left-1/2 -translate-x-1/2 text-blue-500" aria-hidden="true" />
-            <svg width="96" height="96" viewBox="0 0 96 96" role="img" aria-label={`Current streak ${data.currentStreak} days`}>
+            <svg width="96" height="96" viewBox="0 0 96 96" role="img" aria-label={t("currentStreakDays", { count: data.currentStreak })}>
               <circle cx="48" cy="48" r={R} fill="none" stroke={gridColor} strokeWidth="7" />
               <circle
                 cx="48"
@@ -408,21 +415,21 @@ export default function GitHubAnalytics() {
               </text>
             </svg>
           </div>
-          <p className="mt-2 text-sm font-semibold dark:text-zinc-100 text-zinc-900">Current Streak</p>
+          <p className="mt-2 text-sm font-semibold dark:text-zinc-100 text-zinc-900">{t("currentStreak")}</p>
           <p className="mt-1 text-xs dark:text-green-400 text-green-700">{data.currentRange}</p>
         </div>
         <div className="p-6 text-center">
           <p className="font-incognito text-4xl font-bold dark:text-zinc-900 text-zinc-950">
             {data.longestStreak}
           </p>
-          <p className="mt-2 text-sm dark:text-zinc-300 text-zinc-700">Longest Streak</p>
+          <p className="mt-2 text-sm dark:text-zinc-300 text-zinc-700">{t("longestStreak")}</p>
           <p className="mt-1 text-xs dark:text-green-400 text-green-700">{data.longestRange}</p>
         </div>
         <div className="p-6">
-          <p className="font-incognito font-semibold dark:text-blue-400 text-blue-600 mb-3">Most Used Languages</p>
+          <p className="font-incognito font-semibold dark:text-blue-400 text-blue-600 mb-3">{t("mostUsedLanguages")}</p>
           {data.languages.length > 0 ? (
             <>
-              <div className="flex h-2.5 w-full overflow-hidden rounded-full" role="img" aria-label="Language usage breakdown">
+              <div className="flex h-2.5 w-full overflow-hidden rounded-full" role="img" aria-label={t("languageBreakdown")}>
                 {data.languages.map((l) => (
                   <span key={l.name} style={{ width: `${l.pct}%`, backgroundColor: l.color }} title={`${l.name} ${l.pct.toFixed(2)}%`} />
                 ))}
@@ -437,7 +444,7 @@ export default function GitHubAnalytics() {
               </ul>
             </>
           ) : (
-            <p className="text-xs dark:text-zinc-500 text-zinc-500">Language data unavailable.</p>
+            <p className="text-xs dark:text-zinc-500 text-zinc-500">{t("languageDataUnavailable")}</p>
           )}
         </div>
       </div>

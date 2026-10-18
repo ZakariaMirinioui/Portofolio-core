@@ -1,10 +1,13 @@
 import { clientsQuery } from "@/lib/sanity.query";
 import type { ClientType } from "@/types";
 import { sanityFetch } from "@/lib/sanity.client";
+import { getTranslations } from "next-intl/server";
 import { Slide } from "../../animation/Slide";
 import Image from "next/image";
 
-export default async function ClientLogos({ featuredOnly = true, title = "Trusted by Leading Institutions" }: { featuredOnly?: boolean; title?: string }) {
+export default async function ClientLogos({ locale, featuredOnly = true, title }: { locale: string; featuredOnly?: boolean; title?: string }) {
+  const t = await getTranslations({ locale, namespace: "home.clientLogos" });
+  const resolvedTitle = title ?? t("title");
   const clients: ClientType[] = await sanityFetch({
     query: clientsQuery,
     tags: ["client"],
@@ -22,7 +25,7 @@ export default async function ClientLogos({ featuredOnly = true, title = "Truste
     <section className="mb-16">
       <Slide delay={0.1}>
         <h2 className="text-sm font-incognito font-semibold uppercase tracking-wider dark:text-zinc-300 text-zinc-700 mb-8 text-center">
-          {title}
+          {resolvedTitle}
         </h2>
         <div className="overflow-hidden">
           <div className="flex animate-scroll-x gap-8 md:gap-16 px-4">

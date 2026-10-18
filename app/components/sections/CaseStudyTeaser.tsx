@@ -1,12 +1,13 @@
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { getTranslations } from "next-intl/server";
 import { Slide } from "../../animation/Slide";
 import type { ProjectType } from "@/types";
 import { sanityFetch } from "@/lib/sanity.client";
 import ProjectLogo from "../shared/ProjectLogo";
 import { BiLinkExternal } from "react-icons/bi";
 
-export default async function CaseStudyTeaser() {
+export default async function CaseStudyTeaser({ locale }: { locale: string }) {
   const featured: ProjectType = await sanityFetch({
     query: `*[_type == "project" && slug.current == "dossera-jams"][0]{
       _id,
@@ -22,6 +23,9 @@ export default async function CaseStudyTeaser() {
   });
 
   if (!featured) return null;
+
+  const t = await getTranslations({ locale, namespace: "home.caseStudyTeaser" });
+  const tCase = await getTranslations({ locale, namespace: "caseStudy" });
 
   return (
     <section className="mb-20">
@@ -41,9 +45,9 @@ export default async function CaseStudyTeaser() {
           <div className="relative z-10 pt-12 pb-10 px-6 md:p-8 lg:px-10 lg:flex lg:items-start lg:gap-12">
             <div className="lg:w-[30%]">
               <span className="inline-flex items-center gap-2 px-3 py-1 rounded-md text-sm font-medium dark:bg-zinc-900 bg-zinc-100 dark:text-zinc-400 text-zinc-700 border dark:border-zinc-800 border-zinc-200 mb-6">
-                Case study
+                {tCase("caseStudyLabel")}
               </span>
-              <h2 className="font-incognito text-3xl lg:text-4xl font-bold tracking-tight dark:text-zinc-900 text-zinc-950 mb-3">
+              <h2 className="font-incognito text-3xl lg:text-4xl font-bold tracking-tight dark:text-white text-zinc-950 mb-3">
                 {featured.name}
               </h2>
               <p className="text-base dark:text-zinc-400 text-zinc-600 leading-relaxed mb-8">
@@ -65,10 +69,11 @@ export default async function CaseStudyTeaser() {
               )}
               <div className="flex flex-wrap gap-3">
                 <Link
+                  locale={locale}
                   href={`/projects/${featured.slug}`}
                   className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-md bg-primary-color text-zinc-900 dark:text-zinc-950 font-semibold hover:opacity-90 transition-opacity"
                 >
-                  Read Full Case Study
+                  {t("readCaseStudy")}
                 </Link>
                 {featured.projectUrl && (
                   <a
@@ -78,7 +83,7 @@ export default async function CaseStudyTeaser() {
                     className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-md border dark:border-zinc-800 border-zinc-200 bg-zinc-50 dark:bg-zinc-800 dark:text-zinc-100 text-zinc-900 font-semibold hover:opacity-90 transition-colors"
                   >
                     <BiLinkExternal className="text-base" aria-hidden="true" />
-                    View Live
+                    {t("viewLive")}
                   </a>
                 )}
               </div>

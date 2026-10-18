@@ -1,61 +1,29 @@
-const experience = [
-  {
-    period: "Jul &ndash; Oct 2025",
-    role: "Full Stack Developer &mdash; Key Technical Contributor (Internship)",
-    org:
-      "Palais de Justice de Khouribga &mdash; Public Sector / Justice | Khouribga, Morocco",
-    points: [
-      "Key technical contributor to the digitization of judicial procedures, translating legal requirements into functional specifications.",
-      "Designed and developed the backend (Java/PHP, SQL) of the case-management platform, with access controls for sensitive data.",
-      "Result: estimated 30% reduction in administrative case-processing time.",
-    ],
-    chips: ["Java", "PHP", "SQL"],
-  },
-  {
-    period: "Apr &ndash; Jun 2025",
-    role: "Back-End Developer &amp; API Specialist (Final-Year Internship)",
-    org: "Brink&rsquo;s Morocco &mdash; Logistics &amp; Security | Casablanca, Morocco",
-    points: [
-      "Designed and developed REST and GraphQL APIs with Spring Boot to interconnect heterogeneous internal services.",
-      "Built React interfaces connected in real time to APIs for logistics operations tracking.",
-      "Analyzed and refactored SQL queries to reduce processing latency.",
-    ],
-    chips: ["Java/Spring Boot", "REST APIs", "GraphQL", "React", "PostgreSQL"],
-  },
-  {
-    period: "Aug 2024",
-    role: "IT Support &amp; Automation Associate (Introductory Internship)",
-    org: "OCP Group &mdash; Industry | Khouribga, Morocco",
-    points: [
-      "Maintained operational readiness of the IT estate in a high-availability industrial environment.",
-      "Developed automation scripts (Python/Bash) to generate maintenance reports.",
-    ],
-    chips: ["Python", "Bash"],
-  },
-  {
-    period: "2021 &ndash; Present",
-    role: "Freelance Full Stack Developer",
-    org: "Independent &mdash; web and mobile apps for B2B and B2C clients",
-    points: [
-      "Designed and developed complete web and mobile applications (Java/Spring Boot, Node.js, React, Next.js) from requirements to production.",
-      "JAMS (Judicial Archive Management System): physical and digital archives compliant with the Ministry of Justice archiving charter, featuring hybrid search (Meilisearch + pgvector), OCR and a document-processing pipeline.",
-      "Core member of PWADCteam &mdash; ERP, POS and restaurant/B2B systems sold as ready-made products or custom engagements via pwadcteam.com.",
-      "Business automation workflows with n8n (tool integrations, data processing).",
-      "Managed client relationships independently, from needs estimation to delivery and post-launch support.",
-    ],
-    chips: ["Java/Spring Boot", "Node.js", "React", "Next.js", "n8n"],
-  },
-];
+import { getTranslations } from "next-intl/server";
 
-export default function ExperienceTimeline({ className }: { className?: string }) {
+export default async function ExperienceTimeline({
+  locale,
+  className,
+}: {
+  locale: string;
+  className?: string;
+}) {
+  const t = await getTranslations({ locale });
+  const experience = t.raw("experienceTimeline") as Array<{
+    period: string;
+    role: string;
+    org: string;
+    points: string[];
+    chips: string[];
+  }>;
+
   return (
     <section className={className}>
       <div className="mb-8">
         <h2 className="text-4xl mb-4 font-incognito font-bold tracking-tight">
-          Experience
+          {t("experienceTimelineTitle")}
         </h2>
         <p className="dark:text-zinc-400 text-zinc-600 max-w-xl">
-          Newest first. Freelance work and PWADCteam included.
+          {t("experienceTimelineSubtitle")}
         </p>
       </div>
 

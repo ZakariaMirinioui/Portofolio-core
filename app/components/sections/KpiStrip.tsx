@@ -1,19 +1,15 @@
-const kpis = [
-  {
-    value: "5+ years",
-    label: "Building software, freelance since 2021",
-  },
-  {
-    value: "30%",
-    label: "estimated less admin processing time &mdash; Palais de Justice, Khouribga",
-  },
-  {
-    value: "3",
-    label: "sectors &mdash; Justice, Logistics &amp; Security, Industry",
-  },
-];
+import { getTranslations } from "next-intl/server";
 
-export default function KpiStrip({ className }: { className?: string }) {
+export default async function KpiStrip({
+  locale,
+  className,
+}: {
+  locale: string;
+  className?: string;
+}) {
+  const t = await getTranslations({ locale });
+  const kpis = t.raw("kpiStrip") as Array<{ value: string; label: string }>;
+
   return (
     <section className={className}>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
