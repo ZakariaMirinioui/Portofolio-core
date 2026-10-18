@@ -49,6 +49,7 @@ The minimal env variables required:
 - `NEXT_PUBLIC_SANITY_ACCESS_TOKEN` — Optional access token
 - `NEXT_PUBLIC_GITHUB_USERNAME` — Your GitHub username for contribution graph
 - `NEXT_PUBLIC_GITHUB_JOIN_YEAR` — Year you joined GitHub
+- `NEXT_PUBLIC_CONTACT_FORM_URL` — Third-party form service endpoint (e.g. Formspree/Web3Forms) for the Dossera demo request form
 
 ### Create a New Sanity Project
 
@@ -74,6 +75,16 @@ Visit [http://localhost:3000/studio](http://localhost:3000/studio) to access San
 npm run build
 ```
 
+The build runs `next lint`, an i18n key-parity check (`npm run i18n:check`), a CV download
+verification step, then `next build`, producing a static export in `out/`.
+
+## Internationalization (i18n)
+
+The site is fully bilingual (English / French) using [`next-intl`][nextintl] with both locales
+prefixed in the URL (`/en/...`, `/fr/...`). The root `/` redirects to the visitor's preferred
+locale. Translations live in `messages/en.json` and `messages/fr.json` and must stay in parity —
+`npm run i18n:check` enforces this and is part of `npm run build`.
+
 ## Important Files and Folders
 
 | File(s)                                        | Description                                     |
@@ -91,6 +102,7 @@ MIT License — See [LICENSE](LICENSE) for details.
 <!-- Link Refs -->
 
 [nextjs]: https://nextjs.org
+[nextintl]: https://next-intl.dev
 [vercel]: https://vercel.com
 [sanity]: https://sanity.io
 [tailwind]: https://tailwindcss.com

@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next lint && node scripts/verify-cv-downloads.mjs && next build",
+    "build": "next lint && node scripts/check-i18n-keys.mjs && node scripts/verify-cv-downloads.mjs && next build",
+    "i18n:check": "node scripts/check-i18n-keys.mjs",
     "start": "next start"
   },
   "dependencies": {
