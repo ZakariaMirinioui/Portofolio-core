@@ -1,6 +1,8 @@
 {
   "common": {
     "skipToContent": "Passer au contenu principal",
+    "homeAriaLabel": "Zakaria Mirinioui - Accueil",
+    "languageLabel": "Langue",
     "loading": "Chargement...",
     "error": "Une erreur est survenue",
     "retry": "Réessayer",
@@ -18,7 +20,7 @@
     "message": "Message",
     "submit": "Envoyer",
     "sending": "Envoi en cours...",
-    "success": "Succès !",
+    "success": "Succès !",
     "thankYou": "Merci pour votre demande. Nous vous contacterons dans les 24 heures.",
     "anotherRequest": "Envoyer une autre demande",
     "required": "*",
@@ -26,14 +28,32 @@
     "live": "En ligne",
     "code": "Code",
     "caseStudy": "Étude de cas",
-    "featured": "Mis en avant"
+    "featured": "Mis en avant",
+    "languageSwitcherLabel": "Sélecteur de langue",
+    "selectLanguage": "Sélectionner la langue",
+    "currentLanguage": "Langue actuelle : {language}"
   },
   "navigation": {
     "about": "À propos",
     "projects": "Projets",
     "services": "Services",
     "dossera": "Dossera",
-    "home": "Accueil"
+    "home": "Accueil",
+    "openMenu": "Ouvrir le menu de navigation",
+    "closeMenu": "Fermer le menu de navigation",
+    "menuAriaLabel": "Menu de navigation"
+  },
+  "theme": {
+    "toggleAriaLabel": "Basculer le thème"
+  },
+  "cv": {
+    "download": "Télécharger le CV",
+    "saved": "Enregistré",
+    "menuAriaLabel": "Télécharger le CV",
+    "language": {
+      "en": "Anglais",
+      "fr": "Français"
+    }
   },
   "home": {
     "hero": {
@@ -53,19 +73,32 @@
       "enterpriseSystems": {
         "title": "Systèmes d'entreprise",
         "description": "Plateformes souveraines sur site pour les tribunaux, institutions gouvernementales et industries réglementées. Pleine souveraineté des données, sécurité de niveau militaire et conformité légale.",
-        "highlights": ["Systèmes d'archives judiciaires", "Numérisation gouvernementale", "Sécurité et conformité"],
+        "highlights": [
+          "Systèmes d'archives judiciaires",
+          "Numérisation gouvernementale",
+          "Sécurité et conformité"
+        ],
         "cta": "Voir l'étude de cas Dossera"
       },
       "saasProducts": {
         "title": "Produits SaaS",
         "description": "Cinq plateformes multi-locataires en production servant 100+ entreprises dans la santé, l'éducation, le juridique et le bien-être. Du concept au revenu récurrent.",
-        "highlights": ["Santé (25+ cliniques)", "Éducation (15+ écoles)", "Juridique (30+ cabinets)", "Bien-être (50+ centres)"],
+        "highlights": [
+          "Santé (25+ cliniques)",
+          "Éducation (15+ écoles)",
+          "Juridique (30+ cabinets)",
+          "Bien-être (50+ centres)"
+        ],
         "cta": "Explorer les produits"
       },
       "customEngineering": {
         "title": "Ingénierie sur mesure",
         "description": "Développement de bout en bout pour startups et entreprises. React, Node.js, Java, cloud-natif, sur site, et tout le reste. De l'architecture au déploiement.",
-        "highlights": ["Développement Full-Stack", "Modernisation Legacy", "CTO-as-a-Service"],
+        "highlights": [
+          "Développement Full-Stack",
+          "Modernisation Legacy",
+          "CTO-as-a-Service"
+        ],
         "cta": "Voir les services"
       }
     },
@@ -83,11 +116,12 @@
     },
     "clientLogos": {
       "title": "Approuvé par les institutions leaders"
-    }
+    },
+    "nextPageTeaserAbout": "L'ingénieur derrière les systèmes — parcours, arsenal et qualifications."
   },
   "about": {
     "title": "À propos",
-    "subtitle": "Je m'appelle {name}. Je vis à {location}, où je construis l'avenir.",
+    "subtitle": "Je m’appelle {name}. Base a {location}, ou je construis l’avenir.",
     "downloadResume": "Télécharger le CV",
     "viewLinkedIn": "Voir LinkedIn",
     "contactEmail": "Contacter par email",
@@ -96,7 +130,45 @@
     "heroes": {
       "title": "Héros",
       "description": "Inspiré par la liste des héros de Rafael Condo, voici ma propre sélection de magiciens du code et dynamos numériques que je suis ravi de rencontrer un jour. \"Sans ordre particulier\""
-    }
+    },
+    "specialties": "Java/Spring Boot · React/Next.js · Systèmes sécurisés de niveau entreprise",
+    "bioExtended": "Développeur Full Stack (Java/Spring Boot, React/Next.js), freelance depuis 2021, livrant des projets B2B et B2C du cahier des charges à la production, et membre clé de PWADCteam, qui construit des systèmes ERP, POS et de gestion de restaurants pour les entreprises. Ma certification PMI Business Analysis façonne ma manière de transformer les besoins métier en spécifications fonctionnelles — comme lors de mon stage au Palais de Justice de Khouribga sur une plateforme de gestion judiciaire. Mon projet phare, JAMS, a approfondi mon expertise en recherche hybride (Meilisearch/pgvector), OCR et automatisation du traitement documentaire.",
+    "viewProjects": "Voir les projets",
+    "portraitAlt": "Portrait de {name}",
+    "jobTitleSubtitle": "Développeur Full Stack & Architecte de Solutions Numériques",
+    "openToOpportunities": "Ouvert aux opportunités",
+    "location": "Casablanca & El Jadida, Maroc",
+    "mobility": "Ouvert à la mobilité à travers le Maroc, Rabat inclus",
+    "cvSectionTitle": "Curriculum vitæ",
+    "languagesTitle": "Langues",
+    "educationTitle": "Formation",
+    "education": {
+      "degree": "Diplôme Universitaire de Technologie (DUT) — Génie Informatique",
+      "school": "EST Béni Mellal · Béni Mellal, Maroc · 2023–2025",
+      "description": "Programme intensif couvrant le génie logiciel, l'administration système et les architectures n-tiers (Java EE). Projets pratiques en développement web moderne et administration de bases de données (Oracle/MySQL/PL-SQL)."
+    },
+    "certificationsTitle": "Certifications",
+    "languages": [
+      "Arabe · Natif",
+      "Français · Courant",
+      "Anglais · C1 Avancé (Certifié EF SET)"
+    ],
+    "credentials": [
+      "Analyse d'affaires (PMI)",
+      "Gestion de projet (PMI / NASBA)",
+      "SQL Avancé (HackerRank)",
+      "JavaScript Intermédiaire (HackerRank)",
+      "Développement Frontend (HackerRank)",
+      "Fondamentaux de cybersécurité (Fortinet)",
+      "Oracle Cloud Infrastructure AI Foundations",
+      "Compétences numériques : IA (Accenture)",
+      "Web Analyste Certifié (CWA)"
+    ],
+    "closingBand": {
+      "text": "Prêt à discuter d'un projet ? Téléchargez mon CV, écrivez-moi, ou parcourez les réalisations."
+    },
+    "sidebarLabel": "Barre latérale À propos",
+    "nextPageTeaserAbout": "Le developpeur derriere les systemes - parcours, arsenal et qualifications."
   },
   "projects": {
     "title": "Projets",
@@ -121,13 +193,50 @@
       "archived": "Archivé",
       "prototype": "Prototype"
     },
-    "emptyState": "Aucun projet trouvé dans cette catégorie"
+    "emptyState": "Aucun projet trouvé dans cette catégorie",
+    "categoriesMobile": "Applications mobiles",
+    "categoryLabels": {
+      "judicial": "Judiciaire",
+      "healthcare": "Santé",
+      "education": "Éducation",
+      "legalTech": "Legal Tech",
+      "wellness": "Bien-être",
+      "ecommerce": "E-commerce",
+      "mobile": "Mobile",
+      "enterprise": "Entreprise",
+      "openSource": "Open Source",
+      "rd": "R&D"
+    },
+    "viewDetails": "Voir les détails de {name}",
+    "detailsArrow": "Détails →",
+    "featuredAriaLabel": "Projet en vedette",
+    "categoriesAriaLabel": "Catégories de projets",
+    "emptyStateMessage": "Projets dans {category}",
+    "nextPageTeaserServicesDescription": "Comment fonctionnent les engagements — processus, livrables et modèles."
   },
   "projectDetail": {
     "backToProjects": "← Retour aux projets",
     "live": "En ligne",
     "code": "Code",
-    "caseStudy": "Étude de cas"
+    "caseStudy": "Étude de cas",
+    "notFound": "Projet non trouvé",
+    "metaClient": "Client",
+    "metaTeam": "Équipe",
+    "metaTeamSize": "{count} ingénieurs",
+    "metaDuration": "Durée",
+    "metaStatus": "Statut",
+    "metaCategory": "Catégorie",
+    "livePreview": "Aperçu en direct",
+    "comingSoon": "Bientôt disponible",
+    "privateTooltip": "Dépôt privé — le code source ne peut pas être exposé sous confidentialité client",
+    "private": "Privé",
+    "privateTooltipContent": "Le code source est privé et ne peut pas être exposé sous confidentialité client. Une démonstration en direct est disponible sur demande.",
+    "techStack": "Stack technique",
+    "keyMetrics": "Métriques clés",
+    "screenshots": "Captures d'écran",
+    "architecture": "Architecture",
+    "screenshotAlt": "Capture d'écran {name} {index}",
+    "architectureAlt": "Diagramme d'architecture {name}"
   },
   "caseStudy": {
     "backToProject": "← Retour au projet",
@@ -149,10 +258,10 @@
     "table": {
       "technology": "Technologie",
       "category": "Catégorie",
-      "reason": "Pourquoi ce choix ?"
+      "reason": "Pourquoi ce choix ?"
     },
     "cta": {
-      "title": "Un défi similaire ?",
+      "title": "Un défi similaire ?",
       "description": "Si vous faites face à une transformation numérique complexe, avez besoin d'un système souverain, ou voulez discuter de décisions d'architecture — je serais ravi d'en discuter.",
       "startConversation": "Commencer la conversation",
       "viewServices": "Voir les services"
@@ -162,7 +271,7 @@
     "title": "Services",
     "description": "De la transformation numérique souveraine pour les institutions gouvernementales aux plateformes SaaS multi-locataires et engagements CTO fractionnés — j'apporte une expérience éprouvée sur des systèmes en production servant de vrais utilisateurs.",
     "cta": {
-      "title": "Prêt à démarrer votre projet ?",
+      "title": "Prêt à démarrer votre projet ?",
       "description": "Que vous ayez besoin d'une transformation numérique complète, d'un nouveau produit SaaS, ou d'un leadership technique senior — discutons de la façon dont je peux aider.",
       "startConversation": "Commencer la conversation",
       "viewWork": "Voir les réalisations"
@@ -185,7 +294,18 @@
     },
     "clientLogos": {
       "title": "Nos clients"
-    }
+    },
+    "categories": {
+      "digital-transformation": "Transformation numérique",
+      "custom-dev": "Développement logiciel sur mesure",
+      "legacy-modernization": "Modernisation Legacy",
+      "infra-devops": "Infrastructure & DevOps",
+      "security-compliance": "Sécurité & Conformité",
+      "product-strategy": "Stratégie produit & Discovery",
+      "advisory": "Conseil technique"
+    },
+    "bestFor": "Idéal pour :",
+    "nextPageTeaserDosseraDescription": "La plateforme judiciaire souveraine en production."
   },
   "dossera": {
     "title": "Dossera JAMS",
@@ -195,7 +315,7 @@
     "description": {
       "intro": "Dossera JAMS (Judicial Archive Management System) est une plateforme souveraine sur site numérisant les archives judiciaires pour les tribunaux, cabinets d'avocats, offices notariaux et institutions gouvernementales au Maroc. Construite avec une architecture client-serveur découplée, elle transforme la façon dont les institutions judiciaires gèrent, recherchent et sécurisent leurs documents critiques.",
       "role": "En tant que Chef de projet technique & Développeur Full Stack, j'ai architecturé et livré l'ensemble du système — de la traduction des exigences légales complexes en spécifications techniques au déploiement d'une plateforme prête pour la production servant de vrais utilisateurs au quotidien.",
-      "results": "Le système est déployé avec succès en production au Tribunal de première instance de Khouribga, avec un second déploiement validé à la Cour d'appel. Il offre des résultats mesurables : une réduction de 30% du temps de traitement administratif et une confidentialité totale des documents judiciaires sensibles."
+      "results": "Le système est déployé avec succès en production au Tribunal de première instance de Khouribga, avec un second déploiement validé à la Cour d'appel. Il offre des résultats mesurables : une réduction de 30% du temps de traitement administratif et une confidentialité totale des documents judiciaires sensibles."
     },
     "features": {
       "title": "Capacités principales",
@@ -282,14 +402,14 @@
       }
     },
     "cta": {
-      "title": "Prêt à numériser vos archives ?",
+      "title": "Prêt à numériser vos archives ?",
       "description": "Que vous soyez un tribunal, un cabinet d'avocats, un office notarial ou une institution gouvernementale — nous pouvons vous aider à transformer vos archives papier en un système numérique sécurisé, recherchable et conforme.",
       "requestDemo": "Demander une démo",
       "viewDocs": "Voir la documentation →"
     },
     "contactForm": {
       "title": "Demander une démo",
-      "description": "Intéressé par Dossera JAMS pour votre institution ? Remplissez le formulaire ci-dessous et nous planifierons une démonstration personnalisée.",
+      "description": "Intéressé par Dossera JAMS pour votre institution ? Remplissez le formulaire ci-dessous et nous planifierons une démonstration personnalisée.",
       "fields": {
         "name": "Nom complet",
         "email": "Adresse e-mail",
@@ -308,17 +428,376 @@
       },
       "submit": "Demander une démo",
       "submitting": "Envoi en cours...",
-      "success": "Merci !",
+      "success": "Merci !",
       "successDescription": "Votre demande de démo a été reçue. Notre équipe examinera votre demande et vous répondra dans les 24 heures.",
       "anotherRequest": "Envoyer une autre demande",
       "privacy": "En soumettant, vous acceptez d'être contacté au sujet de Dossera JAMS. Nous respectons votre vie privée et ne partagerons jamais vos informations."
     },
     "testimonials": {
       "title": "Approuvé par les institutions juridiques"
-    }
+    },
+    "whatIsDossera": "Qu'est-ce que Dossera ?",
+    "callUs": "ou appelez le {phone}",
+    "techStack": [
+      {
+        "name": "React",
+        "category": "Frontend"
+      },
+      {
+        "name": "Node.js",
+        "category": "Backend"
+      },
+      {
+        "name": "PostgreSQL",
+        "category": "Base de données"
+      },
+      {
+        "name": "pgvector",
+        "category": "Recherche vectorielle"
+      },
+      {
+        "name": "Meilisearch",
+        "category": "Recherche plein texte"
+      },
+      {
+        "name": "MinIO",
+        "category": "Stockage d'objets"
+      },
+      {
+        "name": "Redis",
+        "category": "Cache"
+      },
+      {
+        "name": "Docker",
+        "category": "Conteneurisation"
+      },
+      {
+        "name": "Proxmox VE",
+        "category": "Virtualisation"
+      },
+      {
+        "name": "pfSense",
+        "category": "Pare-feu"
+      },
+      {
+        "name": "Wazuh SIEM",
+        "category": "Sécurité"
+      },
+      {
+        "name": "Grafana",
+        "category": "Supervision"
+      },
+      {
+        "name": "Ansible",
+        "category": "Automatisation"
+      },
+      {
+        "name": "Tesseract.js",
+        "category": "OCR"
+      }
+    ],
+    "nextPageTeaserHomeDescription": "Retour au début — le parcours complet en une boucle.",
+    "contactFormPlaceholders": {
+      "name": "Votre nom complet",
+      "email": "vous@organisation.com",
+      "organization": "Tribunal, cabinet d'avocats ou nom d'institution",
+      "role": "Sélectionnez votre rôle",
+      "phone": "+212 6XX-XXXXXX",
+      "message": "Parlez-nous de votre institution, de vos défis actuels et de ce que vous souhaitez accomplir avec Dossera JAMS..."
+    },
+    "contactFormErrorFallback": "Une erreur est survenue. Veuillez réessayer."
+  },
+  "nextPageTeaser": {
+    "continueTo": "Continuer vers {title}"
+  },
+  "testimonials": {
+    "previous": "Témoignage précédent",
+    "next": "Témoignage suivant",
+    "slidesAriaLabel": "Diapositives de témoignages",
+    "goToSlide": "Aller au témoignage {index}",
+    "fallbackAlt": "Client",
+    "anonymousClient": "Client anonyme"
+  },
+  "job": {
+    "workExperienceTitle": "Expérience professionnelle",
+    "logoAlt": "Logo {name}",
+    "present": "Présent",
+    "notProvidedTitle": "Expérience professionnelle non fournie",
+    "notProvidedMessage": "Nous n'avons trouvé aucune expérience professionnelle pour le moment. Pour en ajouter, visitez le studio Sanity pour commencer à modifier le contenu."
+  },
+  "github": {
+    "analyticsTitle": "Analytique GitHub",
+    "contributionGraphErrorTitle": "Impossible de charger le graphique de contributions",
+    "contributionGraphErrorMessage": "Nous n'avons pas trouvé d'identifiants GitHub ajoutés au fichier .env. Pour afficher le graphique, fournissez votre nom d'utilisateur et l'année de votre inscription à GitHub",
+    "contributionsOnGitHub": "{count} contributions sur GitHub",
+    "publicRepos": "{count} dépôts publics",
+    "joinedGitHubYears": "A rejoint GitHub {count, plural, one {il y a # an} other {il y a # ans}}",
+    "contributionsLastYear": "contributions au cours de la dernière année",
+    "weeklyChartAriaLabel": "Contributions par semaine, pic {max}",
+    "totalContributions": "Contributions totales",
+    "currentStreakDays": "Série actuelle {count} jours",
+    "currentStreak": "Série actuelle",
+    "longestStreak": "Plus longue série",
+    "mostUsedLanguages": "Langages les plus utilisés",
+    "languageBreakdown": "Répartition par langage",
+    "languageDataUnavailable": "Données de langage indisponibles.",
+    "usernameNotConfigured": "Le nom d'utilisateur GitHub n'est pas configuré.",
+    "noContributionData": "Aucune donnée de contribution disponible.",
+    "loadFailed": "Échec du chargement des données GitHub.",
+    "temporarilyUnavailable": "Les analytiques GitHub sont temporairement indisponibles ({error}).",
+    "retry": "Réessayer",
+    "loadingAriaLabel": "Chargement des analytiques GitHub",
+    "freelance": "Freelance"
   },
   "footer": {
     "builtWith": "Construit avec:",
     "copyright": "Copyright © Zakaria Mirinioui {year} Tous droits réservés"
+  },
+  "metadata": {
+    "siteTitle": "Zakaria Mirinioui | Développeur Full Stack & Architecte de Solutions Numériques",
+    "siteDescription": "Développeur Full Stack spécialisé en solutions Java d'entreprise, architecture web moderne et transformation numérique pour les secteurs judiciaires et logistiques sécurisés.",
+    "siteName": "zakaria-mirinioui.dev",
+    "keywords": [
+      "Développeur Full Stack",
+      "Java Spring Boot",
+      "React Next.js",
+      "Solutions numériques",
+      "Architecte logiciel",
+      "Développeur Maroc",
+      "Applications d'entreprise"
+    ],
+    "home": {
+      "title": "Zakaria Mirinioui | Développeur Full Stack & Architecte de Solutions Numériques",
+      "description": "Architecte de solutions & Fondateur d'agence aidant les institutions à se numériser avec des systèmes souverains et sécurisés."
+    },
+    "about": {
+      "title": "À propos | Zakaria Mirinioui",
+      "description": "Développeur Full Stack & Architecte de Solutions Numériques basé à Casablanca & El Jadida, Maroc. Expérience, stack, certifications et CV."
+    },
+    "projects": {
+      "title": "Projets | Zakaria Mirinioui",
+      "description": "Systèmes de niveau entreprise, plateformes SaaS multi-locataires et outils open source."
+    },
+    "services": {
+      "title": "Services | Zakaria Mirinioui",
+      "description": "Transformation numérique souveraine, développement SaaS multi-locataires et conseil technique."
+    },
+    "dossera": {
+      "title": "Dossera JAMS | Zakaria Mirinioui",
+      "description": "Système souverain de gestion d'archives judiciaires numérisant la justice au Maroc."
+    },
+    "project": "Projet",
+    "projectNotFound": "Projet non trouvé"
+  },
+  "jsonLd": {
+    "person": {
+      "jobTitle": "Architecte de solutions & Fondateur d'agence"
+    },
+    "org": {
+      "description": "Agence de solutions numériques construisant des systèmes souverains pour les secteurs gouvernemental, santé, juridique et bien-être."
+    }
+  },
+  "kpiStrip": [
+    {
+      "value": "5+ ans",
+      "label": "Développement logiciel, freelance depuis 2021"
+    },
+    {
+      "value": "30%",
+      "label": "de temps de traitement administratif en moins — Palais de Justice, Khouribga"
+    },
+    {
+      "value": "15+",
+      "label": "projets livres"
+    }
+  ],
+  "stackGrid": [
+    {
+      "title": "Backend",
+      "items": [
+        "Java (Spring Boot)",
+        "Node.js",
+        "PHP (Laravel)",
+        "architecture n-tiers",
+        "Design patterns"
+      ]
+    },
+    {
+      "title": "Frontend",
+      "items": [
+        "React",
+        "Next.js",
+        "TypeScript",
+        "Gestion d'état",
+        "Optimisation côté client"
+      ]
+    },
+    {
+      "title": "APIs & Data",
+      "items": [
+        "REST",
+        "GraphQL",
+        "PostgreSQL",
+        "MySQL",
+        "Oracle",
+        "Meilisearch",
+        "pgvector",
+        "Modélisation relationnelle",
+        "Sécurité des données"
+      ]
+    },
+    {
+      "title": "DevOps & Tools",
+      "items": [
+        "Docker",
+        "Kubernetes",
+        "Git",
+        "CI/CD",
+        "Nginx",
+        "n8n (automatisation)",
+        "Agile / Scrum"
+      ]
+    },
+    {
+      "title": "Management & Analysis",
+      "items": [
+        "Analyse d'affaires",
+        "Gestion de projet (PMI / NASBA)",
+        "Rédaction de spécifications fonctionnelles"
+      ]
+    }
+  ],
+  "stackGridTitle": "Stack",
+  "stackGridSubtitle": "Choisi par projet, pas par tendance. Pas de barres de compétences — juste ce que j'utilise.",
+  "featuredWork": [
+    {
+      "title": "JAMS — Système de Gestion d'Archives Judiciaires",
+      "description": "Archives physiques et numériques conformes à la charte d'archivage du Ministère de la Justice. Recherche hybride (Meilisearch + pgvector), OCR et pipeline de traitement documentaire. Conçu pour le Tribunal de première instance de Khouribga.",
+      "chips": [
+        "Meilisearch",
+        "pgvector",
+        "OCR"
+      ]
+    },
+    {
+      "title": "PWADCteam Marketplace",
+      "description": "Systèmes ERP et POS prêts à l'emploi avec démos en direct, vendus en produits packagés ou projets sur mesure.",
+      "chips": [
+        "ERP",
+        "POS",
+        "Marketplace"
+      ]
+    }
+  ],
+  "featuredWorkTitle": "Réalisations en vedette",
+  "featuredWorkSubtitle": "Les études de cas sont sur la page Projets.",
+  "featuredWorkViewProject": "Voir le projet →",
+  "experienceTimeline": [
+    {
+      "period": "Juil – Oct 2025",
+      "role": "Développeur Full Stack — Contributeur Technique Clé (Stage)",
+      "org": "Palais de Justice de Khouribga — Secteur Public / Justice | Khouribga, Maroc",
+      "points": [
+        "Contributeur technique clé à la numérisation des procédures judiciaires, traduisant les exigences légales en spécifications fonctionnelles.",
+        "Conception et développement du backend (Java/PHP, SQL) de la plateforme de gestion des dossiers, avec contrôles d'accès pour les données sensibles.",
+        "Résultat : réduction estimée de 30% du temps de traitement administratif des dossiers."
+      ],
+      "chips": [
+        "Java",
+        "PHP",
+        "SQL"
+      ]
+    },
+    {
+      "period": "Avr – Juin 2025",
+      "role": "Développeur Back-End & Spécialiste API (Stage de fin d'études)",
+      "org": "Brink's Morocco — Logistique & Sécurité | Casablanca, Maroc",
+      "points": [
+        "Conception et développement d'API REST et GraphQL avec Spring Boot pour interconnecter des services internes hétérogènes.",
+        "Construction d'interfaces React connectées en temps réel aux API pour le suivi des opérations logistiques.",
+        "Analyse et refactorisation de requêtes SQL pour réduire la latence de traitement."
+      ],
+      "chips": [
+        "Java/Spring Boot",
+        "REST APIs",
+        "GraphQL",
+        "React",
+        "PostgreSQL"
+      ]
+    },
+    {
+      "period": "Août 2024",
+      "role": "Assistance IT & Automatisation (Stage d'initiation)",
+      "org": "OCP Group — Industrie | Khouribga, Maroc",
+      "points": [
+        "Maintien de la disponibilité opérationnelle du parc informatique dans un environnement industriel à haute disponibilité.",
+        "Développement de scripts d'automatisation (Python/Bash) pour générer des rapports de maintenance."
+      ],
+      "chips": [
+        "Python",
+        "Bash"
+      ]
+    },
+    {
+      "period": "2021 – Présent",
+      "role": "Développeur Full Stack Freelance",
+      "org": "Indépendant — applications web et mobiles pour clients B2B et B2C",
+      "points": [
+        "Conception et développement d'applications web et mobiles complètes (Java/Spring Boot, Node.js, React, Next.js) du cahier des charges à la production.",
+        "JAMS (Système de Gestion d'Archives Judiciaires) : archives physiques et numériques conformes à la charte d'archivage du Ministère de la Justice, avec recherche hybride (Meilisearch + pgvector), OCR et pipeline de traitement documentaire.",
+        "Membre clé de PWADCteam — systèmes ERP, POS et de restauration/B2B vendus en produits prêts à l'emploi ou sur mesure via pwadcteam.com.",
+        "Workflows d'automatisation métier avec n8n (intégration d'outils, traitement de données).",
+        "Gestion indépendante des relations clients, de l'estimation des besoins à la livraison et au support post-lancement."
+      ],
+      "chips": [
+        "Java/Spring Boot",
+        "Node.js",
+        "React",
+        "Next.js",
+        "n8n"
+      ]
+    }
+  ],
+  "experienceTimelineTitle": "Expérience",
+  "experienceTimelineSubtitle": "Plus récent en premier. Travail freelance et PWADCteam inclus.",
+  "notFound": {
+    "metadataTitle": "Erreur 404",
+    "title": "Erreur 404 !",
+    "description": "Oups ! Cette page n'existe pas sur zakariamirinioui.surge.sh. Pendant que vous êtes là, découvrez mes projets ou apprenez-en plus sur moi.",
+    "duckAlt": "Canard jaune en recherche",
+    "backToHome": "← Retour à l'accueil",
+    "viewProjects": "Voir les projets →"
+  },
+  "emptyState": {
+    "duckAlt": "Canard jaune en recherche",
+    "noItemsFound": "Aucun {value} trouvé",
+    "noItemsMessage": "Il n'y a aucun {value} disponible pour le moment. Veuillez réessayer plus tard."
+  },
+  "sharePost": {
+    "title": "Partager l'article",
+    "shareTo": "Partager sur {name}",
+    "checkOutArticle": "Découvrez cet article de {name}",
+    "readArticle": "Lisez cet article de {name}"
+  },
+  "easterEgg": {
+    "imageAlt": "ouais ouais"
+  },
+  "buymeacoffee": {
+    "cta": "Intéressé par une collaboration ? Contactons-nous !"
+  },
+  "loading": {
+    "pageAriaLabel": "Chargement de la page",
+    "aboutAriaLabel": "Chargement de la page à propos",
+    "projectsAriaLabel": "Chargement des projets",
+    "servicesAriaLabel": "Chargement des services",
+    "dosseraAriaLabel": "Chargement de la page Dossera"
+  },
+  "contactApi": {
+    "rateLimited": "Trop de requêtes. Veuillez réessayer plus tard.",
+    "requiredFields": "Veuillez remplir tous les champs obligatoires.",
+    "invalidEmail": "Veuillez fournir une adresse e-mail valide.",
+    "maxLength": "La saisie dépasse la longueur maximale.",
+    "notProvided": "Non fourni",
+    "serverError": "Une erreur est survenue. Veuillez réessayer ou nous envoyer un e-mail à zakmirinioui@gmail.com."
   }
 }

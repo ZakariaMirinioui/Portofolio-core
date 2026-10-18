@@ -1,0 +1,28 @@
+"use client";
+
+import { useTranslations } from "next-intl";
+
+export default function Loading() {
+  const t = useTranslations("loading");
+
+  return (
+    <main className="max-w-7xl mx-auto md:px-16 px-6" aria-busy="true" aria-label={t("dosseraAriaLabel")}>
+      <div className="animate-pulse">
+        <div className="h-12 w-64 rounded-lg dark:bg-zinc-800 bg-zinc-200 mb-4" />
+        <div className="h-4 w-full max-w-3xl rounded dark:bg-zinc-800 bg-zinc-200 mb-8" />
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {[0, 1, 2, 3, 4, 5].map((i) => (
+            <div
+              key={i}
+              className="dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-lg p-6"
+            >
+              <div className="h-8 w-8 rounded dark:bg-zinc-800 bg-zinc-200 mb-4" />
+              <div className="h-5 w-1/2 rounded dark:bg-zinc-800 bg-zinc-200 mb-2" />
+              <div className="h-3 w-full rounded dark:bg-zinc-800 bg-zinc-200" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </main>
+  );
+}

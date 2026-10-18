@@ -1,6 +1,8 @@
 {
   "common": {
     "skipToContent": "Skip to main content",
+    "homeAriaLabel": "Zakaria Mirinioui - Home",
+    "languageLabel": "Language",
     "loading": "Loading...",
     "error": "An error occurred",
     "retry": "Retry",
@@ -26,14 +28,32 @@
     "live": "Live",
     "code": "Code",
     "caseStudy": "Case Study",
-    "featured": "Featured"
+    "featured": "Featured",
+    "languageSwitcherLabel": "Language switcher",
+    "selectLanguage": "Select language",
+    "currentLanguage": "Current language: {language}"
   },
   "navigation": {
     "about": "About",
     "projects": "Projects",
     "services": "Services",
     "dossera": "Dossera",
-    "home": "Home"
+    "home": "Home",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu",
+    "menuAriaLabel": "Navigation menu"
+  },
+  "theme": {
+    "toggleAriaLabel": "Toggle Theme"
+  },
+  "cv": {
+    "download": "Download CV",
+    "saved": "Saved",
+    "menuAriaLabel": "Download CV",
+    "language": {
+      "en": "English",
+      "fr": "Français"
+    }
   },
   "home": {
     "hero": {
@@ -53,19 +73,32 @@
       "enterpriseSystems": {
         "title": "Enterprise Systems",
         "description": "Sovereign, on-premise platforms for courts, government institutions, and regulated industries. Full data sovereignty, military-grade security, and legal compliance.",
-        "highlights": ["Judicial Archive Systems", "Government Digitization", "Security & Compliance"],
+        "highlights": [
+          "Judicial Archive Systems",
+          "Government Digitization",
+          "Security & Compliance"
+        ],
         "cta": "View Dossera Case Study"
       },
       "saasProducts": {
         "title": "SaaS Products",
         "description": "Five live multi-tenant platforms serving 100+ businesses across healthcare, education, legal, and wellness. From concept to recurring revenue.",
-        "highlights": ["Healthcare (25+ clinics)", "Education (15+ schools)", "Legal (30+ firms)", "Wellness (50+ centers)"],
+        "highlights": [
+          "Healthcare (25+ clinics)",
+          "Education (15+ schools)",
+          "Legal (30+ firms)",
+          "Wellness (50+ centers)"
+        ],
         "cta": "Explore Products"
       },
       "customEngineering": {
         "title": "Custom Engineering",
         "description": "End-to-end development for startups and enterprises. React, Node.js, Java, cloud-native, on-prem, and everything in between. Architecture to deployment.",
-        "highlights": ["Full-Stack Development", "Legacy Modernization", "CTO-as-a-Service"],
+        "highlights": [
+          "Full-Stack Development",
+          "Legacy Modernization",
+          "CTO-as-a-Service"
+        ],
         "cta": "View Services"
       }
     },
@@ -83,11 +116,12 @@
     },
     "clientLogos": {
       "title": "Trusted by Leading Institutions"
-    }
+    },
+    "nextPageTeaserAbout": "The engineer behind the systems — background, arsenal and credentials."
   },
   "about": {
     "title": "About",
-    "subtitle": "I'm {name}. I live in {location}, where I build the future.",
+    "subtitle": "I'm {name}. Based in {location}, where I build the future.",
     "downloadResume": "Download Resume",
     "viewLinkedIn": "View LinkedIn",
     "contactEmail": "Contact via email",
@@ -96,7 +130,45 @@
     "heroes": {
       "title": "Heroes",
       "description": "Inspired by Rafael Condo's heroes list, here's my own curated lineup of code conjurers and digital dynamos that I'm absolutely stoked to meet someday. \"In no particular order\""
-    }
+    },
+    "specialties": "Java/Spring Boot · React/Next.js · Secure, enterprise-grade systems",
+    "bioExtended": "Full Stack Developer (Java/Spring Boot, React/Next.js), freelance since 2021, delivering B2B and B2C projects from requirements to production, and core member of PWADCteam, which builds ERP, POS and restaurant management systems for businesses. My PMI Business Analysis certification shapes how I turn business needs into functional specifications — as I did during my internship at the Palais de Justice of Khouribga on a judicial case-management platform. My flagship project, JAMS, deepened my expertise in hybrid search (Meilisearch/pgvector), OCR and document-process automation.",
+    "viewProjects": "View Projects",
+    "portraitAlt": "Portrait of {name}",
+    "jobTitleSubtitle": "Full Stack Developer & Digital Solutions Architect",
+    "openToOpportunities": "Open to opportunities",
+    "location": "Casablanca & El Jadida, Morocco",
+    "mobility": "Open to mobility across Morocco, Rabat included",
+    "cvSectionTitle": "Curriculum vitæ",
+    "languagesTitle": "Languages",
+    "educationTitle": "Education",
+    "education": {
+      "degree": "University Diploma of Technology (DUT) — Computer Engineering",
+      "school": "EST Béni Mellal · Béni Mellal, Morocco · 2023–2025",
+      "description": "Intensive program covering software engineering, system administration and n-tier architectures (Java EE). Hands-on projects in modern web development and database administration (Oracle/MySQL/PL-SQL)."
+    },
+    "certificationsTitle": "Certifications",
+    "languages": [
+      "Arabic · Native",
+      "French · Fluent",
+      "English · C1 Advanced (EF SET Certified)"
+    ],
+    "credentials": [
+      "Business Analysis (PMI)",
+      "Project Management (PMI / NASBA)",
+      "SQL Advanced (HackerRank)",
+      "JavaScript Intermediate (HackerRank)",
+      "Frontend Development (HackerRank)",
+      "Cybersecurity Fundamentals (Fortinet)",
+      "Oracle Cloud Infrastructure AI Foundations",
+      "Digital Skills: AI (Accenture)",
+      "Certified Web Analyst (CWA)"
+    ],
+    "closingBand": {
+      "text": "Ready to discuss a project? Grab my CV, drop me a line, or browse the work."
+    },
+    "sidebarLabel": "About sidebar",
+    "nextPageTeaserAbout": "The developer behind the systems - background, arsenal and credentials."
   },
   "projects": {
     "title": "Projects",
@@ -121,13 +193,50 @@
       "archived": "Archived",
       "prototype": "Prototype"
     },
-    "emptyState": "No projects found in this category"
+    "emptyState": "No projects found in this category",
+    "categoriesMobile": "Mobile Apps",
+    "categoryLabels": {
+      "judicial": "Judicial",
+      "healthcare": "Healthcare",
+      "education": "Education",
+      "legalTech": "Legal Tech",
+      "wellness": "Wellness",
+      "ecommerce": "E-commerce",
+      "mobile": "Mobile",
+      "enterprise": "Enterprise",
+      "openSource": "Open Source",
+      "rd": "R&D"
+    },
+    "viewDetails": "View details of {name}",
+    "detailsArrow": "Details →",
+    "featuredAriaLabel": "Featured project",
+    "categoriesAriaLabel": "Project categories",
+    "emptyStateMessage": "Projects in {category}",
+    "nextPageTeaserServicesDescription": "How engagements run — process, deliverables and models."
   },
   "projectDetail": {
     "backToProjects": "← Back to Projects",
     "live": "Live",
     "code": "Code",
-    "caseStudy": "Case Study"
+    "caseStudy": "Case Study",
+    "notFound": "Project Not Found",
+    "metaClient": "Client",
+    "metaTeam": "Team",
+    "metaTeamSize": "{count} engineers",
+    "metaDuration": "Duration",
+    "metaStatus": "Status",
+    "metaCategory": "Category",
+    "livePreview": "Live Preview",
+    "comingSoon": "Coming Soon",
+    "privateTooltip": "Private repository — source code cannot be exposed under client confidentiality",
+    "private": "Private",
+    "privateTooltipContent": "Source code is private and cannot be exposed under client confidentiality. A live walkthrough is available on request.",
+    "techStack": "Tech Stack",
+    "keyMetrics": "Key Metrics",
+    "screenshots": "Screenshots",
+    "architecture": "Architecture",
+    "screenshotAlt": "{name} screenshot {index}",
+    "architectureAlt": "{name} architecture diagram"
   },
   "caseStudy": {
     "backToProject": "← Back to Project",
@@ -185,7 +294,18 @@
     },
     "clientLogos": {
       "title": "Our Clients"
-    }
+    },
+    "categories": {
+      "digital-transformation": "Digital Transformation",
+      "custom-dev": "Custom Software Development",
+      "legacy-modernization": "Legacy Modernization",
+      "infra-devops": "Infrastructure & DevOps",
+      "security-compliance": "Security & Compliance",
+      "product-strategy": "Product Strategy & Discovery",
+      "advisory": "Technical Advisory"
+    },
+    "bestFor": "Best for:",
+    "nextPageTeaserDosseraDescription": "The sovereign judicial platform running in production."
   },
   "dossera": {
     "title": "Dossera JAMS",
@@ -315,10 +435,375 @@
     },
     "testimonials": {
       "title": "Trusted by Legal Institutions"
-    }
+    },
+    "whatIsDossera": "What is Dossera?",
+    "callUs": "or call {phone}",
+    "techStack": [
+      {
+        "name": "React",
+        "category": "Frontend"
+      },
+      {
+        "name": "Node.js",
+        "category": "Backend"
+      },
+      {
+        "name": "PostgreSQL",
+        "category": "Database"
+      },
+      {
+        "name": "pgvector",
+        "category": "Vector Search"
+      },
+      {
+        "name": "Meilisearch",
+        "category": "Full-Text Search"
+      },
+      {
+        "name": "MinIO",
+        "category": "Object Storage"
+      },
+      {
+        "name": "Redis",
+        "category": "Cache"
+      },
+      {
+        "name": "Docker",
+        "category": "Containerization"
+      },
+      {
+        "name": "Proxmox VE",
+        "category": "Virtualization"
+      },
+      {
+        "name": "pfSense",
+        "category": "Firewall"
+      },
+      {
+        "name": "Wazuh SIEM",
+        "category": "Security"
+      },
+      {
+        "name": "Grafana",
+        "category": "Monitoring"
+      },
+      {
+        "name": "Ansible",
+        "category": "Automation"
+      },
+      {
+        "name": "Tesseract.js",
+        "category": "OCR"
+      }
+    ],
+    "nextPageTeaserHomeDescription": "Back to the start — the full journey in one loop.",
+    "contactFormPlaceholders": {
+      "name": "Your full name",
+      "email": "you@organization.com",
+      "organization": "Court, law firm, or institution name",
+      "role": "Select your role",
+      "phone": "+212 6XX-XXXXXX",
+      "message": "Tell us about your institution, current challenges, and what you'd like to achieve with Dossera JAMS..."
+    },
+    "contactFormErrorFallback": "Something went wrong. Please try again."
+  },
+  "nextPageTeaser": {
+    "continueTo": "Continue to {title}"
+  },
+  "testimonials": {
+    "previous": "Previous testimonial",
+    "next": "Next testimonial",
+    "slidesAriaLabel": "Testimonial slides",
+    "goToSlide": "Go to testimonial {index}",
+    "fallbackAlt": "Client",
+    "anonymousClient": "Anonymous Client"
+  },
+  "job": {
+    "workExperienceTitle": "Work Experience",
+    "logoAlt": "{name} logo",
+    "present": "Present",
+    "notProvidedTitle": "Work Experience Not Provided",
+    "notProvidedMessage": "We could not find any work experience at the moment. To add one, visit the Sanity studio to start editing the content."
+  },
+  "github": {
+    "analyticsTitle": "GitHub Analytics",
+    "contributionGraphErrorTitle": "Unable to load Contribution Graph",
+    "contributionGraphErrorMessage": "We could not find any GitHub credentials added to the .env file. To display the graph, provide your username and the year you joined GitHub",
+    "contributionsOnGitHub": "{count} Contributions on GitHub",
+    "publicRepos": "{count} Public Repos",
+    "joinedGitHubYears": "Joined GitHub {count, plural, one {# year ago} other {# years ago}}",
+    "contributionsLastYear": "contributions in the last year",
+    "weeklyChartAriaLabel": "Contributions per week, peak {max}",
+    "totalContributions": "Total Contributions",
+    "currentStreakDays": "Current streak {count} days",
+    "currentStreak": "Current Streak",
+    "longestStreak": "Longest Streak",
+    "mostUsedLanguages": "Most Used Languages",
+    "languageBreakdown": "Language usage breakdown",
+    "languageDataUnavailable": "Language data unavailable.",
+    "usernameNotConfigured": "GitHub username is not configured.",
+    "noContributionData": "No contribution data available.",
+    "loadFailed": "Failed to load GitHub data.",
+    "temporarilyUnavailable": "GitHub analytics are temporarily unavailable ({error}).",
+    "retry": "Retry",
+    "loadingAriaLabel": "Loading GitHub analytics",
+    "freelance": "Freelance"
   },
   "footer": {
     "builtWith": "Built with:",
     "copyright": "Copyright © Zakaria Mirinioui {year} All rights Reserved"
+  },
+  "metadata": {
+    "siteTitle": "Zakaria Mirinioui | Full Stack Developer & Digital Solutions Architect",
+    "siteDescription": "Full Stack Developer specializing in enterprise Java solutions, modern web architecture, and digital transformation for judicial and secure logistics sectors.",
+    "siteName": "zakaria-mirinioui.dev",
+    "keywords": [
+      "Full Stack Developer",
+      "Java Spring Boot",
+      "React Next.js",
+      "Digital Solutions",
+      "Software Architect",
+      "Morocco Developer",
+      "Enterprise Applications"
+    ],
+    "home": {
+      "title": "Zakaria Mirinioui | Full Stack Developer & Digital Solutions Architect",
+      "description": "Solutions Architect & Agency Founder helping institutions digitize with sovereign, secure systems."
+    },
+    "about": {
+      "title": "About | Zakaria Mirinioui",
+      "description": "Full Stack Developer & Digital Solutions Architect based in Casablanca & El Jadida, Morocco. Experience, stack, certifications and CV."
+    },
+    "projects": {
+      "title": "Projects | Zakaria Mirinioui",
+      "description": "Enterprise-grade systems, multi-tenant SaaS platforms, and open-source tools."
+    },
+    "services": {
+      "title": "Services | Zakaria Mirinioui",
+      "description": "Sovereign digital transformation, multi-tenant SaaS development, and technical advisory."
+    },
+    "dossera": {
+      "title": "Dossera JAMS | Zakaria Mirinioui",
+      "description": "Sovereign Judicial Archive Management System digitizing justice across Morocco."
+    },
+    "project": "Project",
+    "projectNotFound": "Project Not Found"
+  },
+  "jsonLd": {
+    "person": {
+      "jobTitle": "Solutions Architect & Agency Founder"
+    },
+    "org": {
+      "description": "Digital solutions agency building sovereign systems for government, healthcare, legal, and wellness sectors."
+    }
+  },
+  "kpiStrip": [
+    {
+      "value": "5+ years",
+      "label": "Building software, freelance since 2021"
+    },
+    {
+      "value": "30%",
+      "label": "estimated less admin processing time — Palais de Justice, Khouribga"
+    },
+    {
+      "value": "15+",
+      "label": "projects delivered"
+    }
+  ],
+  "stackGrid": [
+    {
+      "title": "Backend",
+      "items": [
+        "Java (Spring Boot)",
+        "Node.js",
+        "PHP (Laravel)",
+        "n-tier architecture",
+        "Design patterns"
+      ]
+    },
+    {
+      "title": "Frontend",
+      "items": [
+        "React",
+        "Next.js",
+        "TypeScript",
+        "State management",
+        "Client-side optimization"
+      ]
+    },
+    {
+      "title": "APIs & Data",
+      "items": [
+        "REST",
+        "GraphQL",
+        "PostgreSQL",
+        "MySQL",
+        "Oracle",
+        "Meilisearch",
+        "pgvector",
+        "Relational modeling",
+        "Data security"
+      ]
+    },
+    {
+      "title": "DevOps & Tools",
+      "items": [
+        "Docker",
+        "Kubernetes",
+        "Git",
+        "CI/CD",
+        "Nginx",
+        "n8n (automation)",
+        "Agile / Scrum"
+      ]
+    },
+    {
+      "title": "Management & Analysis",
+      "items": [
+        "Business Analysis",
+        "Project management (PMI / NASBA)",
+        "Functional specification writing"
+      ]
+    }
+  ],
+  "stackGridTitle": "Stack",
+  "stackGridSubtitle": "Picked per project, not per trend. No skill bars — just what I ship with.",
+  "featuredWork": [
+    {
+      "title": "JAMS — Judicial Archive Management System",
+      "description": "Physical and digital archives aligned with the Ministry of Justice archiving charter. Hybrid search (Meilisearch + pgvector), OCR and a document processing pipeline. Built for the Court of First Instance of Khouribga.",
+      "chips": [
+        "Meilisearch",
+        "pgvector",
+        "OCR"
+      ]
+    },
+    {
+      "title": "PWADCteam Marketplace",
+      "description": "Ready-made ERP and POS systems with live demos, sold as boxed products or custom projects.",
+      "chips": [
+        "ERP",
+        "POS",
+        "Marketplace"
+      ]
+    }
+  ],
+  "featuredWorkTitle": "Featured work",
+  "featuredWorkSubtitle": "Case studies live on the Projects page.",
+  "featuredWorkViewProject": "View project →",
+  "experienceTimeline": [
+    {
+      "period": "Jul – Oct 2025",
+      "role": "Full Stack Developer — Key Technical Contributor (Internship)",
+      "org": "Palais de Justice de Khouribga — Public Sector / Justice | Khouribga, Morocco",
+      "points": [
+        "Key technical contributor to the digitization of judicial procedures, translating legal requirements into functional specifications.",
+        "Designed and developed the backend (Java/PHP, SQL) of the case-management platform, with access controls for sensitive data.",
+        "Result: estimated 30% reduction in administrative case-processing time."
+      ],
+      "chips": [
+        "Java",
+        "PHP",
+        "SQL"
+      ]
+    },
+    {
+      "period": "Apr – Jun 2025",
+      "role": "Back-End Developer & API Specialist (Final-Year Internship)",
+      "org": "Brink's Morocco — Logistics & Security | Casablanca, Morocco",
+      "points": [
+        "Designed and developed REST and GraphQL APIs with Spring Boot to interconnect heterogeneous internal services.",
+        "Built React interfaces connected in real time to APIs for logistics operations tracking.",
+        "Analyzed and refactored SQL queries to reduce processing latency."
+      ],
+      "chips": [
+        "Java/Spring Boot",
+        "REST APIs",
+        "GraphQL",
+        "React",
+        "PostgreSQL"
+      ]
+    },
+    {
+      "period": "Aug 2024",
+      "role": "IT Support & Automation Associate (Introductory Internship)",
+      "org": "OCP Group — Industry | Khouribga, Morocco",
+      "points": [
+        "Maintained operational readiness of the IT estate in a high-availability industrial environment.",
+        "Developed automation scripts (Python/Bash) to generate maintenance reports."
+      ],
+      "chips": [
+        "Python",
+        "Bash"
+      ]
+    },
+    {
+      "period": "2021 – Present",
+      "role": "Freelance Full Stack Developer",
+      "org": "Independent — web and mobile apps for B2B and B2C clients",
+      "points": [
+        "Designing and delivering web apps, mobile apps and automations for francophone SMEs, from requirements to production and post-launch support. Clients found through Malt and Codeur.com.",
+        "15+ projects delivered for 10+ clients across restaurants, e-commerce, education, healthcare and legal; 4 ready-to-deploy products; 8+ n8n automations in production.",
+        "Built complete management platforms: back-office, POS, booking, invoicing, dashboards.",
+        "Developed mobile apps (Flutter) and modern websites (Next.js, React).",
+        "Automated repetitive processes (WhatsApp sales bots and agents, e-commerce workflows, notifications) with n8n.",
+        "Took over, fixed and extended existing applications (Laravel, Firebase, push notifications, multilingual localisation).",
+        "Supported clients end to end: scoping, quotes, delivery, training, support.",
+        "Core member of PWADCteam: ERP, POS and restaurant/B2B systems, ready-made or custom, via pwadcteam.com. Products include a School ERP, Legal Practice Management, Hospital Booking, and Salon & Spa, with bilingual French/Arabic listings."
+      ],
+      "chips": [
+        "Java/Spring Boot",
+        "Node.js",
+        "React",
+        "Next.js",
+        "Laravel",
+        "Flutter",
+        "Firebase",
+        "n8n"
+      ]
+    }
+  ],
+  "experienceTimelineTitle": "Experience",
+  "experienceTimelineSubtitle": "Newest first. Freelance work and PWADCteam included.",
+  "notFound": {
+    "metadataTitle": "Error 404",
+    "title": "Error 404!",
+    "description": "Oopsies! This page does not exist on zakariamirinioui.surge.sh. While you're here, check out my projects or learn more about me.",
+    "duckAlt": "Yellow duck searching",
+    "backToHome": "← Back to Home",
+    "viewProjects": "View Projects →"
+  },
+  "emptyState": {
+    "duckAlt": "Yellow duck searching",
+    "noItemsFound": "No {value} Found",
+    "noItemsMessage": "There are no {value} available at this time. Please check back later."
+  },
+  "sharePost": {
+    "title": "Share Post",
+    "shareTo": "Share to {name}",
+    "checkOutArticle": "Check out this article by {name}",
+    "readArticle": "Read this article by {name}"
+  },
+  "easterEgg": {
+    "imageAlt": "yeah right"
+  },
+  "buymeacoffee": {
+    "cta": "Interested in working together? Let's connect!"
+  },
+  "loading": {
+    "pageAriaLabel": "Loading page",
+    "aboutAriaLabel": "Loading about page",
+    "projectsAriaLabel": "Loading projects",
+    "servicesAriaLabel": "Loading services",
+    "dosseraAriaLabel": "Loading Dossera page"
+  },
+  "contactApi": {
+    "rateLimited": "Too many requests. Please try again later.",
+    "requiredFields": "Please fill in all required fields.",
+    "invalidEmail": "Please provide a valid email address.",
+    "maxLength": "Input exceeds maximum length.",
+    "notProvided": "Not provided",
+    "serverError": "Something went wrong. Please try again or email us directly at zakmirinioui@gmail.com."
   }
 }

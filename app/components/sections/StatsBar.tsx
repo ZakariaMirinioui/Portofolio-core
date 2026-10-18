@@ -1,15 +1,18 @@
 import { Slide } from "../../animation/Slide";
+import { getTranslations } from "next-intl/server";
 
-const stats = [
-  { value: "9+", label: "Projects Delivered" },
-  { value: "100+", label: "Businesses Served" },
-  { value: "50K+", label: "End Users" },
-  { value: "99.9%", label: "Uptime SLA" },
-  { value: "30%", label: "Avg. Efficiency Gain" },
-  { value: "2", label: "Countries Deployed" },
-];
+export default async function StatsBar({ locale }: { locale: string }) {
+  const t = await getTranslations({ locale, namespace: "home.stats" });
 
-export default function StatsBar() {
+  const stats = [
+    { value: "9+", label: t("projectsDelivered") },
+    { value: "100+", label: t("businessesServed") },
+    { value: "50K+", label: t("endUsers") },
+    { value: "99.9%", label: t("uptimeSLA") },
+    { value: "30%", label: t("efficiencyGain") },
+    { value: "2", label: t("countriesDeployed") },
+  ];
+
   return (
     <section className="mb-16">
       <Slide delay={0.12}>

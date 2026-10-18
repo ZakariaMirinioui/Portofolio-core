@@ -1,11 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
+import { useTranslations } from "next-intl";
 import SunIcon from "../../assets/icons/SunIcon";
 import MoonIcon from "../../assets/icons/MoonIcon";
 
 export default function Theme() {
   const { systemTheme, theme, setTheme } = useTheme();
+  const t = useTranslations("theme");
   const [hasMounted, setHasMounted] = useState(false);
   const currentTheme = theme === "system" ? systemTheme : theme;
 
@@ -25,7 +27,7 @@ export default function Theme() {
       className={`dark:bg-primary-bg bg-zinc-100 dark:text-primary-color text-zinc-500 border dark:border-zinc-800 border-zinc-200 rounded-full p-2 duration-300 transition-transform group: ${
         currentTheme === "light" ? "-rotate-180" : "rotate-0"
       }`}
-      aria-label="Toggle Theme"
+      aria-label={t("toggleAriaLabel")}
     >
       {currentTheme === "light" ? <SunIcon /> : <MoonIcon />}
     </button>

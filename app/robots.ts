@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = "https://zakaria-mirinioui.dev";
+  const baseUrl = "https://zakariamirinioui.surge.sh";
 
   return {
     rules: {

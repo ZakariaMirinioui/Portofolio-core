@@ -75,12 +75,12 @@ async function createProjects() {
     },
 
     // ============================================
-    // PWADCTEAM SUITE - 5 SaaS Products
+    // PWADCTEAM SUITE - 5 SaaS Products (Professional Names)
     // ============================================
     {
       _type: "project",
-      name: "Doctor.pwadcteam.com",
-      slug: { current: "doctor-pwadcteam" },
+      name: "PWADC Clinic",
+      slug: { current: "pwadc-clinic" },
       tagline: "Multi-tenant clinic management SaaS for healthcare providers",
       category: "healthcare",
       status: "production",
@@ -113,8 +113,8 @@ async function createProjects() {
     },
     {
       _type: "project",
-      name: "School.pwadcteam.com",
-      slug: { current: "school-pwadcteam" },
+      name: "EduManage",
+      slug: { current: "edumanage" },
       tagline: "School management system for educational institutions",
       category: "education",
       status: "production",
@@ -146,8 +146,8 @@ async function createProjects() {
     },
     {
       _type: "project",
-      name: "Avocat.pwadcteam.com",
-      slug: { current: "avocat-pwadcteam" },
+      name: "PWADC Advocate",
+      slug: { current: "pwadc-advocate" },
       tagline: "Law firm case management and legal practice automation",
       category: "professional-services",
       status: "production",
@@ -179,8 +179,8 @@ async function createProjects() {
     },
     {
       _type: "project",
-      name: "Salon.pwadcteam.com",
-      slug: { current: "salon-pwadcteam" },
+      name: "PWADC Salon",
+      slug: { current: "pwadc-salon" },
       tagline: "Salon & spa booking and business management platform",
       category: "wellness",
       status: "production",
@@ -212,8 +212,8 @@ async function createProjects() {
     },
     {
       _type: "project",
-      name: "Spa.pwadcteam.com",
-      slug: { current: "spa-pwadcteam" },
+      name: "Salon Hub",
+      slug: { current: "salon-hub" },
       tagline: "Premium spa & wellness center management suite",
       category: "wellness",
       status: "production",
@@ -284,27 +284,29 @@ async function createProjects() {
     },
 
     // ============================================
-    // GITHUB HIGHLIGHTS - Open Source
+    // SECUDRIVE - Mobile ride-hailing app
     // ============================================
     {
       _type: "project",
-      name: "Sanity-Portfolio-Starter",
-      slug: { current: "sanity-portfolio-starter" },
-      tagline: "Open-source portfolio template with Next.js 14, Sanity, Tailwind",
-      category: "open-source",
+      name: "SECUDRIVE",
+      slug: { current: "secudrive" },
+      tagline: "Secure ride-hailing mobile app for riders & drivers",
+      category: "mobile",
       status: "active",
-      featured: false,
-      clientType: "open-source",
-      role: "fullstack",
-      teamSize: 1,
-      duration: "2024",
-      techStack: ["Next.js 14", "Sanity", "Tailwind CSS", "TypeScript", "Framer Motion"],
+      featured: true,
+      clientType: "own-product",
+      role: "founder",
+      teamSize: 2,
+      duration: "Ongoing",
+      techStack: ["Flutter", "Dart", "Supabase", "GetX", "Google Maps", "PostgreSQL", "Lottie"],
       metrics: [
-        { label: "GitHub Stars", value: "120+", description: "Community adoption" },
-        { label: "Forks", value: "35+", description: "Used as starter by developers" },
+        { label: "App Screens", value: "35+", description: "Rider + driver flows in one codebase" },
+        { label: "Platforms", value: "3", description: "Android, iOS and Web from a single codebase" },
+        { label: "Auth", value: "PKCE", description: "Supabase auth with secure PKCE flow" },
+        { label: "Live Tracking", value: "Real-time", description: "Maps, geolocation, routing & ETAs" },
       ],
-      projectUrl: "https://github.com/ZakariaMirinioui/sanity-portfolio-starter",
-      repository: "https://github.com/ZakariaMirinioui/sanity-portfolio-starter",
+      projectUrl: "",
+      repository: "",
       description: [
         {
           _type: "block",
@@ -312,12 +314,72 @@ async function createProjects() {
           children: [
             {
               _type: "span",
-              text: "Production-ready portfolio starter featuring: Sanity CMS integration, dark mode, GitHub contribution graph, project showcase, blog-ready, SEO optimized, Vercel deployment configured. Used as foundation for this portfolio."
+              text: "SECUDRIVE is a secure ride-hailing mobile app built with Flutter, covering both sides of the marketplace in a single codebase: riders can request rides with live tracking, saved places and spending analytics, while drivers get earnings dashboards, performance insights, vehicle management and ride history."
+            }
+          ]
+        },
+        {
+          _type: "block",
+          style: "normal",
+          children: [
+            {
+              _type: "span",
+              text: "The backend runs on Supabase (auth with PKCE, Postgres, realtime), navigation and state are handled with GetX, and the maps experience uses Google Maps with geolocation, geocoding and route polylines. Mobile demo available on request."
             }
           ]
         }
       ],
     },
+    // ============================================
+    // PWADC TEAM MARKETPLACE
+    // ============================================
+    {
+      _type: "project",
+      name: "PWADC Team Marketplace",
+      slug: { current: "pwadc-marketplace" },
+      tagline: "Trilingual marketplace to buy & sell scripts, themes & apps",
+      category: "ecommerce",
+      status: "production",
+      featured: true,
+      clientType: "own-product",
+      role: "founder",
+      teamSize: 3,
+      duration: "Ongoing (2023 - Present)",
+      techStack: ["Laravel", "PHP", "MySQL", "JavaScript", "Bootstrap"],
+      metrics: [
+        { label: "Products Listed", value: "200+", description: "Scripts, themes, Flutter apps & templates" },
+        { label: "Languages", value: "3", description: "English, French and Arabic storefront" },
+        { label: "Currencies", value: "3", description: "MAD, EUR and USD checkout" },
+        { label: "Own Products", value: "5", description: "Shipped with live preview links" },
+      ],
+      projectUrl: "https://pwadcteam.com",
+      repository: "",
+      description: [
+        {
+          _type: "block",
+          style: "normal",
+          children: [
+            {
+              _type: "span",
+              text: "PWADC Team Marketplace (pwadcteam.com) is a trilingual digital marketplace to buy and sell scripts, themes, Flutter apps and templates, with multi-currency checkout (MAD/EUR/USD), author storefronts, carts, collections and a become-an-author program."
+            }
+          ]
+        },
+        {
+          _type: "block",
+          style: "normal",
+          children: [
+            {
+              _type: "span",
+              text: "My verified author storefront lists the ClinicFlow, EduManage, LegalFlow and StyleBook systems — each shipping with a live preview link. As founder I run the full commercial loop: development, packaging, documentation, live demos and post-sale support."
+            }
+          ]
+        }
+      ],
+    },
+    // ============================================
+    // GITHUB HIGHLIGHTS - Open Source
+    // ============================================
     {
       _type: "project",
       name: "Meilisearch-Arabic-OCR-Pipeline",

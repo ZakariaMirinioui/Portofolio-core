@@ -1,7 +1,6 @@
 import job from "./job";
 import profile from "./profile";
 import project from "./project";
-import heroe from "./heroe";
 import blockContent from "./blockContent";
 import caseStudy from "./caseStudy";
 import service from "./service";
@@ -12,7 +11,6 @@ export const schemaTypes = [
   profile,
   job,
   project,
-  heroe,
   caseStudy,
   service,
   testimonial,
