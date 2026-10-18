@@ -1,4 +1,6 @@
 import { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+import { getAlternateUrls, getCanonicalUrl, SITE_URL } from "@/lib/metadata";
 import { profileQuery } from "@/lib/sanity.query";
 import type { ProfileType } from "@/types";
 import { sanityFetch } from "@/lib/sanity.client";
@@ -12,24 +14,33 @@ import ClosingBand from "@/app/components/sections/ClosingBand";
 import AboutSidebar from "@/app/components/sections/AboutSidebar";
 import { Slide } from "@/app/animation/Slide";
 
-export const revalidate = 3600;
-
-export const metadata: Metadata = {
-  title: "About | Zakaria Mirinioui",
-  metadataBase: new URL("https://zakariamirinioui.surge.sh"),
-  description:
-    "Full Stack Developer & Digital Solutions Architect based in Casablanca & El Jadida, Morocco. Building secure, enterprise-grade systems with Java/Spring Boot and React/Next.js. Experience, stack, certifications and CV download.",
-  openGraph: {
-    title: "About | Zakaria Mirinioui",
-    url: "/about",
-    description:
-      "Full Stack Developer & Digital Solutions Architect based in Casablanca & El Jadida, Morocco.",
-    images: "/og.png",
-  },
-  alternates: {
-    canonical: "/about",
-  },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: { locale: string };
+}): Promise<Metadata> {
+  const { locale } = params;
+  const t = await getTranslations({ locale, namespace: "metadata" });
+  const path = "/about";
+  return {
+    title: t("about.title"),
+    description: t("about.description"),
+    metadataBase: new URL(SITE_URL),
+    alternates: {
+      canonical: getCanonicalUrl(locale, path),
+      languages: getAlternateUrls(path),
+    },
+    openGraph: {
+      title: t("about.title"),
+      description: t("about.description"),
+      url: getCanonicalUrl(locale, path),
+      siteName: t("siteName"),
+      locale: locale === "fr" ? "fr_FR" : "en_US",
+      alternateLocale: locale === "fr" ? ["en_US"] : ["fr_FR"],
+      images: [{ url: "/og.png", width: 1200, height: 630 }],
+    },
+  };
+}
 
 const fallbackProfile: ProfileType = {
   _id: "fallback",
@@ -49,7 +60,13 @@ const fallbackProfile: ProfileType = {
   usage: [],
 };
 
-export default async function About() {
+export default async function About({
+  params,
+}: {
+  params: { locale: string };
+}) {
+  const { locale } = params;
+  const t = await getTranslations({ locale, namespace: "about" });
   let profile: ProfileType | null = null;
   try {
     profile = await sanityFetch({ query: profileQuery, tags: ["profile"] });
@@ -64,19 +81,23 @@ export default async function About() {
           <div className="lg:col-start-1">
             <AboutHero
               profile={profile ?? fallbackProfile}
+              locale={locale}
               className="mb-12 lg:mb-16"
             />
-            <KpiStrip className="mb-12 lg:mb-16" />
-            <ExperienceTimeline className="mb-12 lg:mb-16" />
-            <FeaturedWork className="mb-12 lg:mb-16" />
+            <KpiStrip locale={locale} className="mb-12 lg:mb-16" />
+            <ExperienceTimeline locale={locale} className="mb-12 lg:mb-16" />
+            <FeaturedWork locale={locale} className="mb-12 lg:mb-16" />
             <StackGrid className="mb-12 lg:mb-16" />
-            <ClosingBand className="mb-12 lg:mb-16" />
+            <ClosingBand locale={locale} className="mb-12 lg:mb-16" />
           </div>
           <aside
             className="top-24 lg:sticky lg:top-24"
-            aria-label="About sidebar"
+            aria-label={t("sidebarLabel")}
           >
-            <AboutSidebar profile={profile ?? fallbackProfile} />
+            <AboutSidebar
+              profile={profile ?? fallbackProfile}
+              locale={locale}
+            />
           </aside>
         </div>
       </Slide>

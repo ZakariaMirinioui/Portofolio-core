@@ -1,9 +1,11 @@
 import { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+import { getAlternateUrls, getCanonicalUrl, SITE_URL } from "@/lib/metadata";
 import { servicesQuery, testimonialsQuery } from "@/lib/sanity.query";
 import type { ServiceType, TestimonialType } from "@/types";
 import { sanityFetch } from "@/lib/sanity.client";
-import PageHeading from "../components/shared/PageHeading";
-import { Slide } from "../animation/Slide";
+import PageHeading from "../../components/shared/PageHeading";
+import { Slide } from "../../animation/Slide";
 import {
   HiOutlineShieldCheck,
   HiOutlineDatabase,
@@ -12,26 +14,38 @@ import {
   HiOutlineCheckCircle,
   HiOutlineArrowRight,
 } from "react-icons/hi";
-import Link from "next/link";
-import TestimonialsCarousel from "../components/sections/TestimonialsCarousel";
-import ClientLogos from "../components/sections/ClientLogos";
-import NextPageTeaser from "../components/sections/NextPageTeaser";
+import { Link } from "@/i18n/navigation";
+import TestimonialsCarousel from "../../components/sections/TestimonialsCarousel";
+import ClientLogos from "../../components/sections/ClientLogos";
+import NextPageTeaser from "../../components/sections/NextPageTeaser";
 
-export const revalidate = 3600;
-
-export const metadata: Metadata = {
-  title: "Services | Zakaria Mirinioui",
-  metadataBase: new URL("https://zakaria-mirinioui.dev/services"),
-  description:
-    "Enterprise digital transformation, multi-tenant SaaS development, legacy modernization, and technical advisory services for institutions and businesses.",
-  openGraph: {
-    title: "Services | Zakaria Mirinioui",
-    url: "https://zakaria-mirinioui.dev/services",
-    description:
-      "Enterprise digital transformation, multi-tenant SaaS development, legacy modernization, and technical advisory services for institutions and businesses.",
-    images: "/og.png",
-  },
-};
+export async function generateMetadata({
+  params,
+}: {
+    params: { locale: string };
+  }): Promise<Metadata> {
+  const { locale } = params;
+  const t = await getTranslations({ locale, namespace: "metadata" });
+  const path = "/services";
+  return {
+    title: t("services.title"),
+    description: t("services.description"),
+    metadataBase: new URL(SITE_URL),
+    alternates: {
+      canonical: getCanonicalUrl(locale, path),
+      languages: getAlternateUrls(path),
+    },
+    openGraph: {
+      title: t("services.title"),
+      description: t("services.description"),
+      url: getCanonicalUrl(locale, path),
+      siteName: t("siteName"),
+      locale: locale === "fr" ? "fr_FR" : "en_US",
+      alternateLocale: locale === "fr" ? ["en_US"] : ["fr_FR"],
+      images: [{ url: "/og.png", width: 1200, height: 630 }],
+    },
+  };
+}
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   HiOutlineShieldCheck,
@@ -40,17 +54,22 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   HiOutlineChartBar,
 };
 
-const categoryLabels: Record<string, string> = {
-  "digital-transformation": "Digital Transformation",
-  "custom-dev": "Custom Software Development",
-  "legacy-modernization": "Legacy Modernization",
-  "infra-devops": "Infrastructure & DevOps",
-  "security-compliance": "Security & Compliance",
-  "product-strategy": "Product Strategy & Discovery",
-  advisory: "Technical Advisory",
+const engagementModelKeys: Record<string, string> = {
+  "Fixed Scope / Fixed Price": "fixedPrice",
+  "Time & Materials": "timeMaterials",
+  "Dedicated Team": "dedicatedTeam",
+  "Retainer / Advisory": "retainer",
+  "Milestone-based": "milestone",
 };
 
-export default async function ServicesPage() {
+export default async function ServicesPage({
+  params,
+}: {
+  params: { locale: string };
+}) {
+  const { locale } = params;
+  const t = await getTranslations({ locale, namespace: "services" });
+  const tNav = await getTranslations({ locale, namespace: "navigation" });
   const [services, testimonials] = await Promise.all([
     sanityFetch({ query: servicesQuery, tags: ["service"] }) as Promise<ServiceType[]>,
     sanityFetch({ query: testimonialsQuery, tags: ["testimonial"] }) as Promise<TestimonialType[]>,
@@ -59,8 +78,8 @@ export default async function ServicesPage() {
   return (
     <main className="max-w-7xl mx-auto md:px-16 px-6">
       <PageHeading
-        title="Services"
-        description="From sovereign digital transformation for government institutions to multi-tenant SaaS platforms and fractional CTO engagements — I bring battle-tested experience from production systems serving real users."
+        title={t("title")}
+        description={t("description")}
       />
 
       {/* Service Cards */}
@@ -69,7 +88,7 @@ export default async function ServicesPage() {
           const IconComponent = iconMap[service.icon || ""] || HiOutlineCog;
           return (
             <Slide key={service._id} delay={0.1 + index * 0.05}>
-              <ServiceCard service={service} IconComponent={IconComponent} />
+              <ServiceCard service={service} IconComponent={IconComponent} locale={locale} />
             </Slide>
           );
         })}
@@ -79,37 +98,39 @@ export default async function ServicesPage() {
       <Slide delay={0.35}>
         <section className="mt-16 mb-16">
           <h2 className="text-2xl font-incognito font-bold tracking-tight mb-8 text-center">
-            Client Feedback
+            {t("testimonials.title")}
           </h2>
           <TestimonialsCarousel testimonials={testimonials} />
         </section>
       </Slide>
 
       {/* Client Logos */}
-      <ClientLogos featuredOnly={false} title="Our Clients" />
+      <ClientLogos locale={locale} featuredOnly={false} title={t("clientLogos.title")} />
 
       {/* CTA Section */}
       <Slide delay={0.4}>
         <section className="mt-16 mb-20">
           <div className="dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-lg p-8 text-center">
             <h2 className="text-2xl font-incognito font-bold tracking-tight mb-4">
-              Ready to Start Your Project?
+              {t("cta.title")}
             </h2>
             <p className="dark:text-zinc-400 text-zinc-600 mb-6 max-w-2xl mx-auto">
-              Whether you need a complete digital transformation, a new SaaS product, or senior technical leadership — let&apos;s discuss how I can help.
+              {t("cta.description")}
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
               <a
                 href="mailto:zakmirinioui@gmail.com?subject=Project%20Inquiry"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-md dark:bg-primary-color bg-secondary-color dark:text-zinc-900 text-white font-semibold hover:opacity-90 transition-opacity"
               >
-                Start a Conversation
+                {t("cta.startConversation")}
               </a>
-              <Link
+               <Link
+                 locale={locale}
+
                 href="/projects"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-md dark:bg-zinc-800 bg-zinc-200 dark:text-white text-zinc-900 font-semibold border dark:border-zinc-700 border-zinc-300 hover:dark:border-zinc-500 hover:border-zinc-400 transition-colors"
               >
-                View Past Work
+                {t("cta.viewWork")}
               </Link>
             </div>
           </div>
@@ -118,20 +139,35 @@ export default async function ServicesPage() {
 
       <NextPageTeaser
         href="/dossera"
-        title="Dossera"
-        description="The sovereign judicial platform running in production."
+        title={tNav("dossera")}
+        description={t("nextPageTeaserDosseraDescription")}
       />
     </main>
   );
 }
 
-function ServiceCard({
+async function ServiceCard({
   service,
   IconComponent,
+  locale,
 }: {
   service: ServiceType;
   IconComponent: React.ComponentType<{ className?: string }>;
+  locale: string;
 }) {
+  const t = await getTranslations({ locale, namespace: "services" });
+  const tCommon = await getTranslations({ locale, namespace: "common" });
+
+  const categoryLabels: Record<string, string> = {
+    "digital-transformation": t("categories.digital-transformation"),
+    "custom-dev": t("categories.custom-dev"),
+    "legacy-modernization": t("categories.legacy-modernization"),
+    "infra-devops": t("categories.infra-devops"),
+    "security-compliance": t("categories.security-compliance"),
+    "product-strategy": t("categories.product-strategy"),
+    advisory: t("categories.advisory"),
+  };
+
   return (
     <article className="dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-xl overflow-hidden">
       {/* Header */}
@@ -147,7 +183,7 @@ function ServiceCard({
               </h2>
               {service.featured && (
                 <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium dark:bg-amber-900/30 bg-amber-100 dark:text-amber-400 text-amber-700 border dark:border-amber-800 border-amber-300">
-                  Featured
+                  {tCommon("featured")}
                 </span>
               )}
             </div>
@@ -165,7 +201,7 @@ function ServiceCard({
       {service.whatWeDeliver && service.whatWeDeliver.length > 0 && (
         <div className="p-6 lg:p-8 border-b dark:border-zinc-800 border-zinc-200">
           <h3 className="text-sm font-incognito font-semibold uppercase tracking-wider dark:text-zinc-300 text-zinc-700 mb-4">
-            What We Deliver
+            {t("sections.deliverables")}
           </h3>
           <div className="grid md:grid-cols-2 gap-2">
             {service.whatWeDeliver.map((item, i) => (
@@ -182,7 +218,7 @@ function ServiceCard({
       {service.process && service.process.length > 0 && (
         <div className="p-6 lg:p-8 border-b dark:border-zinc-800 border-zinc-200">
           <h3 className="text-sm font-incognito font-semibold uppercase tracking-wider dark:text-zinc-300 text-zinc-700 mb-6">
-            Our Process
+            {t("sections.process")}
           </h3>
           <div className="space-y-4">
             {service.process.map((step) => (
@@ -230,7 +266,7 @@ function ServiceCard({
       {service.engagementModels && service.engagementModels.length > 0 && (
         <div className="p-6 lg:p-8 border-b dark:border-zinc-800 border-zinc-200">
           <h3 className="text-sm font-incognito font-semibold uppercase tracking-wider dark:text-zinc-300 text-zinc-700 mb-4">
-            Engagement Models
+            {t("sections.engagementModels")}
           </h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {service.engagementModels.map((model, i) => (
@@ -240,13 +276,15 @@ function ServiceCard({
               >
                 <h4 className="font-incognito font-semibold text-sm mb-1 flex items-center gap-2">
                   <HiOutlineArrowRight className="text-xs dark:text-primary-color text-secondary-color" />
-                  {model.name}
+                  {engagementModelKeys[model.name]
+                    ? t(`engagementModels.${engagementModelKeys[model.name]}`)
+                    : model.name}
                 </h4>
                 <p className="text-xs dark:text-zinc-400 text-zinc-600 leading-relaxed mb-2">
                   {model.description}
                 </p>
                 <p className="text-xs dark:text-zinc-500 text-zinc-500 italic">
-                  Best for: {model.bestFor}
+                  {t("bestFor")} {model.bestFor}
                 </p>
               </div>
             ))}
@@ -258,7 +296,7 @@ function ServiceCard({
       {service.techStack && service.techStack.length > 0 && (
         <div className="p-6 lg:p-8">
           <h3 className="text-sm font-incognito font-semibold uppercase tracking-wider dark:text-zinc-300 text-zinc-700 mb-4">
-            Typical Tech Stack
+            {t("sections.techStack")}
           </h3>
           <div className="flex flex-wrap gap-2">
             {service.techStack.map((tech) => (

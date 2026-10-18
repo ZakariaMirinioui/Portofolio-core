@@ -1,37 +1,29 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { Link, useRouter } from "@/i18n/navigation";
 import { Star } from "@phosphor-icons/react";
 import type { ProjectType } from "@/types";
-import EmptyState from "../components/shared/EmptyState";
-import ProjectLogo from "../components/shared/ProjectLogo";
-import { Slide } from "../animation/Slide";
+import EmptyState from "../../components/shared/EmptyState";
+import ProjectLogo from "../../components/shared/ProjectLogo";
+import { Slide } from "../../animation/Slide";
 import { BiLinkExternal, BiLogoGithub, BiBookOpen } from "react-icons/bi";
-import { trackProjectViewed, trackGithubLinkClicked, trackLiveDemoClicked } from "../lib/analytics";
+import { trackProjectViewed, trackGithubLinkClicked, trackLiveDemoClicked } from "../../lib/analytics";
 
 const CATEGORIES = [
-  { value: "all", label: "All Projects" },
-  { value: "judicial", label: "Judicial / Legal Tech" },
-  { value: "healthcare", label: "Healthcare SaaS" },
-  { value: "education", label: "Education SaaS" },
-  { value: "professional-services", label: "Professional Services SaaS" },
-  { value: "wellness", label: "Wellness / Beauty SaaS" },
-  { value: "ecommerce", label: "E-commerce / Marketplace" },
-  { value: "mobile", label: "Mobile Apps" },
-  { value: "enterprise", label: "Enterprise / Internal Tools" },
-  { value: "open-source", label: "Open Source" },
-  { value: "rd", label: "R&D / Experiment" },
+  { value: "all", labelKey: "categories.all" },
+  { value: "judicial", labelKey: "categories.judicial" },
+  { value: "healthcare", labelKey: "categories.healthcare" },
+  { value: "education", labelKey: "categories.education" },
+  { value: "professional-services", labelKey: "categories.professional-services" },
+  { value: "wellness", labelKey: "categories.wellness" },
+  { value: "ecommerce", labelKey: "categories.ecommerce" },
+  { value: "mobile", labelKey: "categoriesMobile" },
+  { value: "enterprise", labelKey: "categories.enterprise" },
+  { value: "open-source", labelKey: "categories.open-source" },
+  { value: "rd", labelKey: "categories.rd" },
 ] as const;
-
-const STATUS_LABELS: Record<string, string> = {
-  production: "Production",
-  active: "Active Development",
-  maintenance: "Maintenance",
-  archived: "Archived",
-  prototype: "Prototype",
-};
 
 const STATUS_DOT: Record<string, string> = {
   production: "bg-green-500",
@@ -41,17 +33,17 @@ const STATUS_DOT: Record<string, string> = {
   prototype: "bg-purple-500",
 };
 
-const CATEGORY_LABELS: Record<string, string> = {
-  judicial: "Judicial",
-  healthcare: "Healthcare",
-  education: "Education",
-  "professional-services": "Legal Tech",
-  wellness: "Wellness",
-  ecommerce: "E-commerce",
-  mobile: "Mobile",
-  enterprise: "Enterprise",
-  "open-source": "Open Source",
-  rd: "R&D",
+const CATEGORY_LABEL_KEYS: Record<string, string> = {
+  judicial: "judicial",
+  healthcare: "healthcare",
+  education: "education",
+  "professional-services": "legalTech",
+  wellness: "wellness",
+  ecommerce: "ecommerce",
+  mobile: "mobile",
+  enterprise: "enterprise",
+  "open-source": "openSource",
+  rd: "rd",
 };
 
 export default function ProjectsClient({
@@ -61,13 +53,14 @@ export default function ProjectsClient({
   projects: ProjectType[];
   featuredProjects: ProjectType[];
 }) {
+  const t = useTranslations("projects");
   return (
     <>
       {featuredProjects.length > 0 && (
         <Slide delay={0.1}>
           <section className="mb-12">
             <h2 className="text-2xl font-incognito font-bold tracking-tight mb-6">
-              Featured Work
+              {t("featured")}
             </h2>
             <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
               {featuredProjects.map((project) => (
@@ -87,6 +80,10 @@ export default function ProjectsClient({
 
 function FeaturedProjectCard({ project }: { project: ProjectType }) {
   const router = useRouter();
+  const t = useTranslations("projects");
+  const tDetail = useTranslations("projectDetail");
+  const statusLabels = t.raw("status") as Record<string, string>;
+  const shortCategoryLabels = t.raw("categoryLabels") as Record<string, string>;
   const hasCaseStudy = !!project.caseStudy;
   const status = project.status || "production";
   const category = project.category || "enterprise";
@@ -104,7 +101,7 @@ function FeaturedProjectCard({ project }: { project: ProjectType }) {
       }}
       tabIndex={0}
       role="link"
-      aria-label={`View details of ${project.name}`}
+      aria-label={t("viewDetails", { name: project.name })}
       className="group cursor-pointer dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-xl p-6 hover:dark:border-zinc-600 hover:border-zinc-300 focus:outline-none focus:ring-2 focus:ring-primary-color focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-zinc-900 transition-colors h-full flex flex-col"
     >
       <div className="flex items-start justify-between gap-3 mb-4">
@@ -120,18 +117,18 @@ function FeaturedProjectCard({ project }: { project: ProjectType }) {
           <div className="min-w-0">
             <h3 className="font-incognito font-semibold text-lg flex items-center gap-1.5">
               {project.featured && (
-                <Star size={16} weight="fill" className="text-amber-500 shrink-0" aria-label="Featured project" />
+                <Star size={16} weight="fill" className="text-amber-500 shrink-0" aria-label={t("featuredAriaLabel")} />
               )}
               {project.name}
             </h3>
             <p className="flex items-center gap-2 mt-1 text-xs">
               <span className={`h-1.5 w-1.5 rounded-full shrink-0 ${STATUS_DOT[status] || "bg-zinc-500"}`} aria-hidden="true" />
               <span className="font-medium dark:text-zinc-300 text-zinc-700">
-                {STATUS_LABELS[status] || status}
+                {statusLabels[status] || status}
               </span>
               <span className="dark:text-zinc-600 text-zinc-400" aria-hidden="true">·</span>
               <span className="uppercase tracking-wider dark:text-zinc-500 text-zinc-500">
-                {CATEGORY_LABELS[category] || category}
+                {shortCategoryLabels[CATEGORY_LABEL_KEYS[category]] || category}
               </span>
             </p>
           </div>
@@ -173,7 +170,7 @@ function FeaturedProjectCard({ project }: { project: ProjectType }) {
             className="inline-flex items-center gap-1.5 text-sm font-medium dark:text-primary-color text-secondary-color hover:underline"
           >
             <BiLinkExternal className="text-base" />
-            Live
+            {tDetail("live")}
           </a>
         )}
         {project.repository && (
@@ -188,7 +185,7 @@ function FeaturedProjectCard({ project }: { project: ProjectType }) {
             className="inline-flex items-center gap-1.5 text-sm font-medium dark:text-zinc-400 text-zinc-600 hover:dark:text-white hover:text-zinc-900"
           >
             <BiLogoGithub className="text-base" />
-            Code
+            {tDetail("code")}
           </a>
         )}
         {hasCaseStudy && (
@@ -201,15 +198,15 @@ function FeaturedProjectCard({ project }: { project: ProjectType }) {
             className="inline-flex items-center gap-1.5 text-sm font-medium dark:text-blue-400 text-blue-600 hover:underline"
           >
             <BiBookOpen className="text-base" />
-            Case Study
+            {tDetail("caseStudy")}
           </Link>
         )}
         <button
           onClick={goToDetails}
           className="ml-auto inline-flex items-center gap-1 text-sm font-medium dark:text-zinc-400 text-zinc-600 hover:dark:text-white hover:text-zinc-900 hover:underline"
-          aria-label={`View details of ${project.name}`}
+          aria-label={t("viewDetails", { name: project.name })}
         >
-          Details →
+          {t("detailsArrow")}
         </button>
       </div>
     </article>
@@ -218,6 +215,8 @@ function FeaturedProjectCard({ project }: { project: ProjectType }) {
 
 function ProjectsList({ projects }: { projects: ProjectType[] }) {
   const [activeCategory, setActiveCategory] = useState("all");
+  const t = useTranslations("projects");
+  const tNav = useTranslations("navigation");
 
   const filteredProjects = useMemo(() => {
     if (activeCategory === "all") return projects;
@@ -233,9 +232,13 @@ function ProjectsList({ projects }: { projects: ProjectType[] }) {
     return CATEGORIES.map((c) => ({ ...c, count: counts[c.value] || 0 })).filter((c) => c.count > 0);
   }, [projects]);
 
+  const activeCategoryLabel = t(
+    CATEGORIES.find((c) => c.value === activeCategory)?.labelKey ?? "categories.all"
+  );
+
   return (
     <section>
-      <div className="flex flex-wrap gap-2 mb-8" role="tablist" aria-label="Project categories">
+      <div className="flex flex-wrap gap-2 mb-8" role="tablist" aria-label={t("categoriesAriaLabel")}>
         {categoriesWithCounts.map((cat) => (
           <button
             key={cat.value}
@@ -248,7 +251,7 @@ function ProjectsList({ projects }: { projects: ProjectType[] }) {
                 : "dark:bg-primary-bg bg-zinc-100 dark:text-zinc-400 text-zinc-600 hover:dark:bg-zinc-800 hover:bg-zinc-200 hover:dark:text-white hover:text-zinc-900"
             }`}
           >
-            {cat.label} <span className="ml-2 opacity-70">({cat.count})</span>
+            {t(cat.labelKey)} <span className="ml-2 opacity-70">({cat.count})</span>
           </button>
         ))}
       </div>
@@ -260,7 +263,13 @@ function ProjectsList({ projects }: { projects: ProjectType[] }) {
           ))}
         </div>
       ) : (
-        <EmptyState value={`Projects in ${CATEGORIES.find((c) => c.value === activeCategory)?.label || "this category"}`} />
+        <EmptyState
+          value={
+            activeCategory === "all"
+              ? tNav("projects")
+              : t("emptyStateMessage", { category: activeCategoryLabel })
+          }
+        />
       )}
     </section>
   );
@@ -268,6 +277,9 @@ function ProjectsList({ projects }: { projects: ProjectType[] }) {
 
 function ProjectCard({ project }: { project: ProjectType }) {
   const router = useRouter();
+  const t = useTranslations("projects");
+  const tDetail = useTranslations("projectDetail");
+  const statusLabels = t.raw("status") as Record<string, string>;
   const hasCaseStudy = !!project.caseStudy;
   const status = project.status || "production";
   const category = project.category || "enterprise";
@@ -285,7 +297,7 @@ function ProjectCard({ project }: { project: ProjectType }) {
       }}
       tabIndex={0}
       role="link"
-      aria-label={`View details of ${project.name}`}
+      aria-label={t("viewDetails", { name: project.name })}
       className="group cursor-pointer dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-lg p-4 hover:dark:border-zinc-600 hover:border-zinc-300 focus:outline-none focus:ring-2 focus:ring-primary-color focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-zinc-900 transition-colors flex flex-col h-full"
     >
       <div className="flex items-center gap-3 mb-3">
@@ -302,7 +314,7 @@ function ProjectCard({ project }: { project: ProjectType }) {
           <p className="flex items-center gap-1.5 text-[11px]">
             <span className={`h-1.5 w-1.5 rounded-full shrink-0 ${STATUS_DOT[status] || "bg-zinc-500"}`} aria-hidden="true" />
             <span className="font-medium dark:text-zinc-300 text-zinc-700">
-              {STATUS_LABELS[status] || status}
+              {statusLabels[status] || status}
             </span>
           </p>
         </div>
@@ -341,7 +353,7 @@ function ProjectCard({ project }: { project: ProjectType }) {
             className="inline-flex items-center gap-1 text-xs font-medium dark:text-primary-color text-secondary-color hover:underline"
           >
             <BiLinkExternal className="text-sm" />
-            Live
+            {tDetail("live")}
           </a>
         )}
         {project.repository && (
@@ -356,7 +368,7 @@ function ProjectCard({ project }: { project: ProjectType }) {
             className="inline-flex items-center gap-1 text-xs font-medium dark:text-zinc-400 text-zinc-600 hover:dark:text-white hover:text-zinc-900"
           >
             <BiLogoGithub className="text-sm" />
-            Code
+            {tDetail("code")}
           </a>
         )}
         {hasCaseStudy && (
@@ -369,7 +381,7 @@ function ProjectCard({ project }: { project: ProjectType }) {
             className="inline-flex items-center gap-1 text-xs font-medium dark:text-blue-400 text-blue-600 hover:underline"
           >
             <BiBookOpen className="text-sm" />
-            Case Study
+            {tDetail("caseStudy")}
           </Link>
         )}
       </div>

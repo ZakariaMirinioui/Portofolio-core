@@ -1,6 +1,12 @@
+"use client";
+
+import { useTranslations } from "next-intl";
+
 export default function Loading() {
+  const t = useTranslations("loading");
+
   return (
-    <main className="max-w-7xl mx-auto md:px-16 px-6" aria-busy="true" aria-label="Loading Dossera page">
+    <main className="max-w-7xl mx-auto md:px-16 px-6" aria-busy="true" aria-label={t("dosseraAriaLabel")}>
       <div className="animate-pulse">
         <div className="h-12 w-64 rounded-lg dark:bg-zinc-800 bg-zinc-200 mb-4" />
         <div className="h-4 w-full max-w-3xl rounded dark:bg-zinc-800 bg-zinc-200 mb-8" />

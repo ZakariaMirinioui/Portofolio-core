@@ -1,9 +1,15 @@
+"use client";
+
+import { useTranslations } from "next-intl";
+
 export default function Loading() {
+  const t = useTranslations("loading");
+
   return (
     <main
       className="relative lg:max-w-7xl mx-auto max-w-3xl md:px-16 px-6 lg:mt-20 mt-12"
       aria-busy="true"
-      aria-label="Loading about page"
+      aria-label={t("aboutAriaLabel")}
     >
       <div className="animate-pulse relative grid gap-y-12 lg:gap-x-10 lg:grid-cols-[1.55fr_1fr]">
         <div className="space-y-8">

@@ -4,13 +4,15 @@ import { projectsQuery, singleProjectQuery } from "@/lib/sanity.query";
 import type { ProjectType } from "@/types";
 import { PortableText } from "@portabletext/react";
 import { CustomPortableText } from "@/app/components/shared/CustomPortableText";
-import { Slide } from "../../animation/Slide";
+import { Slide } from "../../../animation/Slide";
+import { setRequestLocale, getTranslations } from "next-intl/server";
+import { routing } from "@/i18n/routing";
+import { getAlternateUrls, getCanonicalUrl, SITE_URL } from "@/lib/metadata";
 import { urlFor } from "@/lib/sanity.image";
 import { sanityFetch } from "@/lib/sanity.client";
 import { BiLinkExternal, BiLogoGithub, BiLock } from "react-icons/bi";
 import ProjectLogo from "@/app/components/shared/ProjectLogo";
-
-export const revalidate = 3600;
+import { Link } from "@/i18n/navigation";
 
 export async function generateStaticParams() {
   const projects = await sanityFetch<Array<{ slug: string }>>({
@@ -18,11 +20,14 @@ export async function generateStaticParams() {
     tags: ["project"],
   });
 
-  return projects.map((project) => ({ project: project.slug }));
+  return routing.locales.flatMap((locale) =>
+    projects.map((project) => ({ locale, project: project.slug }))
+  );
 }
 
 type Props = {
   params: {
+    locale: string;
     project: string;
   };
 };
@@ -31,34 +36,49 @@ const fallbackImage: string = "/project.png";
 
 // Dynamic metadata for SEO
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const slug = params.project;
+  const { locale, project: slug } = params;
+  const t = await getTranslations({ locale, namespace: "metadata" });
   const project: ProjectType = await sanityFetch({
     query: singleProjectQuery,
     tags: ["project"],
     qParams: { slug },
   });
 
+  const path = `/projects/${project?.slug || slug}`;
+
   if (!project?.name) {
-    return { title: "Project Not Found" };
+    return { title: t("projectNotFound") };
   }
 
   return {
-    title: `${project.name} | Project`,
-    metadataBase: new URL(`https://zakariamirinioui.surge.sh/projects/${project.slug || slug}`),
+    title: `${project.name} | ${t("project")}`,
     description: project.tagline,
+    metadataBase: new URL(SITE_URL),
+    alternates: {
+      canonical: getCanonicalUrl(locale, path),
+      languages: getAlternateUrls(path),
+    },
     openGraph: {
-      images: project.coverImage?.image
-        ? urlFor(project.coverImage.image).width(1200).height(630).url()
-        : fallbackImage,
-      url: `https://zakariamirinioui.surge.sh/projects/${project.slug || slug}`,
-      title: project.name,
+      title: `${project.name} | ${t("project")}`,
       description: project.tagline,
+      url: getCanonicalUrl(locale, path),
+      siteName: t("siteName"),
+      locale: locale === "fr" ? "fr_FR" : "en_US",
+      alternateLocale: locale === "fr" ? ["en_US"] : ["fr_FR"],
+      images: [
+        project.coverImage?.image
+          ? urlFor(project.coverImage.image).width(1200).height(630).url()
+          : fallbackImage,
+      ],
     },
   };
 }
 
 export default async function Project({ params }: Props) {
-  const slug = params.project;
+  const { locale, project: slug } = params;
+  setRequestLocale(locale);
+  const t = await getTranslations({ locale, namespace: "projectDetail" });
+  const tCommon = await getTranslations({ locale, namespace: "common" });
   const project: ProjectType = await sanityFetch({
     query: singleProjectQuery,
     tags: ["project"],
@@ -66,12 +86,12 @@ export default async function Project({ params }: Props) {
   });
 
   const meta: Array<{ label: string; value: string }> = [];
-  if (project.role) meta.push({ label: "Role", value: project.role });
-  if (project.clientType) meta.push({ label: "Client", value: project.clientType });
-  if (project.teamSize) meta.push({ label: "Team", value: `${project.teamSize} engineers` });
-  if (project.duration) meta.push({ label: "Duration", value: project.duration });
-  if (project.status) meta.push({ label: "Status", value: project.status });
-  if (project.category) meta.push({ label: "Category", value: project.category });
+  if (project.role) meta.push({ label: tCommon("role"), value: project.role });
+  if (project.clientType) meta.push({ label: t("metaClient"), value: project.clientType });
+  if (project.teamSize) meta.push({ label: t("metaTeam"), value: t("metaTeamSize", { count: project.teamSize }) });
+  if (project.duration) meta.push({ label: t("metaDuration"), value: project.duration });
+  if (project.status) meta.push({ label: t("metaStatus"), value: project.status });
+  if (project.category) meta.push({ label: t("metaCategory"), value: project.category });
 
   return (
     <main className="max-w-6xl mx-auto lg:px-16 px-8">
@@ -108,12 +128,12 @@ export default async function Project({ params }: Props) {
                   className="flex items-center gap-x-2 dark:bg-primary-color bg-secondary-color dark:text-zinc-900 text-white font-semibold rounded-md px-4 py-2 duration-200 hover:opacity-90"
                 >
                   <BiLinkExternal aria-hidden="true" />
-                  Live Preview
+                  {t("livePreview")}
                 </a>
               ) : (
                 <span className="flex items-center gap-x-2 dark:bg-primary-bg bg-secondary-bg dark:text-white text-zinc-700 border border-transparent rounded-md px-4 py-2 opacity-80">
                   <BiLinkExternal aria-hidden="true" />
-                  Coming Soon
+                  {t("comingSoon")}
                 </span>
               )}
 
@@ -130,27 +150,28 @@ export default async function Project({ params }: Props) {
               ) : (
                 <span
                   className="group/private relative flex cursor-help items-center gap-x-2 dark:bg-primary-bg bg-secondary-bg dark:text-white text-zinc-700 border border-transparent rounded-md px-4 py-2"
-                  title="Private repository — source code cannot be exposed under client confidentiality"
+                  title={t("privateTooltip")}
                 >
                   <BiLock aria-hidden="true" />
-                  Private
+                  {t("private")}
                   <span
                     role="tooltip"
                     className="pointer-events-none absolute left-1/2 top-full z-10 mt-2 w-56 -translate-x-1/2 rounded-md border dark:border-zinc-700 border-zinc-200 dark:bg-zinc-800 bg-white px-3 py-2 text-xs font-normal leading-relaxed dark:text-zinc-300 text-zinc-600 opacity-0 shadow-lg transition-opacity duration-200 group-hover/private:opacity-100 group-focus-within/private:opacity-100"
                   >
-                    Source code is private and cannot be exposed under client
-                    confidentiality. A live walkthrough is available on request.
+                    {t("privateTooltipContent")}
                   </span>
                 </span>
               )}
 
               {project.caseStudy && (
-                <a
+                 <Link
+                   locale={locale}
+
                   href={`/projects/${project.slug}/case-study`}
                   className="flex items-center gap-x-2 dark:bg-zinc-800 bg-zinc-200 dark:text-white text-zinc-900 font-semibold rounded-md px-4 py-2 duration-200 border dark:border-zinc-700 border-zinc-300 hover:dark:border-zinc-500 hover:border-zinc-400"
                 >
-                  Case Study →
-                </a>
+                  {t("caseStudy")} →
+                </Link>
               )}
             </div>
           </div>
@@ -188,7 +209,7 @@ export default async function Project({ params }: Props) {
           {project.techStack && project.techStack.length > 0 && (
             <div className="mt-8">
               <h2 className="text-sm font-incognito font-semibold uppercase tracking-wider dark:text-zinc-300 text-zinc-700 mb-3">
-                Tech Stack
+                {t("techStack")}
               </h2>
               <div className="flex flex-wrap gap-2">
                 {project.techStack.map((tech) => (
@@ -206,7 +227,7 @@ export default async function Project({ params }: Props) {
           {project.metrics && project.metrics.length > 0 && (
             <div className="mt-8">
               <h2 className="text-sm font-incognito font-semibold uppercase tracking-wider dark:text-zinc-300 text-zinc-700 mb-3">
-                Key Metrics
+                {t("keyMetrics")}
               </h2>
               <div className="grid sm:grid-cols-2 gap-3">
                 {project.metrics.map((metric, i) => (
@@ -241,7 +262,7 @@ export default async function Project({ params }: Props) {
           {project.gallery && project.gallery.length > 0 && (
             <div className="mt-8">
               <h2 className="text-sm font-incognito font-semibold uppercase tracking-wider dark:text-zinc-300 text-zinc-700 mb-3">
-                Screenshots
+                {t("screenshots")}
               </h2>
               <div className="grid sm:grid-cols-2 gap-4">
                 {project.gallery.map((shot, i) => (
@@ -250,7 +271,7 @@ export default async function Project({ params }: Props) {
                       <Image
                         src={shot.image}
                         fill
-                        alt={shot.alt || `${project.name} screenshot ${i + 1}`}
+                        alt={shot.alt || t("screenshotAlt", { name: project.name, index: i + 1 })}
                         className="object-cover"
                       />
                     </div>
@@ -268,13 +289,13 @@ export default async function Project({ params }: Props) {
           {project.architectureDiagram?.image && (
             <div className="mt-8">
               <h2 className="text-sm font-incognito font-semibold uppercase tracking-wider dark:text-zinc-300 text-zinc-700 mb-3">
-                Architecture
+                {t("architecture")}
               </h2>
               <div className="relative w-full h-64 rounded-lg overflow-hidden border dark:border-zinc-800 border-zinc-200">
                 <Image
                   src={project.architectureDiagram.image}
                   fill
-                  alt={project.architectureDiagram.alt || `${project.name} architecture diagram`}
+                  alt={project.architectureDiagram.alt || t("architectureAlt", { name: project.name })}
                   className="object-contain dark:bg-zinc-900 bg-zinc-50"
                 />
               </div>
