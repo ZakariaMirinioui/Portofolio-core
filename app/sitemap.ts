@@ -1,69 +1,41 @@
 import { MetadataRoute } from "next";
 import { sanityFetch } from "@/lib/sanity.client";
-import { projectsQuery, caseStudiesQuery, servicesQuery } from "@/lib/sanity.query";
+import { projectsQuery } from "@/lib/sanity.query";
+import { routing } from "@/i18n/routing";
+import { getAlternateUrls, SITE_URL } from "@/lib/metadata";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://zakariamirinioui.surge.sh";
+  const projects = (await sanityFetch({
+    query: projectsQuery,
+    tags: ["project"],
+  })) as Array<{ slug: string; _updatedAt: string }>;
 
-  const [projects, caseStudies, services] = await Promise.all([
-    sanityFetch({ query: projectsQuery, tags: ["project"] }) as Promise<Array<{ slug: string; _updatedAt: string }>>,
-    sanityFetch({ query: caseStudiesQuery, tags: ["caseStudy"] }) as Promise<Array<{ slug: string; _updatedAt: string }>>,
-    sanityFetch({ query: servicesQuery, tags: ["service"] }) as Promise<Array<{ slug: string; _updatedAt: string }>>,
-  ]);
+  const staticPaths = ["/", "/about", "/projects", "/services", "/dossera"];
 
-  const projectUrls = projects.map((project) => ({
-    url: `${baseUrl}/projects/${project.slug}`,
-    lastModified: project._updatedAt ? new Date(project._updatedAt) : new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.8,
-  }));
-
-  const caseStudyUrls = caseStudies.map((cs) => ({
-    url: `${baseUrl}/projects/${cs.slug}/case-study`,
-    lastModified: cs._updatedAt ? new Date(cs._updatedAt) : new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
-
-  const serviceUrls = services.map((service) => ({
-    url: `${baseUrl}/services/${service.slug}`,
-    lastModified: service._updatedAt ? new Date(service._updatedAt) : new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
-
-  const staticUrls = [
-    {
-      url: baseUrl,
+  const staticUrls: MetadataRoute.Sitemap = staticPaths.flatMap((path) =>
+    routing.locales.map((locale) => ({
+      url: `${SITE_URL}/${locale}${path === "/" ? "/" : `${path}/`}`,
       lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: 1.0,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/projects`,
-      lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/services`,
-      lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/dossera`,
-      lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: 0.9,
-    },
-  ];
+      changeFrequency: (path === "/" ? "weekly" : "monthly") as
+        | "weekly"
+        | "monthly",
+      priority: path === "/" ? 1.0 : 0.8,
+      alternates: { languages: getAlternateUrls(path) },
+    }))
+  );
 
-  return [...staticUrls, ...projectUrls, ...caseStudyUrls, ...serviceUrls];
+  const projectUrls: MetadataRoute.Sitemap = projects.flatMap((project) =>
+    routing.locales.map((locale) => {
+      const path = `/projects/${project.slug}`;
+      return {
+        url: `${SITE_URL}/${locale}${path}/`,
+        lastModified: project._updatedAt ? new Date(project._updatedAt) : new Date(),
+        changeFrequency: "monthly" as const,
+        priority: 0.8,
+        alternates: { languages: getAlternateUrls(path) },
+      };
+    })
+  );
+
+  return [...staticUrls, ...projectUrls];
 }
