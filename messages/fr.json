@@ -62,11 +62,10 @@
     },
     "stats": {
       "projectsDelivered": "Projets livrés",
-      "businessesServed": "Entreprises servies",
-      "endUsers": "Utilisateurs finaux",
-      "uptimeSLA": "SLA Disponibilité",
-      "efficiencyGain": "Gain d'efficacité moyen",
-      "countriesDeployed": "Pays déployés"
+      "clients": "Clients",
+      "readyToDeployProducts": "Produits prêts à déployer",
+      "n8nAutomations": "Automatisations n8n en production",
+      "yearsFreelance": "Années en freelance"
     },
     "valueProps": {
       "title": "Ce que je construis",

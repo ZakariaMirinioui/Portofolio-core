@@ -62,11 +62,10 @@
     },
     "stats": {
       "projectsDelivered": "Projects Delivered",
-      "businessesServed": "Businesses Served",
-      "endUsers": "End Users",
-      "uptimeSLA": "Uptime SLA",
-      "efficiencyGain": "Avg. Efficiency Gain",
-      "countriesDeployed": "Countries Deployed"
+      "clients": "Clients",
+      "readyToDeployProducts": "Ready-to-deploy Products",
+      "n8nAutomations": "n8n Automations in Production",
+      "yearsFreelance": "Years Freelance"
     },
     "valueProps": {
       "title": "What I Build",
