@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next lint && node scripts/check-i18n-keys.mjs && node scripts/verify-cv-downloads.mjs && next build",
+    "build": "next lint && node scripts/check-i18n-keys.mjs && node scripts/verify-cv-downloads.mjs && node scripts/regression-guards.mjs && next build",
     "i18n:check": "node scripts/check-i18n-keys.mjs",
+    "regression:check": "node scripts/regression-guards.mjs",
     "start": "next start"
   },
   "dependencies": {
