@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import HeroSvg from "@/assets/icons/HeroSvg";
+import HeroSvg from "../../assets/icons/HeroSvg";
 
 export default function HeroAnimation() {
   const [mounted, setMounted] = useState(false);

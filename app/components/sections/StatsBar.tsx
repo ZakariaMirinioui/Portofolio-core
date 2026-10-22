@@ -1,6 +1,6 @@
 import { Slide } from "../../animation/Slide";
 import { getTranslations } from "next-intl/server";
-import { homeStats } from "@/data/home-stats";
+import { homeStats } from "../../data/home-stats";
 
 export default async function StatsBar({ locale }: { locale: string }) {
   const t = await getTranslations({ locale, namespace: "home.stats" });

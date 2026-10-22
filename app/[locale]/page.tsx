@@ -1,7 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { profileQuery, featuredTestimonialsQuery } from "@/lib/sanity.query";
 import type { ProfileType, TestimonialType } from "@/types";
-import HeroAnimation from "@/components/hero/HeroAnimation";
+import HeroAnimation from "../components/hero/HeroAnimation";
 import Job from "../components/pages/Job";
 import Social from "../components/shared/Social";
 import { Slide } from "../animation/Slide";
