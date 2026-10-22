@@ -1,9 +1,7 @@
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { getAlternateUrls, getCanonicalUrl, SITE_URL } from "@/lib/metadata";
-import { profileQuery } from "@/lib/sanity.query";
 import type { ProfileType } from "@/types";
-import { sanityFetch } from "@/lib/sanity.client";
 import CvDownload from "@/app/components/cv-download/CvDownload";
 import AboutHero from "@/app/components/sections/AboutHero";
 import KpiStrip from "@/app/components/sections/KpiStrip";
@@ -13,6 +11,7 @@ import StackGrid from "@/app/components/sections/StackGrid";
 import ClosingBand from "@/app/components/sections/ClosingBand";
 import AboutSidebar from "@/app/components/sections/AboutSidebar";
 import { Slide } from "@/app/animation/Slide";
+import { profile } from "../../data/profile";
 
 export async function generateMetadata({
   params,
@@ -42,24 +41,6 @@ export async function generateMetadata({
   };
 }
 
-const fallbackProfile: ProfileType = {
-  _id: "fallback",
-  fullName: "Zakaria Mirinioui",
-  headline: "Full Stack Developer & Digital Solutions Architect",
-  profileImage: {
-    image: "/personal-img-formal.webp",
-    lqip: "",
-    alt: "Portrait of Zakaria Mirinioui",
-  },
-  shortBio: "",
-  location: "Casablanca & El Jadida, Morocco",
-  fullBio: [],
-  email: "zakmirinioui@gmail.com",
-  resumeURL: "",
-  og: "",
-  usage: [],
-};
-
 export default async function About({
   params,
 }: {
@@ -67,12 +48,6 @@ export default async function About({
 }) {
   const { locale } = params;
   const t = await getTranslations({ locale, namespace: "about" });
-  let profile: ProfileType | null = null;
-  try {
-    profile = await sanityFetch({ query: profileQuery, tags: ["profile"] });
-  } catch {
-    profile = null;
-  }
 
   return (
     <main className="relative lg:max-w-7xl mx-auto max-w-3xl md:px-16 px-6 lg:mt-20 mt-12">
@@ -80,7 +55,7 @@ export default async function About({
         <div className="grid gap-y-12 lg:gap-x-10 lg:grid-cols-[1.55fr_1fr]">
           <div className="lg:col-start-1">
             <AboutHero
-              profile={profile ?? fallbackProfile}
+              profile={profile}
               locale={locale}
               className="mb-12 lg:mb-16"
             />
@@ -95,7 +70,7 @@ export default async function About({
             aria-label={t("sidebarLabel")}
           >
             <AboutSidebar
-              profile={profile ?? fallbackProfile}
+              profile={profile}
               locale={locale}
             />
           </aside>

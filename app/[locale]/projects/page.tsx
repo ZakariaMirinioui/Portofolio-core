@@ -1,12 +1,11 @@
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { getAlternateUrls, getCanonicalUrl, SITE_URL } from "@/lib/metadata";
-import { projectsQuery, featuredProjectsQuery } from "@/lib/sanity.query";
 import type { ProjectType } from "@/types";
-import { sanityFetch } from "@/lib/sanity.client";
 import PageHeading from "../../components/shared/PageHeading";
 import NextPageTeaser from "../../components/sections/NextPageTeaser";
 import ProjectsClient from "./ProjectsClient";
+import { projects, featuredProjects } from "../../data/projects";
 
 export async function generateMetadata({
   params,
@@ -44,10 +43,6 @@ export default async function ProjectsPage({
   const { locale } = params;
   const t = await getTranslations({ locale, namespace: "projects" });
   const tNav = await getTranslations({ locale, namespace: "navigation" });
-  const [projects, featuredProjects] = await Promise.all([
-    sanityFetch({ query: projectsQuery, tags: ["project"] }) as Promise<ProjectType[]>,
-    sanityFetch({ query: featuredProjectsQuery, tags: ["project"] }) as Promise<ProjectType[]>,
-  ]);
 
   return (
     <main className="max-w-7xl mx-auto md:px-16 px-6">

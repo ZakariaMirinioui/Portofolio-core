@@ -1,23 +1,19 @@
-import { clientsQuery } from "@/lib/sanity.query";
 import type { ClientType } from "@/types";
-import { sanityFetch } from "@/lib/sanity.client";
 import { getTranslations } from "next-intl/server";
 import { Slide } from "../../animation/Slide";
 import Image from "next/image";
+import { clients } from "../../data/clients";
 
 export default async function ClientLogos({ locale, featuredOnly = true, title }: { locale: string; featuredOnly?: boolean; title?: string }) {
   const t = await getTranslations({ locale, namespace: "home.clientLogos" });
   const resolvedTitle = title ?? t("title");
-  const clients: ClientType[] = await sanityFetch({
-    query: clientsQuery,
-    tags: ["client"],
-  });
+  const clientsData: ClientType[] = clients;
 
-  if (!clients || clients.length === 0) return null;
+  if (!clientsData || clientsData.length === 0) return null;
 
   const displayClients = featuredOnly
-    ? clients.filter(c => c.projects && c.projects.length > 0)
-    : clients;
+    ? clientsData.filter(c => c.projects && c.projects.length > 0)
+    : clientsData;
 
   if (displayClients.length === 0) return null;
 

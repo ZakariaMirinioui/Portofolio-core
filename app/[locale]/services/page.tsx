@@ -1,9 +1,7 @@
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { getAlternateUrls, getCanonicalUrl, SITE_URL } from "@/lib/metadata";
-import { servicesQuery, testimonialsQuery } from "@/lib/sanity.query";
 import type { ServiceType, TestimonialType } from "@/types";
-import { sanityFetch } from "@/lib/sanity.client";
 import PageHeading from "../../components/shared/PageHeading";
 import { Slide } from "../../animation/Slide";
 import {
@@ -18,6 +16,8 @@ import { Link } from "@/i18n/navigation";
 import TestimonialsCarousel from "../../components/sections/TestimonialsCarousel";
 import ClientLogos from "../../components/sections/ClientLogos";
 import NextPageTeaser from "../../components/sections/NextPageTeaser";
+import { services, featuredServices } from "../../data/services";
+import { featuredTestimonials } from "../../data/testimonials";
 
 export async function generateMetadata({
   params,
@@ -70,10 +70,6 @@ export default async function ServicesPage({
   const { locale } = params;
   const t = await getTranslations({ locale, namespace: "services" });
   const tNav = await getTranslations({ locale, namespace: "navigation" });
-  const [services, testimonials] = await Promise.all([
-    sanityFetch({ query: servicesQuery, tags: ["service"] }) as Promise<ServiceType[]>,
-    sanityFetch({ query: testimonialsQuery, tags: ["testimonial"] }) as Promise<TestimonialType[]>,
-  ]);
 
   return (
     <main className="max-w-7xl mx-auto md:px-16 px-6">
@@ -100,7 +96,7 @@ export default async function ServicesPage({
           <h2 className="text-2xl font-incognito font-bold tracking-tight mb-8 text-center">
             {t("testimonials.title")}
           </h2>
-          <TestimonialsCarousel testimonials={testimonials} />
+          <TestimonialsCarousel testimonials={featuredTestimonials} />
         </section>
       </Slide>
 
@@ -126,12 +122,11 @@ export default async function ServicesPage({
               </a>
                <Link
                  locale={locale}
-
-                href="/projects"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-md dark:bg-zinc-800 bg-zinc-200 dark:text-white text-zinc-900 font-semibold border dark:border-zinc-700 border-zinc-300 hover:dark:border-zinc-500 hover:border-zinc-400 transition-colors"
-              >
-                {t("cta.viewWork")}
-              </Link>
+                 href="/projects"
+                 className="inline-flex items-center gap-2 px-6 py-3 rounded-md dark:bg-zinc-800 bg-zinc-200 dark:text-white text-zinc-900 font-semibold border dark:border-zinc-700 border-zinc-300 hover:dark:border-zinc-500 hover:border-zinc-400 transition-colors"
+               >
+                 {t("cta.viewWork")}
+               </Link>
             </div>
           </div>
         </section>

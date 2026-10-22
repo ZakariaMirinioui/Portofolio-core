@@ -1,25 +1,54 @@
 import Image from "next/image";
 import { Metadata } from "next";
-import { projectsQuery, singleProjectQuery } from "@/lib/sanity.query";
 import type { ProjectType } from "@/types";
-import { PortableText } from "@portabletext/react";
 import { CustomPortableText } from "@/app/components/shared/CustomPortableText";
 import { Slide } from "../../../animation/Slide";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { getAlternateUrls, getCanonicalUrl, SITE_URL } from "@/lib/metadata";
-import { urlFor } from "@/lib/sanity.image";
-import { sanityFetch } from "@/lib/sanity.client";
 import { BiLinkExternal, BiLogoGithub, BiLock } from "react-icons/bi";
 import ProjectLogo from "@/app/components/shared/ProjectLogo";
 import { Link } from "@/i18n/navigation";
+import { projects } from "../../../data/projects";
+
+function PortableTextRenderer({ value }: { value: any[] }) {
+  if (!value || !Array.isArray(value)) return null;
+
+  return (
+    <div className="prose dark:prose-invert max-w-none">
+      {value.map((block, i) => {
+        if (block._type === "block") {
+          return (
+            <div key={i} className="mb-4">
+              {block.children?.map((child: any, j: number) => {
+                if (child._type === "span") {
+                  return (
+                    <span key={j} className={child.marks?.includes("strong") ? "font-bold" : ""}>
+                      {child.text}
+                    </span>
+                  );
+                }
+                return null;
+              })}
+            </div>
+          );
+        }
+        if (block._type === "list") {
+          return (
+            <ul key={i} className="list-disc list-inside mb-4">
+              {block.children?.map((item: any, j: number) => (
+                <li key={j}>{item.children?.[0]?.text}</li>
+              ))}
+            </ul>
+          );
+        }
+        return null;
+      })}
+    </div>
+  );
+}
 
 export async function generateStaticParams() {
-  const projects = await sanityFetch<Array<{ slug: string }>>({
-    query: projectsQuery,
-    tags: ["project"],
-  });
-
   return routing.locales.flatMap((locale) =>
     projects.map((project) => ({ locale, project: project.slug }))
   );
@@ -34,15 +63,10 @@ type Props = {
 
 const fallbackImage: string = "/project.png";
 
-// Dynamic metadata for SEO
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, project: slug } = params;
   const t = await getTranslations({ locale, namespace: "metadata" });
-  const project: ProjectType = await sanityFetch({
-    query: singleProjectQuery,
-    tags: ["project"],
-    qParams: { slug },
-  });
+  const project = projects.find((p) => p.slug === slug);
 
   const path = `/projects/${project?.slug || slug}`;
 
@@ -67,7 +91,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       alternateLocale: locale === "fr" ? ["en_US"] : ["fr_FR"],
       images: [
         project.coverImage?.image
-          ? urlFor(project.coverImage.image).width(1200).height(630).url()
+          ? `${SITE_URL}${project.coverImage.image}`
           : fallbackImage,
       ],
     },
@@ -79,11 +103,21 @@ export default async function Project({ params }: Props) {
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "projectDetail" });
   const tCommon = await getTranslations({ locale, namespace: "common" });
-  const project: ProjectType = await sanityFetch({
-    query: singleProjectQuery,
-    tags: ["project"],
-    qParams: { slug },
-  });
+  const project = projects.find((p) => p.slug === slug);
+
+  if (!project) {
+    return (
+      <main className="max-w-6xl mx-auto lg:px-16 px-8">
+        <div className="text-center py-20">
+          <h1 className="font-incognito font-bold text-3xl mb-4">{t("notFound")}</h1>
+          <p className="dark:text-zinc-400 text-zinc-600 mb-8">{t("notFoundDescription")}</p>
+          <Link locale={locale} href="/projects" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-primary-color text-zinc-900 dark:text-zinc-950 font-semibold hover:opacity-90 transition-opacity">
+            {t("backToProjects")}
+          </Link>
+        </div>
+      </main>
+    );
+  }
 
   const meta: Array<{ label: string; value: string }> = [];
   if (project.role) meta.push({ label: tCommon("role"), value: project.role });
@@ -101,12 +135,17 @@ export default async function Project({ params }: Props) {
             <div className="mb-4">
               <div className="mb-4 w-fit">
                 <ProjectLogo
-                  src={project.logo}
+                  src={
+                    project.slug === "dossera-jams"
+                      ? "/dossera-darkmode.png"
+                      : project.logo
+                  }
                   name={project.name}
                   category={project.category}
                   slug={project.slug}
                   wellClassName="h-16 w-fit max-w-[15rem]"
                   iconSize={32}
+                  forceWhiteBg={project.slug === "dossera-jams"}
                 />
               </div>
               <h1 className="font-incognito font-black tracking-tight sm:text-5xl text-3xl max-w-md">
@@ -163,16 +202,15 @@ export default async function Project({ params }: Props) {
                 </span>
               )}
 
-              {project.caseStudy && (
+              {(project as any).caseStudy && (
                  <Link
                    locale={locale}
-
-                  href={`/projects/${project.slug}/case-study`}
-                  className="flex items-center gap-x-2 dark:bg-zinc-800 bg-zinc-200 dark:text-white text-zinc-900 font-semibold rounded-md px-4 py-2 duration-200 border dark:border-zinc-700 border-zinc-300 hover:dark:border-zinc-500 hover:border-zinc-400"
-                >
-                  {t("caseStudy")} →
-                </Link>
-              )}
+                   href={`/projects/${project.slug}/case-study`}
+                   className="flex items-center gap-x-2 dark:bg-zinc-800 bg-zinc-200 dark:text-white text-zinc-900 font-semibold rounded-md px-4 py-2 duration-200 border dark:border-zinc-700 border-zinc-300 hover:dark:border-zinc-500 hover:border-zinc-400"
+                 >
+                   {t("caseStudy")} →
+                 </Link>
+               )}
             </div>
           </div>
 
@@ -253,10 +291,7 @@ export default async function Project({ params }: Props) {
           )}
 
           <div className="mt-8 dark:text-zinc-400 text-zinc-600 leading-relaxed">
-            <PortableText
-              value={project.description}
-              components={CustomPortableText}
-            />
+            <PortableTextRenderer value={project.description} />
           </div>
 
           {project.gallery && project.gallery.length > 0 && (
@@ -265,7 +300,7 @@ export default async function Project({ params }: Props) {
                 {t("screenshots")}
               </h2>
               <div className="grid sm:grid-cols-2 gap-4">
-                {project.gallery.map((shot, i) => (
+                {project.gallery.map((shot: any, i) => (
                   <figure key={i}>
                     <div className="relative w-full h-48 rounded-lg overflow-hidden border dark:border-zinc-800 border-zinc-200">
                       <Image
