@@ -27,7 +27,7 @@ export default async function CaseStudyTeaser({ locale }: { locale: string }) {
   return (
     <section className="mb-20">
       <div
-        className={`relative rounded-[24px] overflow-hidden border border-white/20 dark:border-white/12 bg-gradient-to-br from-emerald-900 via-emerald-800 to-emerald-700 dark:from-[#021A14] dark:via-[#053826] dark:to-[#08603F] min-h-[420px] lg:min-h-[560px] transition-all duration-300 animate-[fadeSlideUp_500ms_ease-out_forwards] opacity-0`}
+        className="relative overflow-hidden rounded-[24px] border border-white/20 bg-gradient-to-br from-emerald-900 via-emerald-800 to-emerald-700 transition-all duration-300 animate-[fadeSlideUp_500ms_ease-out_forwards] opacity-0 dark:border-white/12 dark:from-[#021A14] dark:via-[#053826] dark:to-[#08603F]"
         style={{ animationDelay: "140ms" }}
       >
         <div className="absolute inset-0" style={{ background: emeraldGlow }} />
@@ -35,7 +35,7 @@ export default async function CaseStudyTeaser({ locale }: { locale: string }) {
           className="absolute inset-0 opacity-30"
           style={{ backgroundImage: gridPattern }}
         />
-        <div className="absolute inset-0 opacity-4 bg-[url('/noise.png')] pointer-events-none" />
+        <div className="pointer-events-none absolute inset-0 bg-[url('/noise.png')] opacity-4" />
 
         <div
           className="absolute inset-0 opacity-0 transition-opacity duration-600 ease-in-out group-hover:opacity-100"
@@ -51,31 +51,35 @@ export default async function CaseStudyTeaser({ locale }: { locale: string }) {
           }}
         />
 
-        <div className="relative z-10 flex flex-col lg:flex-row gap-0 lg:gap-6 p-6 lg:p-10 h-full">
-          <div className="flex-1 flex flex-col justify-between lg:justify-center min-h-[360px] lg:min-h-auto">
-            <span className="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-[6px] bg-white/8 border border-white/20 text-[11px] uppercase tracking-[0.12em] text-white/90 font-medium backdrop-blur-sm font-montserrat">
+        <div className="relative z-10 grid gap-8 p-6 lg:grid-cols-2 lg:gap-10 lg:p-12">
+          <div className="flex flex-col items-center justify-center text-center">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-[6px] border border-white/20 bg-white/8 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.12em] text-white/90 backdrop-blur-sm font-montserrat">
               {t("label")}
-            </span>
+            </div>
 
-            <h2 className="font-sans font-bold text-3xl lg:text-5xl tracking-tight text-white mb-4 leading-tight">
+            <h2 className="mb-3 font-sans text-3xl font-bold leading-tight tracking-tight text-white lg:text-5xl">
               {featured.name}
             </h2>
 
-            <p className="text-base text-white/75 leading-relaxed mb-10 max-w-[420px]">
+            <p className="mx-auto mb-5 max-w-[420px] text-base leading-relaxed text-white/75">
               {featured.tagline}
             </p>
 
+            <p className="mx-auto mb-8 max-w-[420px] text-[13px] leading-relaxed text-white/80 font-montserrat">
+              {t("deploymentText")}
+            </p>
+
             {featured.metrics && featured.metrics.length > 0 && (
-              <div className="grid grid-cols-2 gap-3 mb-10">
+              <div className="mb-8 grid w-full max-w-[440px] grid-cols-2 gap-3">
                 {featured.metrics.slice(0, 4).map((metric) => (
                   <div
                     key={metric.label}
-                    className="group relative p-3 rounded-lg transition-all duration-300 border border-white/10 bg-white/5 backdrop-blur-sm hover:border-dossera-color/50 hover:shadow-[0_0_20px_rgba(5,109,78,0.3)]"
+                    className="group relative rounded-xl border border-white/10 bg-white/5 p-3 backdrop-blur-sm transition-all duration-300 hover:border-dossera-color/50 hover:shadow-[0_0_20px_rgba(5,109,78,0.3)]"
                   >
-                    <span className="text-[10px] uppercase tracking-wider text-white/70 font-medium leading-none font-montserrat">
+                    <span className="text-[10px] font-medium uppercase leading-none tracking-wider text-white/70 font-montserrat">
                       {metric.label}
                     </span>
-                    <span className="text-sm font-bold text-white mt-0.5 leading-none animate-[countUp_1500ms_ease-out_forwards]">
+                    <span className="mt-1.5 block text-lg font-bold leading-none text-white">
                       {metric.value}
                     </span>
                   </div>
@@ -83,11 +87,11 @@ export default async function CaseStudyTeaser({ locale }: { locale: string }) {
               </div>
             )}
 
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap items-center justify-center gap-3">
               <Link
                 locale={locale}
                 href={`/projects/${featured.slug}`}
-                className="group relative inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-[#064430] bg-[#E8FFF4] font-bold text-sm tracking-tight transition-all duration-300 hover:bg-white hover:scale-[1.02]"
+                className="group relative inline-flex items-center justify-center gap-2 rounded-lg bg-[#E8FFF4] px-6 py-3 text-sm font-bold tracking-tight text-[#064430] transition-all duration-300 hover:scale-[1.02] hover:bg-white"
               >
                 {t("readCaseStudy")}
                 <span className="transition-transform duration-300 group-hover:translate-x-1">
@@ -99,7 +103,7 @@ export default async function CaseStudyTeaser({ locale }: { locale: string }) {
                   href={featured.projectUrl}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="group relative inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg border border-white/40 text-white/90 font-bold text-sm tracking-tight bg-white/5 hover:bg-white/10 transition-all duration-300 backdrop-blur-sm"
+                  className="group relative inline-flex items-center justify-center gap-2 rounded-lg border border-white/40 bg-white/5 px-6 py-3 text-sm font-bold tracking-tight text-white/90 backdrop-blur-sm transition-all duration-300 hover:bg-white/10"
                 >
                   {t("viewLive")}
                   <BiLinkExternal className="text-sm transition-transform group-hover:translate-x-1" />
@@ -108,48 +112,21 @@ export default async function CaseStudyTeaser({ locale }: { locale: string }) {
             </div>
           </div>
 
-          <div className="flex-1 flex flex-col items-center justify-center p-8 lg:p-12 min-h-[280px] lg:min-h-auto relative overflow-hidden">
-            <div className="relative z-10 flex flex-col items-center justify-center">
-              {featured.slug === "dossera" ? (
-                <>
-                  <img
-                    src="/dossera-lightmode.png"
-                    alt="Dossera JAMS"
-                    className="w-[220px] h-auto opacity-100 transition-opacity duration-300 dark:opacity-0 mx-auto"
-                    aria-hidden="true"
-                    width={220}
-                    height={60}
-                    decoding="async"
-                    loading="lazy"
-                  />
-                  <img
-                    src="/dossera-darkmode.png"
-                    alt="Dossera JAMS"
-                    className="w-[220px] h-auto opacity-0 transition-opacity duration-300 dark:opacity-100 mx-auto"
-                    aria-hidden="true"
-                    width={220}
-                    height={60}
-                    decoding="async"
-                    loading="lazy"
-                  />
-                </>
-              ) : (
-                <div className="w-[220px] h-[60px] flex items-center justify-center rounded-lg bg-white/10 border border-white/20 mx-auto">
-                  {featured.name}
-                </div>
-              )}
-              <span className="mt-6 text-sm font-bold text-white tracking-wide font-montserrat">
-                JAMS v2.4
+          <div className="flex flex-col items-center justify-center">
+            <img
+              src="/dossera-darkmode.png"
+              alt="Dossera JAMS"
+              className="h-auto w-full max-w-[320px]"
+              width={320}
+              height={120}
+              decoding="async"
+              loading="lazy"
+            />
+            <div className="mt-8 flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 backdrop-blur-sm">
+              <span className="h-2 w-2 rounded-full bg-emerald-400" />
+              <span className="text-[10px] font-medium uppercase tracking-wider text-white font-montserrat">
+                {t("status")}
               </span>
-              <div className="mt-4 flex items-center gap-2 px-3 py-1 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm">
-                <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                <span className="text-[10px] uppercase tracking-wider text-white font-medium font-montserrat">
-                  OPERATIONAL SYSTEM
-                </span>
-              </div>
-              <p className="mt-5 text-xs text-white/70 leading-relaxed text-center max-w-[200px] font-montserrat">
-                Deployed in Moroccan courts.
-              </p>
             </div>
           </div>
         </div>

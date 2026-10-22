@@ -136,8 +136,8 @@ export default async function Project({ params }: Props) {
               <div className="mb-4 w-fit">
                 <ProjectLogo
                   src={
-                    project.slug === "dossera-jams"
-                      ? "/dossera-darkmode.png"
+                    project.slug === "dossera"
+                      ? "/dossera-lightmode.png"
                       : project.logo
                   }
                   name={project.name}
@@ -145,7 +145,7 @@ export default async function Project({ params }: Props) {
                   slug={project.slug}
                   wellClassName="h-16 w-fit max-w-[15rem]"
                   iconSize={32}
-                  forceWhiteBg={project.slug === "dossera-jams"}
+                  forceWhiteBg={project.slug === "dossera"}
                 />
               </div>
               <h1 className="font-incognito font-black tracking-tight sm:text-5xl text-3xl max-w-md">

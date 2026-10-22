@@ -6,7 +6,7 @@ export const projects = [
     tagline: "Sovereign Judicial Archive Management System deployed in Moroccan courts",
     projectUrl: "https://dossera.surge.sh",
     repository: "",
-    logo: "/dossera-logo.png",
+    logo: "/dossera-lightmode.png",
     coverImage: {
       image: "/dossera-darkmode.png",
       alt: "Dossera JAMS dashboard",

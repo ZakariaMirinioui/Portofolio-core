@@ -104,7 +104,9 @@
     "caseStudyTeaser": {
       "label": "Étude de cas en vedette",
       "readCaseStudy": "Lire l'étude de cas complète",
-      "viewLive": "Voir en ligne"
+      "viewLive": "Voir en ligne",
+      "status": "Système opérationnel",
+      "deploymentText": "Déployé avec succès au Tribunal de Première Instance de Khouribga. Des dizaines d'utilisateurs bénéficient quotidiennement de la puissance et de la fiabilité de JAMS."
     },
     "servicesOverview": {
       "title": "Comment je peux aider",
@@ -270,11 +272,13 @@
     "title": "Services",
     "description": "De la transformation numérique souveraine pour les institutions gouvernementales aux plateformes SaaS multi-locataires et engagements CTO fractionnés — j'apporte une expérience éprouvée sur des systèmes en production servant de vrais utilisateurs.",
     "cta": {
-      "title": "Prêt à démarrer votre projet ?",
+      "title": "Prêt à démarrer votre projet ?",
       "description": "Que vous ayez besoin d'une transformation numérique complète, d'un nouveau produit SaaS, ou d'un leadership technique senior — discutons de la façon dont je peux aider.",
       "startConversation": "Commencer la conversation",
-      "viewWork": "Voir les réalisations"
+      "viewWork": "Voir les réalisations",
+      "malt": "Voir le profil Malt"
     },
+    "emailAbout": "M'écrire au sujet de ce service",
     "sections": {
       "deliverables": "Ce que nous livrons",
       "process": "Notre processus",

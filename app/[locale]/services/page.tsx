@@ -11,10 +11,10 @@ import {
   HiOutlineChartBar,
   HiOutlineCheckCircle,
   HiOutlineArrowRight,
+  HiOutlineMail,
 } from "react-icons/hi";
 import { Link } from "@/i18n/navigation";
 import TestimonialsCarousel from "../../components/sections/TestimonialsCarousel";
-import ClientLogos from "../../components/sections/ClientLogos";
 import NextPageTeaser from "../../components/sections/NextPageTeaser";
 import { services, featuredServices } from "../../data/services";
 import { featuredTestimonials } from "../../data/testimonials";
@@ -100,9 +100,6 @@ export default async function ServicesPage({
         </section>
       </Slide>
 
-      {/* Client Logos */}
-      <ClientLogos locale={locale} featuredOnly={false} title={t("clientLogos.title")} />
-
       {/* CTA Section */}
       <Slide delay={0.4}>
         <section className="mt-16 mb-20">
@@ -119,6 +116,14 @@ export default async function ServicesPage({
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-md dark:bg-primary-color bg-secondary-color dark:text-zinc-900 text-white font-semibold hover:opacity-90 transition-opacity"
               >
                 {t("cta.startConversation")}
+              </a>
+              <a
+                href="https://www.malt.fr/profile/zakariamirinioui"
+                target="_blank"
+                rel="noreferrer noopener"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-md dark:bg-zinc-800 bg-white dark:text-white text-zinc-900 font-semibold border dark:border-zinc-700 border-zinc-300 hover:dark:border-zinc-500 hover:border-zinc-400 transition-colors"
+              >
+                {t("cta.malt")}
               </a>
                <Link
                  locale={locale}
@@ -188,6 +193,13 @@ async function ServiceCard({
             <p className="dark:text-zinc-400 text-zinc-600 leading-relaxed">
               {service.shortDescription}
             </p>
+            <a
+              href={`mailto:zakmirinioui@gmail.com?subject=${encodeURIComponent(service.name)}`}
+              className="mt-4 inline-flex items-center gap-2 rounded-md border border-zinc-300 bg-white px-4 py-2 text-sm font-semibold text-zinc-900 transition-colors hover:border-zinc-400 hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:border-zinc-500 dark:hover:bg-zinc-800"
+            >
+              <HiOutlineMail className="text-base" aria-hidden="true" />
+              {t("emailAbout")}
+            </a>
           </div>
         </div>
       </div>

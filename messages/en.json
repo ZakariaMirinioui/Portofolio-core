@@ -104,7 +104,9 @@
     "caseStudyTeaser": {
       "label": "Featured Case Study",
       "readCaseStudy": "Read Full Case Study",
-      "viewLive": "View Live"
+      "viewLive": "View Live",
+      "status": "Operational System",
+      "deploymentText": "Successfully deployed at the Court of First Instance of Khouribga. Dozens of users benefit daily from JAMS's power and reliability."
     },
     "servicesOverview": {
       "title": "How I Can Help",
@@ -273,8 +275,10 @@
       "title": "Ready to Start Your Project?",
       "description": "Whether you need a complete digital transformation, a new SaaS product, or senior technical leadership — let's discuss how I can help.",
       "startConversation": "Start a Conversation",
-      "viewWork": "View Past Work"
+      "viewWork": "View Past Work",
+      "malt": "View Malt Profile"
     },
+    "emailAbout": "Email me about this service",
     "sections": {
       "deliverables": "What We Deliver",
       "process": "Our Process",
