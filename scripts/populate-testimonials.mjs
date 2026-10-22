@@ -27,7 +27,7 @@ async function createTestimonials() {
       featured: true,
       permissionToPublish: true,
       dateReceived: "2024-06-15",
-      project: projectMap["dossera-jams"] ? { _type: "reference", _ref: projectMap["dossera-jams"] } : undefined,
+      project: projectMap["dossera"] ? { _type: "reference", _ref: projectMap["dossera"] } : undefined,
     },
     {
       _type: "testimonial",

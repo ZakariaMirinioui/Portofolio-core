@@ -16,7 +16,7 @@ async function createProjects() {
     {
       _type: "project",
       name: "Dossera JAMS",
-      slug: { current: "dossera-jams" },
+      slug: { current: "dossera" },
       tagline: "Sovereign Judicial Archive Management System deployed in Moroccan courts",
       category: "judicial",
       status: "production",

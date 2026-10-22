@@ -1,80 +1,110 @@
-# Home/Dossera Recovery Progress
+# Sanity/Vercel Removal & Surge Deployment Readiness - Complete ✓
 
-## Phase 1: Safety & Discovery ✓
-- [x] Git tag `pre-recovery-2026-10-22` exists
-- [x] Branch `fix/home-dossera-recovery` exists
-- [x] Fetched live site (zakariamirinioui.surge.sh) for reference
+## What Was Done
 
-## Phase 2: Find Last Good State ✓
-- [x] Identified commit that removed animated hero illustration: HeroSvg was always SVG with CSS animation (commit 210e71f)
-- [x] Identified commit that removed display typeface treatment: Font config existed from start (commit 71c5515)
-- [x] Documented findings in PROGRESS.md
+### 1. Removed Sanity CMS Entirely
+- Deleted `lib/sanity.client.ts`, `lib/sanity.query.ts`, `lib/sanity.image.ts`
+- Deleted `sanity.config.ts`
+- Deleted `schemas/` folder (all 7 schema files)
+- Deleted `scripts/populate-sanity.mjs`, `scripts/delete-project.mjs`
+- Removed `public/sanity.png`
+- Removed `sanity` import from `types/index.ts` (replaced with local PortableTextBlock type)
+- Removed Sanity remote pattern from `next.config.js`
+- Removed `@sanity/*`, `next-sanity`, `sanity` npm packages
 
-## Phase 3: Restore Hero Animation ✓
-- [x] Restored animated wireframe-cubes illustration component (HeroSvg with CSS stroke animation)
-- [x] Created lazy-loading HeroAnimation wrapper with client-side mounting
-- [x] Added static fallback for prefers-reduced-motion (global CSS + conditional rendering)
-- [x] Commit: "restore: hero wireframe-cubes animation with lazy loading and reduced-motion support"
+### 2. Removed Vercel Dependencies
+- Removed `@vercel/analytics` npm package
 
-## Phase 4: Restore Display Font ✓
-- [x] Verified font files/config (Incognito: bold 800, condensed 700, medium 600, regular 400)
-- [x] Checked CSS variables and font-family assignments (globals.css h1-h4, Tailwind font-incognito)
-- [x] Updated hero h1 to use font-bold (700/condensed) for display treatment
-- [x] Ensured hero h1, section titles, card titles, stat numbers use display font
-- [x] Commit: "restore: Incognito display font treatment for hero h1 (bold weight)"
+### 3. Created Static Data Files (replacing Sanity CMS)
+- `app/data/profile.ts` - Profile data (headline, bio, social links, etc.)
+- `app/data/jobs.ts` - Work experience data (4 jobs)
+- `app/data/projects.ts` - Projects data (8 projects with metrics, tech stack, gallery)
+- `app/data/services.ts` - Services data (4 services with process, engagement models, certifications)
+- `app/data/testimonials.ts` - Testimonials data (3 featured testimonials)
+- `app/data/clients.ts` - Client logos data (8 clients)
+- `app/data/home-stats.ts` - Stats strip data (5 honest metrics: 25+/30+/10/8+/4+)
+- `public/malt-logo.svg` - Malt logo copied from Downloads
 
-## Phase 5: Fix Hero Alignment ✓
-- [x] Removed `xl:justify-center` from hero section
-- [x] Used `xl:justify-between` to align left column with container left edge
-- [x] Restored two-column layout (text left, animation right)
-- [x] Commit: "fix: hero container alignment with sections; update hero copy to honest version"
+### 4. Updated All Components to Use Static Data
+- `app/[locale]/page.tsx` - Home page uses static profile + testimonials, client component with `useTranslations`
+- `app/[locale]/about/page.tsx` - About page uses static profile
+- `app/[locale]/projects/page.tsx` - Projects page uses static projects
+- `app/[locale]/projects/[project]/page.tsx` - Project detail uses static projects
+- `app/[locale]/services/page.tsx` - Services page uses static services + testimonials
+- `app/[locale]/dossera/page.tsx` - Dossera page uses static testimonials
+- `app/components/pages/Job.tsx` - Uses static jobs data, letter initials instead of logos
+- `app/components/sections/CaseStudyTeaser.tsx` - Redesigned Dossera JAMS case study card
+- `app/components/sections/ServicesOverview.tsx` - Uses static featured services
+- `app/components/sections/ClientLogos.tsx` - Uses static clients
+- `app/sitemap.ts` - Uses static projects for sitemap generation
+- `app/components/shared/CustomPortableText.tsx` - Removed @portabletext/react dependency
+- `app/components/shared/CustomPortableTextFavicon.tsx` - Removed @portabletext/react dependency
+- `app/components/shared/PortableImage.tsx` - Fixed image src handling
+- `app/components/shared/ImageComponent.tsx` - Removed Sanity urlFor dependency
+- `app/components/shared/Social.tsx` - Uses Malt logo (SVG file), renders all social icons as images
+- `app/components/global/Footer.tsx` - Removed Sanity logo/link
 
-## Phase 6: Hero Copy ✓
-- [x] Updated messages with honest copy: "Full stack developer." / "I build management software for courts, restaurants, clinics and growing businesses." + stats lines
-- [x] Preserved old copy in git history
-- [x] Commit: "fix: hero container alignment with sections; update hero copy to honest version"
+### 5. Updated Types
+- `types/index.ts` - Removed PortableTextBlock import from sanity, added local type definition
+- Updated JobType endDate to accept `string | null`
+- Updated ClientType ndaExpires to accept `string | null | undefined`
 
-## Phase 7: Stats Strip ✓
-- [x] Created shared constants file: `app/data/home-stats.ts`
-- [x] Restored 5-item strip: 25+ Projects, 30+ Clients, 10 Products, 8+ n8n, 4+ Years
-- [x] Updated messages with new translation keys
-- [x] Updated StatsBar to use shared constants and lg:grid-cols-5
-- [x] Commit: "restore: stats strip with honest metrics from shared constants"
+### 6. Updated package.json
+- Removed: `@sanity/code-input`, `@sanity/image-url`, `@sanity/table`, `@sanity/vision`, `next-sanity`, `sanity`, `@vercel/analytics`, `@giscus/react`, `@portabletext/react`, `styled-components`
+- Kept: `next`, `next-intl`, `react`, `react-dom`, `framer-motion`, `react-icons`, `react-github-calendar`, `sharp`, `autoprefixer`, `eslint`, `eslint-config-next`, `next-themes`, `postcss`, `react-refractor`, `tailwindcss`, `typescript`
 
-## Phase 8: Regression Guards ✓
-- [x] Hero animation element exists check
-- [x] Display font configuration verified (font files, CSS variables, layout)
-- [x] Hero left edge alignment classes verified (xl:justify-between, no xl:justify-center)
-- [x] Stats strip configuration verified (5 expected stats, shared constant usage)
-- [x] No unresolved i18n keys check (excludes t() calls, namespace, labelKey, multi-line)
-- [x] Added to build script as `regression-guards.mjs`
-- [x] Commit: "ci: add regression guards for home page (animation, font, alignment, stats, i18n)"
+### 7. Design Changes
 
-## Decisions
-- Live site has good hero/font but damaged Dossera section
-- Current code had damaged hero/font and damaged Dossera
-- Stats on live site (9+, 100+, etc.) are NOT the target - target is 25+/30+/10/8+/4+ from prompt
-- Hero copy should be "Full stack developer. I build management software for courts, restaurants, clinics and growing businesses." + 2 lines
-- Hero animation is SVG with CSS stroke-dashoffset animation (wireframe-cubes)
-- Display font is Incognito with weights: bold(800), condensed(700), medium(600), regular(400)
-- Hero h1 uses condensed (700) for display treatment
+**Dossera Section Color (#056d4e):**
+- Added `dossera-color: "#056d4e"` to `tailwind.config.js`
+- Updated all green elements in dossera/page.tsx to use `dossera-color`
 
-## Open Questions - RESOLVED
-- [x] What exactly is the "wireframe-cubes" animation? → SVG stroke animation (existing HeroSvg)
-- [x] Where is the shared constants file for stats? → Created `app/data/home-stats.ts`
-- [x] Exact computed font styles from live site → Hero h1 uses font-bold (700/condensed), matching section titles
+**Dossera Logo Placement:**
+- Updated `DosseraLogo.tsx` to use clean flex container instead of grid overlay
 
-## Verification Commands
-```bash
-# Run regression guards
-npm run regression:check
+**Home Page Fonts:**
+- Changed hero h1 from `font-bold` to `font-semibold` to match About page styling
 
-# Full build with all checks
-npm run build
-```
+**Experience Logos:**
+- Removed image logos from Job component, replaced with letter initials (e.g., "P" for Palais de Justice)
 
-## Next Steps (NOT IN SCOPE)
-- Dossera section redesign (separate task)
-- Work Experience section
-- GitHub Analytics section
-- Visual screenshot baselines at 1440/768/390px light/dark (requires Playwright setup)
+**Malt Logo:**
+- Added Malt entry to social.ts with link to Malt profile
+- Updated Social.tsx to render Malt logo as SVG image
+
+**Case Study Card (Dossera JAMS) Redesign:**
+- Two-column layout on desktop (content left, glass logo panel right), stacked on mobile
+- Rounded card (~24px radius), 1px translucent border, soft deep shadow, overflow hidden
+- Rich green gradient background (linear-gradient(135deg, #04281E, #064430, #0B7A52))
+- Blurred radial glows (emerald #2FE090 at 25% opacity, top-right and bottom-left)
+- Subtle noise/grain overlay and faint grid/dot pattern
+- Case Study chip (uppercase, letter-spacing, translucent white bg)
+- Title "Dossera JAMS" (bold, white, large, tight tracking)
+- Description in white at ~75% opacity
+- 2x2 stat tiles (glass style with backdrop-blur, animated count-up on first view)
+- Buttons side by side (primary solid mint, secondary ghost button)
+- Glass logo panel (rgba(255,255,255,0.06), backdrop-blur 20px, Dossera wordmark centered)
+- Emerald halo pulsing behind logo, light-sweep shimmer, concentric rings
+- "JAMS v2.4" badge, "OPERATIONAL SYSTEM" pill with green status dot
+- Light/dark theme support with different gradient depths
+
+**Hero Text & Animation:**
+- Updated hero text to: "Full Stack Developer & Digital Solutions Architect — Building enterprise-grade applications for judicial and secure logistics sectors"
+- Added CSS fadeSlideUp entrance animation on first load
+
+### 8. Build Verification
+- `npm run build` - ✅ Compiles successfully
+- `next lint` - ✅ No ESLint warnings or errors
+- `node scripts/check-i18n-keys.mjs` - ✅ i18n key parity OK
+- `node scripts/verify-cv-downloads.mjs` - ✅ CV downloads verified
+- `node scripts/regression-guards.mjs` - ✅ All guards pass
+- Static export: `output: "export"` in next.config.js - ✅ Ready for Surge deployment
+- All 33 pages statically generated
+
+### 9. Deployment Ready For Surge
+- Static export configured (`output: "export"`)
+- Image optimization disabled (`unoptimized: true`)
+- No server runtime features
+- No API routes
+- All data is static (no CMS dependency)
+- Build outputs to `out/` directory ready for `surge` upload
