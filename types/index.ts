@@ -1,4 +1,9 @@
-import { PortableTextBlock } from "sanity";
+export type PortableTextBlock = {
+  _type: string;
+  _key?: string;
+  children?: PortableTextBlock[];
+  [key: string]: unknown;
+};
 
 export type ProfileType = {
   _id: string;
@@ -26,7 +31,7 @@ export type JobType = {
   url: string;
   description: string;
   startDate: string;
-  endDate: string;
+  endDate: string | null;
 };
 
 export type ProjectType = {
@@ -43,7 +48,6 @@ export type ProjectType = {
     lqip: string;
   };
   description: PortableTextBlock[];
-  // New fields
   category?: string;
   status?: string;
   featured?: boolean;
@@ -211,5 +215,5 @@ export type ClientType = {
   services?: Array<{ _ref: string }>;
   testimonial?: { _ref: string };
   isPublic?: boolean;
-  ndaExpires?: string;
+  ndaExpires?: string | null;
 };
