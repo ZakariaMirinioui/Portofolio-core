@@ -1,7 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { profileQuery, featuredTestimonialsQuery } from "@/lib/sanity.query";
 import type { ProfileType, TestimonialType } from "@/types";
-import HeroSvg from "../assets/icons/HeroSvg";
+import HeroAnimation from "@/components/hero/HeroAnimation";
 import Job from "../components/pages/Job";
 import Social from "../components/shared/Social";
 import { Slide } from "../animation/Slide";
@@ -44,9 +44,9 @@ export default async function Home({
             <Social type="social" />
           </Slide>
         </div>
-        <Slide delay={0.14}>
-          <HeroSvg />
-        </Slide>
+<Slide delay={0.14}>
+  <HeroAnimation />
+</Slide>
       </section>
 
       <StatsBar locale={locale} />
