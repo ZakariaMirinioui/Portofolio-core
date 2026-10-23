@@ -302,6 +302,7 @@ h4 {
 
 /* Micro corner on cards â€” dormant until hover/focus/wake. */
 .z-cc {
+  position: absolute;
   opacity: 0;
   z-index: 0;
   transition: opacity 0.25s ease;

@@ -207,3 +207,21 @@ class shadow; corner flash caught mid-draw (stagger visible: idx1 still at peak 
 light+dark; dormant rhombi in leftover cell incl. after filtering; zero console errors light+dark throughout.
 - Statics: +chip 5.8KB, +cardcc 1.9KB, +rhombi 3.6KB source into projects client chunk (gzip ~4KB, leaf page only).
 Build 33/33, shared 87.3 kB unchanged.
+
+## Circuit system reinterpretation - step 7: services placements (2026-10-23)
+- Placements per PLAN rows 20-23: faint-at-default headerRoots from nav border; vertical pipeline rail (NEW derived
+variant genPipelineV, fire at walls [64,480,6], meet ratio exactly 0.625 in a 40x300 host = zero crop/distortion) as a
+fixed ornamental chip-column on the right seam of each process block; horizontal pipeline strips (existing 1200x130
+variant, slice crop shows the trace band) inserted into the gaps between the four ServiceCards (space-y gaps, h-8
+band, -my-2 overlap); final CTA card data-cc + two hover corners tl/br (br via rotate(180deg)); #19 teaser shared.
+- Deviation documented: rail does NOT tie cubes to the numbered circles (their pitch varies per step content and slice
+center-crops) - by design a uniform fixed band "runs beside" the list instead; planes left-aligned attempt (left-[28px])
+also drifted because art scale sqrt-dependence; fixed-size band avoids all coupling.
+--systemic lessons: (1) .z-host z-index:-1 hides art behind OPAQUE light card bgs - dark bgs are translucent
+(rgba 39,39,43,.4) so art shows in dark only; hosts INSIDE light cards need inline zIndex:0 (used on the rail).
+(2) .z-cc now includes position:absolute (spans without .z-host otherwise render in flow; teaser/closing corners got
+positioning from their .z-host class). (3) initial walls attempt [64,600,n] with pitch=h/n left dead bands at the
+bottom; y spread formula (h-60)/(n-1) bounds mines fall-area band.
+- Verified: roots light+dark; rail band light (0.6 token bump; zoom clip shows cubes+runs+dots) + dark; gap strips
+light+dark riding seams, chips peeking; CTA corners draw correctly after .z-cc positioning fix; zero console errors.
+Build pending at commit-time; earlier gate 33/33.

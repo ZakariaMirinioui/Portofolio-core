@@ -87,8 +87,9 @@ export type CircuitVariant =
   | "rhombi" //       g06 — nested rhombi rings with spokes         (400×300)
   | "chip" //         g07 — chip core with child circuits           (400×400)
   | "routing" //      g09 — routing field background                (400×300)
-  | "pipeline" //     g10 — chip-to-chip pulse strip                (1200×130)
-  | "crown" //        g11 — mirror crown ornament                   (1200×200)
+  | "pipeline" //      g10 — chip-to-chip pulse strip                (1200×130)
+  | "pipelineV" //     derived — vertical pipeline rail              (64×600)
+  | "crown" //       g11 — mirror crown ornament                   (1200×200)
   | "gapRail" //      derived — sticky column-gap rail              (64×600)
   | "stub"; //        derived — per-card short stub with branch     (10×96)
 
@@ -357,9 +358,43 @@ const genPipeline: Gen = (r, _uid, walls) => {
   return asm(l) + s;
 };
 
+/* derived — vertical pipeline rail (services process connector) */
+const genPipelineV: Gen = (r, _uid, walls) => {
+  const [w, h, step] = walls;
+  const n = step;
+  const pitch = (h - 60) / Math.max(1, n - 1);
+  const l: SvgTrace[] = [];
+  let s = "";
+  for (let i = 0; i < n; i++) {
+    const y = 30 + i * pitch;
+    const c = mkCube(-0.5, -0.5, 0, 16, 32, y);
+    s +=
+      `<path class="z-c" pathLength="1" d="${c.h}"/>` +
+      `<path class="z-a" pathLength="1" d="${c.v}"/>` +
+      `<path class="z-pad z-pu" style="animation-delay:-${round1(4.5 - i * 0.75)}s;animation-duration:4.5s" d="${pathData(c.t, true)}"/>`;
+    if (i < n - 1) {
+      const y0 = y - 14;
+      l.push(
+        trace(
+          r,
+          [
+            [18, y0],
+            [18, y0 + pitch * 0.28],
+            [47, y0 + pitch * 0.43],
+            [47, y0 + pitch * 0.45],
+            [18, y0 + pitch * 0.58],
+            [18, y0 + pitch * 0.86],
+          ],
+          { d: 4.5, dl: -(4.5 - i * 0.75) }
+        )
+      );
+    }
+  }
+  return asm(l) + s;
+};
+
 /* g11 — mirror crown */
-const genCrown: Gen = (r, _uid, walls) => {
-  const [w, h] = walls;
+const genCrown: Gen = (r, _uid, walls) => {  const [w, h] = walls;
   const l: SvgTrace[] = [];
   for (let t = 0; t < 6; t++)
     l.push(
@@ -441,6 +476,7 @@ export const circuitVariants: Record<CircuitVariant, VariantMeta> = {
   chip: { w: 400, h: 400, seed: 15, walls: [400, 400], gen: genChip },
   routing: { w: 400, h: 300, seed: 18, walls: [400, 300, 7], gen: genRouting, preserve: "xMidYMid slice" },
   pipeline: { w: 1200, h: 130, seed: 1, walls: [1200, 130, 6], gen: genPipeline, preserve: "xMidYMid slice" },
+  pipelineV: { w: 64, h: 600, seed: 31, walls: [64, 600, 5], gen: genPipelineV },
   crown: { w: 1200, h: 200, seed: 10, walls: [1200, 200], gen: genCrown, preserve: "xMidYMid slice" },
   gapRail: { w: 64, h: 600, seed: 22, walls: [64, 600, 54], gen: genGapRail },
   stub: { w: 10, h: 96, seed: 5, walls: [10, 96], gen: genStub },
