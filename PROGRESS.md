@@ -183,3 +183,27 @@ into host middle); walls must match host box.
 - Verified (Playwright, dpr zoom clips): both rails visible light+dark, timeline rail weaves axis markers, stack field
 visible in gutters/empty cell, closing corners idle-invisible + hover-wake; zero console errors both themes; build
 33/33, shared 87.3 kB.
+
+## Circuit system reinterpretation - step 6: projects placements (2026-10-23)
+- Placements per PLAN rows 14-19: compact chip core (STATIC_CHIP, walls 320x320 seed 15) as decorative grid child
+filling the empty 3rd featured column (xl-only, when featuredCount<3); per-card micro corner (STATIC_CARD_CORNER,
+140x140 via new genCorner scale factor m=(w+h)/400 - default renders byte-identical) top-left inside card borders on
+hover/focus (featured + main cards, 10x); filter pills row: one-shot ring pulse on the newly active pill (CSS starts
+when aria-selected flips, no JS) + one-shot corner flash on remounting grid cards, staggered 120ms via --z-cc-delay set
+from card index (grid re-mounts children per activeCategory via React keys, so a plain CSS animation replays);
+nested rhombi (STATIC_RHOMBI) dormant (frozen mid-glide via .z-sleep paused animations) in the empty last main-grid
+cell (xl-only, renders when count%3!==0); faint headerRoots (0.24 via inline --zm-o) hanging from nav border; #19
+Continue-to-Services = existing NextPageTeaser corners (no work).
+- Deviations documented: #15 "g09-short trace row" dropped - the pill strip is crowded (11 pills), a trace behind it
+would clutter; the ring pulse + corner flash carry the event layer. Children flash on first load too (grid mounts);
+harmless, mirrors the load-stagger language.
+- generator fix: genCorner now scales its hardcoded 200px ribs/starts by m (byte-identical at defaults, verified
+against committed STATIC_MICRO_CORNER string); 140px walls need the step member: [140,140,10] (omitting step -> NaN,
+caught by harness NaN guard).
+- Bug caught by capture: flash animation fill-mode "both" kept final keyframe (opacity 0 + dashoffset 0) overriding
+the hover reveal forever - removed "both" (base state is already opacity 0, no fill needed).
+- Verified: chip fully drawn in dark 3rd column; roots faint per brief; pill ring halo mid-anim + settled fallback to
+class shadow; corner flash caught mid-draw (stagger visible: idx1 still at peak while idx0 decayed); hover corners
+light+dark; dormant rhombi in leftover cell incl. after filtering; zero console errors light+dark throughout.
+- Statics: +chip 5.8KB, +cardcc 1.9KB, +rhombi 3.6KB source into projects client chunk (gzip ~4KB, leaf page only).
+Build 33/33, shared 87.3 kB unchanged.

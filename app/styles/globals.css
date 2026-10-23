@@ -460,6 +460,62 @@ h4 {
   height: 100%;
 }
 
+/* Placement utilities (Projects pass — see PLAN.md §2) */
+
+/* Active filter pill: one-shot ring pulse on becoming selected
+   (starts when aria-selected flips, then falls back to the class shadow). */
+.z-pills [aria-selected="true"] {
+  animation: z-ring 0.9s ease-out;
+}
+
+@keyframes z-ring {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--zm-line) 45%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 12px color-mix(in srgb, var(--zm-line) 0%, transparent);
+  }
+}
+
+/* Category remount: one-shot staggered corner flash. The cards grid re-mounts
+   its children on every activeCategory change (React keys), so a CSS
+   animation declared on .z-cc replays per fresh key, staggered via
+   --z-cc-delay set from the card index. */
+.z-remount .z-cc {
+  animation: z-ccfl 1.05s ease-out;
+  animation-delay: var(--z-cc-delay, 0s);
+}
+
+.z-remount .z-cc .z-a,
+.z-remount .z-cc .z-b,
+.z-remount .z-cc .z-c {
+  animation: z-hd 1.05s cubic-bezier(0.22, 0.61, 0.36, 1);
+  animation-delay: var(--z-cc-delay, 0s);
+}
+
+@keyframes z-ccfl {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  66% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Empty last grid cell: dormant nested rhombi — frozen mid-glide. */
+.z-sleep .z-a,
+.z-sleep .z-b,
+.z-sleep .z-c,
+.z-sleep .z-pu {
+  animation-play-state: paused;
+}
+
 /* Global pause (visibilitychange) */
 .z-paused .z-host * {
   animation-play-state: paused !important;
@@ -469,7 +525,9 @@ h4 {
   .z-host *,
   .z-drift,
   .z-burst[data-z-live] .stat-burst,
-  .z-jobtrace > svg * {
+  .z-jobtrace > svg *,
+  .z-remount .z-cc,
+  .z-pills [aria-selected="true"] {
     animation: none !important;
     transition: none !important;
   }

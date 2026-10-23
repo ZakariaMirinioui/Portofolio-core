@@ -190,14 +190,17 @@ const genHeaderRoots: Gen = (r, uid, walls) => {
 /* g05 — corner (+ cornerMicro via walls/step) */
 const genCorner: Gen = (r, uid, walls) => {
   const [w, h, step] = walls;
+  // scale factor: 1 for the standard 200×200 (or 400×400) boxes; keeps earlier
+  // seeded renderings byte-identical while allowing smaller card-sized boxes.
+  const m = (w + h) / 400;
   const ok = (q: Pt2) => q[0] > 2 && q[0] < w - 4 && q[1] > 2 && q[1] < h - 4 && q[0] + q[1] < (w + h) / 2 + step * 5;
   const n = Math.max(4, Math.round((w + h) / 100));
   const spread = step * 2 - 2;
   const l: SvgTrace[] = [];
   for (let t = 0; t < n; t++) {
     const left = t % 2 === 0;
-    const x = left ? 4 : 30 + (t >> 1) * spread;
-    const y = left ? 30 + (t >> 1) * spread : 4;
+    const x = left ? 4 : 30 * m + (t >> 1) * spread;
+    const y = left ? 30 * m + (t >> 1) * spread : 4;
     l.push(
       trace(
         r,
@@ -213,7 +216,7 @@ const genCorner: Gen = (r, uid, walls) => {
     );
   }
   const br = [150, 118, 86]
-    .map((nn, i) => `M${4 + i * 18} ${nn + i * 18}V${4 + i * 18}H${nn + i * 18}`)
+    .map((nn, i) => `M${4 + i * 18 * m} ${nn * m + i * 18 * m}V${4 + i * 18 * m}H${nn * m + i * 18 * m}`)
     .join("");
   return (
     defs("f5" + uid, w, h, rad("f5" + uid, 0, 0, (w + h) / 2 + 30)) +

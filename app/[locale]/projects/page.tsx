@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { getAlternateUrls, getCanonicalUrl, SITE_URL } from "@/lib/metadata";
 import type { ProjectType } from "@/types";
 import PageHeading from "../../components/shared/PageHeading";
+import Circuit from "../../components/decor/Circuit";
 import NextPageTeaser from "../../components/sections/NextPageTeaser";
 import ProjectsClient from "./ProjectsClient";
 import { projects, featuredProjects } from "../../data/projects";
@@ -46,10 +47,20 @@ export default async function ProjectsPage({
 
   return (
     <main className="max-w-7xl mx-auto md:px-16 px-6">
-      <PageHeading
-        title={t("title")}
-        description={t("description")}
-      />
+      <div className="relative">
+        <Circuit
+          variant="headerRoots"
+          uid="projects-head"
+          draw
+          fade
+          className="hidden lg:block left-1 right-1 -top-[104px] h-44"
+          style={{ "--zm-o": "0.24", "--z-draw-delay": "0.4s" } as React.CSSProperties}
+        />
+        <PageHeading
+          title={t("title")}
+          description={t("description")}
+        />
+      </div>
 
       <ProjectsClient projects={projects} featuredProjects={featuredProjects} />
       <NextPageTeaser

@@ -7,6 +7,7 @@ import { Star } from "@phosphor-icons/react";
 import type { ProjectType } from "@/types";
 import EmptyState from "../../components/shared/EmptyState";
 import ProjectLogo from "../../components/shared/ProjectLogo";
+import { STATIC_CHIP, STATIC_CARD_CORNER, STATIC_RHOMBI } from "../../components/decor/circuitStatics";
 import { Slide } from "../../animation/Slide";
 import { BiLinkExternal, BiLogoGithub, BiBookOpen } from "react-icons/bi";
 import { trackProjectViewed, trackGithubLinkClicked, trackLiveDemoClicked } from "../../lib/analytics";
@@ -66,6 +67,15 @@ export default function ProjectsClient({
               {featuredProjects.map((project) => (
                 <FeaturedProjectCard key={project._id} project={project} />
               ))}
+              {featuredProjects.length < 3 && (
+                <div aria-hidden="true" className="relative hidden xl:flex items-center justify-center">
+                  <span
+                    className="z-host z-io z-draw h-80 w-80"
+                    style={{ "--z-draw-delay": "0.5s" } as React.CSSProperties}
+                    dangerouslySetInnerHTML={{ __html: STATIC_CHIP }}
+                  />
+                </div>
+              )}
             </div>
           </section>
         </Slide>
@@ -102,8 +112,13 @@ function FeaturedProjectCard({ project }: { project: ProjectType }) {
       tabIndex={0}
       role="link"
       aria-label={t("viewDetails", { name: project.name })}
-      className="group cursor-pointer dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-xl p-6 hover:dark:border-zinc-600 hover:border-zinc-300 focus:outline-none focus:ring-2 focus:ring-primary-color focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-zinc-900 transition-colors h-full flex flex-col"
+      className="group relative cursor-pointer dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-xl p-6 hover:dark:border-zinc-600 hover:border-zinc-300 focus:outline-none focus:ring-2 focus:ring-primary-color focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-zinc-900 transition-colors h-full flex flex-col"
     >
+      <span
+        aria-hidden="true"
+        className="z-cc left-0 top-0 h-14 w-14"
+        dangerouslySetInnerHTML={{ __html: STATIC_CARD_CORNER }}
+      />
       <div className="flex items-start justify-between gap-3 mb-4">
         <div className="flex items-center gap-3 min-w-0">
           <ProjectLogo
@@ -238,7 +253,7 @@ function ProjectsList({ projects }: { projects: ProjectType[] }) {
 
   return (
     <section>
-      <div className="flex flex-wrap gap-2 mb-8" role="tablist" aria-label={t("categoriesAriaLabel")}>
+      <div className="z-pills flex flex-wrap gap-2 mb-8" role="tablist" aria-label={t("categoriesAriaLabel")}>
         {categoriesWithCounts.map((cat) => (
           <button
             key={cat.value}
@@ -257,10 +272,18 @@ function ProjectsList({ projects }: { projects: ProjectType[] }) {
       </div>
 
       {filteredProjects.length > 0 ? (
-        <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
-          {filteredProjects.map((project) => (
-            <ProjectCard key={project._id} project={project} />
+        <div className="z-remount grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
+          {filteredProjects.map((project, i) => (
+            <ProjectCard key={project._id} project={project} idx={i} />
           ))}
+          {filteredProjects.length % 3 !== 0 && (
+            <div aria-hidden="true" className="relative hidden xl:flex items-center justify-center min-h-56">
+              <span
+                className="z-host z-sleep h-64 w-80"
+                dangerouslySetInnerHTML={{ __html: STATIC_RHOMBI }}
+              />
+            </div>
+          )}
         </div>
       ) : (
         <EmptyState
@@ -275,7 +298,7 @@ function ProjectsList({ projects }: { projects: ProjectType[] }) {
   );
 }
 
-function ProjectCard({ project }: { project: ProjectType }) {
+function ProjectCard({ project, idx = 0 }: { project: ProjectType; idx?: number }) {
   const router = useRouter();
   const t = useTranslations("projects");
   const tDetail = useTranslations("projectDetail");
@@ -298,8 +321,14 @@ function ProjectCard({ project }: { project: ProjectType }) {
       tabIndex={0}
       role="link"
       aria-label={t("viewDetails", { name: project.name })}
-      className="group cursor-pointer dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-lg p-4 hover:dark:border-zinc-600 hover:border-zinc-300 focus:outline-none focus:ring-2 focus:ring-primary-color focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-zinc-900 transition-colors flex flex-col h-full"
+      className="group relative cursor-pointer dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-lg p-4 hover:dark:border-zinc-600 hover:border-zinc-300 focus:outline-none focus:ring-2 focus:ring-primary-color focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-zinc-900 transition-colors flex flex-col h-full"
     >
+      <span
+        aria-hidden="true"
+        className="z-cc left-0 top-0 h-14 w-14"
+        style={{ "--z-cc-delay": `${idx * 0.12}s` } as React.CSSProperties}
+        dangerouslySetInnerHTML={{ __html: STATIC_CARD_CORNER }}
+      />
       <div className="flex items-center gap-3 mb-3">
         <ProjectLogo
           src={project.logo}
