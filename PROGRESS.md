@@ -152,3 +152,19 @@ pm run build: pass (lint + i18n + CV + regression guards + static export), share
 - 
 pm run build: pass (lint + guards + 33 static pages), shared First Load JS unchanged 87.3 kB.
 - Note: dev-server hiccup during verification = corrupted .next (prod build interleaved with dev); fixed by full .next delete + restart. Unrelated to code changes.
+
+## Circuit system reinterpretation — step 4: home placements (2026-10-23)
+Commit: feat(decor): home placements (chip, roots, stats pulse, crown, teaser corners, job stubs)
+- Sponsored w/ CircuitIsland idle-deferred attach (requestIdleCallback + coalesce) - hydration warning resolved.
+- Placements: hero headerRoots (-top-[104px] h-44, lg only) + chip zone (right-2 top-1/2 300px, xl only, hover lift + drift);
+stats band routing field inset-3/stat-burst staggered glow (0.18s steps); crown strip between ServicesOverview and ClientLogos
+(h-40); Dossera band mint corners (h-44, tl + rotate-180 br, delays 0.7/0.85s) + logo-column data-cc micro-corner pair
+(h-20, 70% offsets); Job cards STATIC_STUB z-jobtrace (10x96, delay idx*0.12s) + z-jnode glow; NextPageTeaser button
+data-cc + h-14 micro-corner pair (md only).
+- New: "stub" variant (10x96 vertical) in config/decor.ts + preserve meta > circuitStatics.ts (STATIC_MICRO_CORNER, STATIC_STUB)
+for client components. New CSS utilities: .z-drift, .z-chip-zone (hover(hover)+pointer(fine) lift + speed), .z-burst/.stat-burst,
+.z-jobtrace, .z-jnode; reduced-motion block covers all.
+- Verified (Playwright, dev after .next rebuild): 17 hosts/6 live/17 drawn/4 jobtraces, ZERO console errors in light+dark;
+band corners, CTA hover wake (idle invisible > hover traces), chip-cube weave, crown position above "Trusted by Clients",
+stats routing behind text w/o legibility loss (dark more present, light subtle - by design).
+- Known env notes: .next corrupted twice (vendor-chunks Module NotFound) - recovery = kill node trees, delete .next, restart dev.

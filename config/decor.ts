@@ -89,7 +89,8 @@ export type CircuitVariant =
   | "routing" //      g09 — routing field background                (400×300)
   | "pipeline" //     g10 — chip-to-chip pulse strip                (1200×130)
   | "crown" //        g11 — mirror crown ornament                   (1200×200)
-  | "gapRail"; //     derived — sticky column-gap rail              (64×600)
+  | "gapRail" //      derived — sticky column-gap rail              (64×600)
+  | "stub"; //        derived — per-card short stub with branch     (10×96)
 
 type SvgTrace = { b: string; m: string; e: string };
 
@@ -406,30 +407,46 @@ const genGapRail: Gen = (r, uid, walls) => {
   );
 };
 
+/* derived — per-card stub: short vertical route with one branch */
+const genStub: Gen = (r, _uid, walls) => {
+  const [w, h] = walls;
+  const bendY = h * 0.55;
+  const bx = w * 0.55;
+  return (
+    dotEl([1, 2], 1.6, "", "") +
+    `<path class="z-b" pathLength="1" d="M1 2V${h}"/>` +
+    `<path class="z-a z-mv" pathLength="1" style="animation-duration:6s;animation-delay:-${round1(r() * 3)}s" d="M1 0V${bendY}L${round1(bx)} ${round1(bendY - 4)}V${round1(bendY - 8)}"/>` +
+    dotEl([bx, bendY - 10], 1.8, "z-pu", delayAttr(r, 3)) +
+    dotEl([1, h - 2], 1.6, "z-pu", delayAttr(r, 4))
+  );
+};
+
 type VariantMeta = {
   w: number;
   h: number;
   seed: number;
   walls: number[];
   gen: Gen;
+  preserve?: "xMidYMid meet" | "xMidYMid slice";
 };
 
 export const circuitVariants: Record<CircuitVariant, VariantMeta> = {
-  headerRoots: { w: 1200, h: 220, seed: 8, walls: [1200, 220], gen: genHeaderRoots },
+  headerRoots: { w: 1200, h: 220, seed: 8, walls: [1200, 220], gen: genHeaderRoots, preserve: "xMidYMid slice" },
   corner: { w: 400, h: 400, seed: 12, walls: [400, 400, 20], gen: genCorner },
   cornerMicro: { w: 200, h: 200, seed: 12, walls: [200, 200, 10], gen: genCorner },
   rhombi: { w: 400, h: 300, seed: 3, walls: [400, 300], gen: genRhombi },
   chip: { w: 400, h: 400, seed: 15, walls: [400, 400], gen: genChip },
-  routing: { w: 400, h: 300, seed: 18, walls: [400, 300, 7], gen: genRouting },
-  pipeline: { w: 1200, h: 130, seed: 1, walls: [1200, 130, 6], gen: genPipeline },
-  crown: { w: 1200, h: 200, seed: 10, walls: [1200, 200], gen: genCrown },
+  routing: { w: 400, h: 300, seed: 18, walls: [400, 300, 7], gen: genRouting, preserve: "xMidYMid slice" },
+  pipeline: { w: 1200, h: 130, seed: 1, walls: [1200, 130, 6], gen: genPipeline, preserve: "xMidYMid slice" },
+  crown: { w: 1200, h: 200, seed: 10, walls: [1200, 200], gen: genCrown, preserve: "xMidYMid slice" },
   gapRail: { w: 64, h: 600, seed: 22, walls: [64, 600, 54], gen: genGapRail },
+  stub: { w: 10, h: 96, seed: 5, walls: [10, 96], gen: genStub },
 };
 
 export const renderCircuit = (
   variant: CircuitVariant,
   uid: string,
-  overrides: { seed?: number; walls?: number[] } = {}
+  overrides: { seed?: number; walls?: number[]; preserve?: "xMidYMid meet" | "xMidYMid slice" } = {}
 ): { svg: string; w: number; h: number } => {
   const meta = circuitVariants[variant];
   const walls = overrides.walls || meta.walls;
@@ -438,7 +455,7 @@ export const renderCircuit = (
   const svg =
     `<svg class="z-root" xmlns="http://www.w3.org/2000/svg"` +
     ` viewBox="0 0 ${walls[0]} ${walls[1]}" fill="none"` +
-    ` preserveAspectRatio="xMidYMid meet"` +
+    ` preserveAspectRatio="${overrides.preserve || meta.preserve || "xMidYMid meet"}"` +
     ` aria-hidden="true" focusable="false">${inner}</svg>`;
   return { svg, w: walls[0], h: walls[1] };
 };

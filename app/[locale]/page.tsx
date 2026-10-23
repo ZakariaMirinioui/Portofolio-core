@@ -12,6 +12,7 @@ import TestimonialsCarousel from "../components/sections/TestimonialsCarousel";
 import ClientLogos from "../components/sections/ClientLogos";
 import NextPageTeaser from "../components/sections/NextPageTeaser";
 import HeroAnimation from "../components/hero/HeroAnimation";
+import Circuit from "../components/decor/Circuit";
 import { profile } from "../data/profile";
 import { featuredTestimonials } from "../data/testimonials";
 
@@ -26,7 +27,24 @@ export default async function Home({
 
   return (
     <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20">
-      <section className="flex xl:flex-row flex-col xl:items-center items-start xl:justify-between justify-between gap-x-12 mb-16">
+      <section className="relative flex xl:flex-row flex-col xl:items-center items-start xl:justify-between justify-between gap-x-12 mb-16">
+        <Circuit
+          variant="headerRoots"
+          uid="home-roots"
+          draw
+          className="hidden lg:block left-1 right-1 -top-[104px] h-44 z-fade"
+          style={{ "--z-draw-delay": "0.45s" } as React.CSSProperties}
+        />
+        <div className="z-chip-zone hidden xl:block absolute right-2 top-1/2 h-[300px] w-[300px] -translate-y-1/2" aria-hidden="true">
+          <Circuit
+            variant="chip"
+            uid="home-chip"
+            draw
+            fade
+            className="inset-0 z-drift"
+            style={{ "--z-draw-delay": "0.6s" } as React.CSSProperties}
+          />
+        </div>
         <div key={profile._id} className="lg:max-w-2xl max-w-2xl">
           <Slide>
             <h1 className="font-incognito font-semibold tracking-tight text-3xl sm:text-5xl mb-6 lg:leading-[3.7rem] leading-tight lg:min-w-[700px] min-w-full animate-[fadeSlideUp_700ms_ease-out_forwards]" style={{animationDelay:"0ms"}}>
@@ -49,6 +67,16 @@ export default async function Home({
       <ValueProps locale={locale} />
       <CaseStudyTeaser locale={locale} />
       <ServicesOverview locale={locale} />
+      <div className="hidden lg:block relative py-2" aria-hidden="true">
+        <Circuit
+          variant="crown"
+          uid="home-crown"
+          draw
+          fade
+          className="left-0 right-0 top-0 h-40"
+          style={{ "--z-draw-delay": "0.2s" } as React.CSSProperties}
+        />
+      </div>
       <ClientLogos locale={locale} />
       <section className="mt-24 mb-16">
         <Slide delay={0.18}>

@@ -3,6 +3,8 @@ import { Link } from "@/i18n/navigation";
 import { BiLinkExternal } from "react-icons/bi";
 import type { ProjectType } from "@/types";
 import { projects } from "../../data/projects";
+import Circuit from "../decor/Circuit";
+import { STATIC_MICRO_CORNER } from "../decor/circuitStatics";
 
 const emeraldGlow = `
   radial-gradient(600px circle at 25% 25%,
@@ -49,6 +51,21 @@ export default async function CaseStudyTeaser({ locale }: { locale: string }) {
             backgroundSize: "200% 200%",
             animation: "sweep 6s linear infinite",
           }}
+        />
+
+        <Circuit
+          variant="corner"
+          uid="doss-tl"
+          draw
+          className="z-mint left-3 top-3 h-44 w-44"
+          style={{ "--z-draw-delay": "0.7s" } as React.CSSProperties}
+        />
+        <Circuit
+          variant="corner"
+          uid="doss-br"
+          draw
+          className="z-mint right-3 bottom-3 h-44 w-44 rotate-180"
+          style={{ "--z-draw-delay": "0.85s" } as React.CSSProperties}
         />
 
         <div className="relative z-10 grid gap-8 p-6 lg:grid-cols-2 lg:gap-10 lg:p-12">
@@ -112,7 +129,19 @@ export default async function CaseStudyTeaser({ locale }: { locale: string }) {
             </div>
           </div>
 
-          <div className="flex flex-col items-center justify-center">
+          <div className="z-mint relative flex flex-col items-center justify-center" data-cc>
+            <Circuit
+              variant="cornerMicro"
+              uid="doss-logo-tl"
+              className="z-cc left-1/2 top-1/2 h-20 w-20"
+              style={{ transform: "translate(-70%, -70%)" } as React.CSSProperties}
+            />
+            <Circuit
+              variant="cornerMicro"
+              uid="doss-logo-br"
+              className="z-cc left-1/2 top-1/2 h-20 w-20"
+              style={{ transform: "translate(70%, 70%) rotate(180deg)" } as React.CSSProperties}
+            />
             <img
               src="/dossera-darkmode.png"
               alt="Dossera JAMS"

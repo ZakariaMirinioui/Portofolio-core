@@ -39,10 +39,23 @@ export default function CircuitIsland() {
       { rootMargin: "-12% 0px -12% 0px", threshold: 0.01 }
     );
 
-    const attach = () => hosts().forEach((n) => io.observe(n));
-    attach();
+    const schedule = (fn: () => void) => {
+      const ric =
+        (window as unknown as { requestIdleCallback?: (cb: () => void) => void })
+          .requestIdleCallback;
+      if (ric) ric(fn);
+      else setTimeout(fn, 1);
+    };
 
-    const mo = new MutationObserver(attach);
+    const attach = () => hosts().forEach((n) => io.observe(n));
+    schedule(attach);
+
+    let pending = false;
+    const mo = new MutationObserver(() => {
+      if (pending) return;
+      pending = true;
+      schedule(() => { pending = false; attach(); });
+    });
     mo.observe(document.documentElement, { childList: true, subtree: true });
 
     const onHidden = () =>

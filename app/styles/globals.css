@@ -287,7 +287,12 @@ h4 {
 /* Micro corner on cards â€” dormant until hover/focus/wake. */
 .z-cc {
   opacity: 0;
+  z-index: 0;
   transition: opacity 0.25s ease;
+}
+
+.z-cc[data-z-live] {
+  opacity: 1;
 }
 
 .z-cc .z-a,
@@ -355,13 +360,100 @@ h4 {
   }
 }
 
+/* Placement utilities (Home pass — see PLAN.md §2) */
+
+/* Hero chip: gentle drift + cursor-proximity lift (pointer:fine only). */
+.z-drift {
+  animation: z-drift 9s ease-in-out infinite alternate;
+}
+
+@keyframes z-drift {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-10px);
+  }
+}
+
+.z-chip-zone {
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .z-chip-zone {
+    pointer-events: auto;
+  }
+
+  .z-chip-zone:hover .z-root {
+    --zm-o: 0.78;
+  }
+
+  .z-chip-zone:hover .z-pu {
+    animation-duration: 2.4s;
+  }
+}
+
+/* Stats one-shot pulse burst (replaces the count-finish trigger). */
+.z-burst[data-z-live] .stat-burst {
+  animation: z-burst 2.4s ease-in-out both;
+  animation-delay: var(--z-burst-delay, 0s);
+}
+
+@keyframes z-burst {
+  0%,
+  64%,
+  100% {
+    text-shadow: none;
+    opacity: 1;
+  }
+  22% {
+    text-shadow: 0 0 16px var(--zm-line);
+    opacity: 1;
+  }
+  40% {
+    text-shadow: none;
+    opacity: 0.72;
+  }
+}
+
+/* Work-experience cards: node lights while the card is live. */
+.z-jnode {
+  transition: border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+.z-io[data-z-live] .z-jnode {
+  border-color: var(--zm-line);
+  box-shadow: 0 0 14px -6px var(--zm-line);
+}
+
+/* Per-card stub trace on the existing line axis (left-9 = 36px). */
+.z-jobtrace {
+  position: absolute;
+  left: calc(2.25rem - 0.5px);
+  top: 3.5rem;
+  width: 10px;
+  height: 96px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.z-jobtrace > svg {
+  width: 100%;
+  height: 100%;
+}
+
 /* Global pause (visibilitychange) */
 .z-paused .z-host * {
   animation-play-state: paused !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .z-host * {
+  .z-host *,
+  .z-drift,
+  .z-burst[data-z-live] .stat-burst,
+  .z-jobtrace > svg * {
     animation: none !important;
     transition: none !important;
   }
