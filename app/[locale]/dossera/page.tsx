@@ -3,6 +3,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getAlternateUrls, getCanonicalUrl, SITE_URL } from "@/lib/metadata";
 import { Slide } from "../../animation/Slide";
 import PageHeading from "../../components/shared/PageHeading";
+import Circuit from "../../components/decor/Circuit";
+import { STATIC_MICRO_CORNER, STATIC_CARD_CORNER } from "../../components/decor/circuitStatics";
 import DosseraContactForm from "../../components/sections/DosseraContactForm";
 import DosseraLogo from "../../components/sections/DosseraLogo";
 import NextPageTeaser from "../../components/sections/NextPageTeaser";
@@ -128,7 +130,17 @@ export default async function Dossera({
 
       {/* Product identity */}
       <Slide delay={0.1}>
-        <div className="mb-12">
+        <div className="relative mb-12">
+          <div className="z-chip-zone hidden xl:block absolute right-0 top-1/2 h-72 w-72 -translate-y-1/2" aria-hidden="true">
+            <Circuit
+              variant="chip"
+              uid="dossera-chip"
+              draw
+              fade
+              className="inset-0 z-drift"
+              style={{ "--z-draw-delay": "0.55s" } as React.CSSProperties}
+            />
+          </div>
           <DosseraLogo heightClassName="h-12 md:h-14" />
           <p className="flex items-center gap-2 mt-4 text-sm">
             <span className="h-2 w-2 rounded-full bg-dossera-color" aria-hidden="true" />
@@ -185,8 +197,14 @@ export default async function Dossera({
           {features.map((feature, index) => (
             <div
               key={index}
-              className="dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-lg p-6 hover:dark:border-zinc-600 hover:border-zinc-300 transition-colors"
+              data-cc=""
+              className="relative dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-lg p-6 hover:dark:border-zinc-600 hover:border-zinc-300 transition-colors"
             >
+              <span
+                aria-hidden="true"
+                className="z-cc left-0 top-0 h-14 w-14"
+                dangerouslySetInnerHTML={{ __html: STATIC_CARD_CORNER }}
+              />
               <feature.icon className="text-3xl dark:text-dossera-color text-dossera-color mb-4" />
               <h3 className="text-lg font-incognito font-semibold mb-2">
                 {feature.title}
@@ -229,6 +247,16 @@ export default async function Dossera({
             </div>
           ))}
         </div>
+        <div aria-hidden="true" className="relative h-10 mt-3 hidden md:block">
+          <Circuit
+            variant="pipeline"
+            uid="dossera-deploy-line"
+            draw
+            fade
+            className="absolute inset-0"
+            style={{ "--z-draw-delay": "0.4s" } as React.CSSProperties}
+          />
+        </div>
         </section>
       </Slide>
 
@@ -265,8 +293,16 @@ export default async function Dossera({
            <h2 className="text-3xl font-incognito font-bold tracking-tight mb-8">
             {t("architecture.title")}
           </h2>
-         <div className="dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-lg p-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
+         <div className="relative dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-lg p-8 overflow-hidden">
+          <Circuit
+            variant="routing"
+            uid="dossera-arch"
+            draw
+            fade
+            className="hidden lg:block absolute left-6 right-6 bottom-4 h-64"
+            style={{ "--z-draw-delay": "0.5s", zIndex: 0 } as React.CSSProperties}
+          />
+          <div className="relative grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
             {techStack.map((tech, index) => (
               <div
                 key={index}
@@ -282,7 +318,7 @@ export default async function Dossera({
             ))}
           </div>
 
-          <div className="mt-8 pt-6 border-t dark:border-zinc-700 border-zinc-200">
+           <div className="relative mt-8 pt-6 border-t dark:border-zinc-700 border-zinc-200">
              <h3 className="text-lg font-incognito font-semibold mb-4">
               {t("architecture.security.title")}
             </h3>
@@ -302,7 +338,15 @@ export default async function Dossera({
            <h2 className="text-3xl font-incognito font-bold tracking-tight mb-8">
             {t("timeline.title")}
           </h2>
-         <div className="dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-lg p-8">
+         <div className="relative dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-lg p-8 overflow-hidden">
+          <Circuit
+            variant="pipelineV"
+            uid="dossera-tl"
+            walls={[64, 480, 6]}
+            draw
+            className="z-thick hidden lg:block absolute right-0 top-2 h-[280px] w-10"
+            style={{ "--z-draw-delay": "0.5s", "--zm-o": "0.6", zIndex: 0 } as React.CSSProperties}
+          />
           <div className="space-y-6">
             <div className="flex gap-4">
               <div className="flex flex-col items-center">

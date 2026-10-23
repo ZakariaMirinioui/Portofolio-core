@@ -509,6 +509,16 @@ h4 {
   }
 }
 
+/* Demo-request form corner: low rest presence (0.12), fully crops while
+   any form field has focus. */
+[data-formcc] .z-cc {
+  opacity: 0.12;
+}
+
+[data-formcc]:focus-within .z-cc {
+  opacity: 0;
+}
+
 /* Empty last grid cell: dormant nested rhombi — frozen mid-glide. */
 .z-sleep .z-a,
 .z-sleep .z-b,

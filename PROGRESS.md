@@ -153,7 +153,7 @@ pm run build: pass (lint + i18n + CV + regression guards + static export), share
 pm run build: pass (lint + guards + 33 static pages), shared First Load JS unchanged 87.3 kB.
 - Note: dev-server hiccup during verification = corrupted .next (prod build interleaved with dev); fixed by full .next delete + restart. Unrelated to code changes.
 
-## Circuit system reinterpretation � step 4: home placements (2026-10-23)
+## Circuit system reinterpretation � step 4: home placements (2026-10-23)
 Commit: feat(decor): home placements (chip, roots, stats pulse, crown, teaser corners, job stubs)
 - Sponsored w/ CircuitIsland idle-deferred attach (requestIdleCallback + coalesce) - hydration warning resolved.
 - Placements: hero headerRoots (-top-[104px] h-44, lg only) + chip zone (right-2 top-1/2 300px, xl only, hover lift + drift);
@@ -225,3 +225,22 @@ bottom; y spread formula (h-60)/(n-1) bounds mines fall-area band.
 - Verified: roots light+dark; rail band light (0.6 token bump; zoom clip shows cubes+runs+dots) + dark; gap strips
 light+dark riding seams, chips peeking; CTA corners draw correctly after .z-cc positioning fix; zero console errors.
 Build pending at commit-time; earlier gate 33/33.
+
+## Circuit system reinterpretation - step 8: dossera placements (2026-10-23)
+- Placements per PLAN rows 24-30: hero chip companion zone right of identity block (`z-chip-zone` xl-only, draw fade z-drift
+delay 0.55s) — deviation: not wrapping logo (logo glass panel remains standalone); 6 feature cards `data-cc` + z-cc
+hover corners (deviation from "enter" io — hover-only simpler, no remount); deployments pipeline strip h-10 mt-3
+below card row (horizontal pipeline 1200x130 slice, chips peek); architecture card `relative overflow-hidden` + routing
+Circuit `absolute left-6 right-6 bottom-4 h-64` zIndex 0 (dark shows through translucent bg, light needs zIndex 0 —
+systemic lesson: `.z-host z-index:-1` hides art behind opaque light card bgs); timeline card pipelineV rail right-0
+h-[280px] (deviation: band on right edge, not on w-0.5 connector which would hide under opaque circles); DosseraContactForm
+`data-formcc relative` + tl micro corner (STATIC_MICRO_CORNER) with CSS rest opacity 0.12 → focus-within 0 (by design
+fades during input). 
+- Statics added: STATIC_CHIP (5.8KB), STATIC_CARD_CORNER (1.9KB), STATIC_RHOMBI (3.6KB) in circuitStatics.ts
+(committed step 6/7); STATIC_MICRO_CORNER (1.9KB) step 4.
+- genPipelineV derived variant (services/dossera): walls [64,480,6], y spread (h-60)/(n-1), cubes x=32, S-runs knot x=18
+dip x=47; meet 40x300 host = 0.625 scale zero crop.
+- Verified (Playwright dossera-pass1/2): hero chip light+dark; deploy strip light; arch routing field dark rich but
+restrained; timeline rail dark; form rest/focus light (corner 0.12 rest invisible by design, focus fades); feature
+hover corner dark visible; zero console errors all themes.
+- Build 33/33, shared 87.3 kB.
