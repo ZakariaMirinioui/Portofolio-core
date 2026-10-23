@@ -143,3 +143,12 @@
 - 
 pm run build: pass (lint + i18n + CV + regression guards + static export), shared First Load JS unchanged 87.3 kB.
 - Temp verification strip + dev servers removed; artifacts kept in temp dir only.
+
+### Step 3 - Part 1 fix: fixed side rail/spine retired (this commit)
+- Removed <SideCircuits /> mount + import from pp/[locale]/layout.tsx; deleted pp/components/decor/SideCircuits.tsx.
+- config/decor.ts: removed Phase-1 exports (decorConfig, ailTraces, spineTraces, constants incl. inert hiddenRoutes); kept shared seeded helpers used by the family port; header comment documents the retirement rationale (fixed-position decor -> section-scoped system per PLAN.md; rail idea lives on as gapRail About signature).
+- globals.css: deleted whole zc-* block (tokens now sourced from the z-* engine: light #0f9d6b@.42 / dark #22c58a@.5).
+- Verified Playwright at 1920 light/dark (part1-after/* in temp): zero .zc-side elements, gutters clean, layout unchanged, console clean.
+- 
+pm run build: pass (lint + guards + 33 static pages), shared First Load JS unchanged 87.3 kB.
+- Note: dev-server hiccup during verification = corrupted .next (prod build interleaved with dev); fixed by full .next delete + restart. Unrelated to code changes.

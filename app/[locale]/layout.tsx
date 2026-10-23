@@ -10,7 +10,6 @@ import Navbar from "@/app/components/global/Navbar";
 import Footer from "@/app/components/global/Footer";
 import HtmlLang from "@/app/components/global/HtmlLang";
 import JsonLd from "@/app/components/global/JsonLd";
-import SideCircuits from "@/app/components/decor/SideCircuits";
 import CircuitIsland from "@/app/components/decor/CircuitIsland";
 
 export function generateStaticParams() {
@@ -68,7 +67,6 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
         <Providers>
-          <SideCircuits />
           <CircuitIsland />
           <HtmlLang />
         <JsonLd locale={locale} />
