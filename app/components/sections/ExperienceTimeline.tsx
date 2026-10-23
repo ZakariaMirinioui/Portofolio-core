@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import Circuit from "../decor/Circuit";
 
 export default async function ExperienceTimeline({
   locale,
@@ -31,6 +32,15 @@ export default async function ExperienceTimeline({
       <ol
         className="relative m-0 list-none pl-0 space-y-16 border-l border-zinc-200 dark:border-zinc-800"
       >
+        <Circuit
+          variant="gapRail"
+          uid="about-tl"
+          walls={[40, 1800, 90]}
+          seed={41}
+          draw
+          className="hidden lg:block absolute left-[-3px] top-2 h-[1800px] w-10 z-thick"
+          style={{ "--z-draw-delay": "0.4s" } as React.CSSProperties}
+        />
         {experience.map((job) => (
           <li key={job.role} className="relative pt-0">
             {/* Timeline marker: centered exactly on the border-l axis, aligned with the date row. */}

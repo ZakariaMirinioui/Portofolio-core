@@ -10,6 +10,8 @@ type CircuitProps = {
   uid: string;
   seed?: number;
   walls?: number[];
+  /** Aspect-fit override (default: the variant's meta preserve). */
+  preserve?: "xMidYMid meet" | "xMidYMid slice";
   /** Positioning/cropping classes come from the placement wrapper. */
   className?: string;
   style?: CSSProperties;
@@ -26,13 +28,14 @@ export default function Circuit({
   uid,
   seed,
   walls,
+  preserve,
   className = "",
   style,
   io = true,
   draw,
   fade,
 }: CircuitProps) {
-  const { svg } = renderCircuit(variant, uid, { seed, walls });
+  const { svg } = renderCircuit(variant, uid, { seed, walls, preserve });
   const cls = [
     "z-host",
     io ? "z-io" : "",

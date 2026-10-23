@@ -168,3 +168,18 @@ for client components. New CSS utilities: .z-drift, .z-chip-zone (hover(hover)+p
 band corners, CTA hover wake (idle invisible > hover traces), chip-cube weave, crown position above "Trusted by Clients",
 stats routing behind text w/o legibility loss (dark more present, light subtle - by design).
 - Known env notes: .next corrupted twice (vendor-chunks Module NotFound) - recovery = kill node trees, delete .next, restart dev.
+
+## Circuit system reinterpretation - step 5: about placements (2026-10-23)
+- Placements per PLAN rows 8-13: gapRail (40x2200, step 64) in the 1.55fr/1fr grid gap strip (left calc((100%-2.5rem)*0.6078));
+cornerMicro rotated 90deg hugging the sidebar portrait top-right (-right-4 -top-4 h-24); pipeline strip floating in the
+KpiStrip top margin (top-[-5rem] h-24, meet); routing field (walls 400x300 step 4) as sibling host behind StackGrid cards
+(z -1, shows through gutters + the empty 3rd-column cell) - kept server-side to avoid bundle growth; gapRail (40x1800,
+step 90) parallel to the ExperienceTimeline border-l axis (left -3px) as one-shot reveal instead of true scroll-link
+(documented deviation); ClosingBand data-cc + h-14 micro-corner pair (hover-only, mirrors NextPageTeaser).
+- New: Circuit "preserve" prop (aspect-fit override, used for KpiStrip pipeline meet).
+- New CSS: .z-thick (2.2px strokes, z-b .55 / z-c .26) for the two signature rails.
+- CircuitIsland unchanged. Bug caught by probe: gap rail initially rendered default 64x600 walls (meet -> art squeezed
+into host middle); walls must match host box.
+- Verified (Playwright, dpr zoom clips): both rails visible light+dark, timeline rail weaves axis markers, stack field
+visible in gutters/empty cell, closing corners idle-invisible + hover-wake; zero console errors both themes; build
+33/33, shared 87.3 kB.

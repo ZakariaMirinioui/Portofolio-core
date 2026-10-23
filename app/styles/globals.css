@@ -211,6 +211,22 @@ h4 {
   animation: z-pu 4s ease-in-out infinite;
 }
 
+/* Signature rails (gap rail / timeline rail) — heavier strokes so a
+   narrow strip still reads against the page texture. */
+.z-thick .z-a,
+.z-thick .z-b,
+.z-thick .z-c {
+  stroke-width: 2.2;
+}
+
+.z-thick .z-b {
+  stroke-opacity: 0.55;
+}
+
+.z-thick .z-c {
+  stroke-opacity: 0.26;
+}
+
 @keyframes z-mv {
   to {
     stroke-dashoffset: -1;
