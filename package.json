@@ -5,8 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next lint && node scripts/check-i18n-keys.mjs && node scripts/verify-cv-downloads.mjs && node scripts/regression-guards.mjs && next build",
+    "check": "next lint && npx tsc --noEmit && node scripts/check-i18n-keys.mjs && node scripts/verify-cv-downloads.mjs && node scripts/regression-guards.mjs",
     "i18n:check": "node scripts/check-i18n-keys.mjs",
     "regression:check": "node scripts/regression-guards.mjs",
+    "typecheck": "npx tsc --noEmit",
     "start": "next start"
   },
   "dependencies": {

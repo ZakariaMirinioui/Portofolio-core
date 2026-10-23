@@ -5,7 +5,6 @@ import RefLink from "../shared/RefLink";
 import EmptyState from "../shared/EmptyState";
 import { RiBriefcase3Fill } from "react-icons/ri";
 import { jobs } from "../../data/jobs";
-import { STATIC_STUB } from "../decor/circuitStatics";
 
 export default async function Job() {
   const jobsData: JobType[] = jobs;
@@ -28,17 +27,11 @@ export default async function Job() {
               return (
                 <div
                   key={job._id}
-                  className="z-io relative flex items-start lg:gap-x-6 gap-x-4 max-w-2xl before:absolute before:bottom-0 before:top-[5rem] before:left-9 before:w-[1px] before:h-[calc(100%-70px)] dark:before:bg-zinc-800 before:bg-zinc-200"
+                  className="relative flex items-start lg:gap-x-6 gap-x-4 max-w-2xl before:absolute before:bottom-0 before:top-[5rem] before:left-9 before:w-[1px] before:h-[calc(100%-70px)] dark:before:bg-zinc-800 before:bg-zinc-200"
                 >
-                  <span
-                    aria-hidden="true"
-                    className="z-io z-draw z-jobtrace hidden lg:block"
-                    style={{ "--z-draw-delay": `${index * 0.12}s` } as React.CSSProperties}
-                    dangerouslySetInnerHTML={{ __html: STATIC_STUB }}
-                  />
                   <RefLink
                     href={job.url}
-                    className="z-jnode grid place-items-center dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 min-h-[80px] min-w-[80px] p-2 rounded-md overflow-clip relative font-incognito font-bold text-xl"
+                    className="grid place-items-center dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 min-h-[80px] min-w-[80px] p-2 rounded-md overflow-clip relative font-incognito font-bold text-xl"
                   >
                     {initial}
                   </RefLink>

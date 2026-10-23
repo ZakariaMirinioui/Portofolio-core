@@ -42,9 +42,9 @@ export const projects = [
     tagline: "Ready-made ERP and POS systems with live demos",
     projectUrl: "https://pwadcteam.com",
     repository: "",
-    logo: "/logos/salon-hub.png",
+    logo: "/logos/PwadcTeamStore-logo.webp",
     coverImage: {
-      image: "/logos/salon-hub.png",
+      image: "/logos/PwadcTeamStore-logo.webp",
       alt: "PWADC Marketplace",
       lqip: "",
     },

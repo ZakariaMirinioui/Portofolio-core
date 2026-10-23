@@ -35,10 +35,10 @@ export default async function ExperienceTimeline({
         <Circuit
           variant="gapRail"
           uid="about-tl"
-          walls={[40, 1800, 90]}
+          walls={[40, 1100, 90]}
           seed={41}
           draw
-          className="hidden lg:block absolute left-[-3px] top-2 h-[1800px] w-10 z-thick"
+          className="hidden lg:block absolute left-[-3px] top-2 h-[1100px] w-10 z-thick"
           style={{ "--z-draw-delay": "0.4s" } as React.CSSProperties}
         />
         {experience.map((job) => (
