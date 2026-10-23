@@ -10,6 +10,7 @@ import Navbar from "@/app/components/global/Navbar";
 import Footer from "@/app/components/global/Footer";
 import HtmlLang from "@/app/components/global/HtmlLang";
 import JsonLd from "@/app/components/global/JsonLd";
+import SideCircuits from "@/app/components/decor/SideCircuits";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -66,13 +67,15 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       <Providers>
+        <SideCircuits />
         <HtmlLang />
         <JsonLd locale={locale} />
         <Navbar locale={locale} />
         <main id="main-content" tabIndex={-1}>
           {children}
         </main>
-        <Footer locale={locale} />      </Providers>
+        <Footer locale={locale} />
+      </Providers>
     </NextIntlClientProvider>
   );
 }

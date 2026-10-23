@@ -117,3 +117,137 @@ h4 {
   from { content: "0"; }
   to { content: attr(data-target); }
 }
+
+/* Side circuit decor (rail left / spine right) */
+:root {
+  --zk-content-max: 80rem;
+  --zm-line: #27b173;
+  --zm-dot: #27b173;
+  --zm-o: 0.8;
+}
+
+.dark {
+  --zm-line: #27b173;
+  --zm-dot: #27b173;
+  --zm-o: 0.8;
+}
+
+.zc-side {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  display: none;
+  opacity: var(--zm-o);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+.zc-left {
+  left: 0;
+  width: max(0px, min(calc((100% - var(--zk-content-max)) / 2), 180px));
+}
+
+.zc-right {
+  right: 0;
+  width: max(0px, min(calc((100% - var(--zk-content-max)) / 2), 240px));
+}
+
+@media (min-width: 1520px) {
+  .zc-side {
+    display: block;
+  }
+}
+
+.zc-fade {
+  height: 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+.zc-fade-right {
+  -webkit-mask-image: linear-gradient(to right, black 55%, transparent 98%);
+  mask-image: linear-gradient(to right, black 55%, transparent 98%);
+}
+
+.zc-fade-left {
+  -webkit-mask-image: linear-gradient(to left, black 55%, transparent 98%);
+  mask-image: linear-gradient(to left, black 55%, transparent 98%);
+}
+
+.zc-a,
+.zc-b,
+.zc-c {
+  fill: none;
+  stroke: var(--zm-line);
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.zc-a {
+  stroke-opacity: 0.75;
+}
+
+.zc-b {
+  stroke-opacity: 0.42;
+}
+
+.zc-c {
+  stroke-opacity: 0.18;
+}
+
+.zc-d {
+  fill: var(--zm-dot);
+}
+
+.zc-mv {
+  stroke-dasharray: 0.14 0.86;
+  stroke-width: 1.6;
+  animation: zc-mv 5s linear infinite;
+}
+
+.zc-pu {
+  animation: zc-pu 4s ease-in-out infinite;
+}
+
+@keyframes zc-mv {
+  to {
+    stroke-dashoffset: -1;
+  }
+}
+
+@keyframes zc-pu {
+  0%,
+  100% {
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zc-mv,
+  .zc-pu {
+    animation: none !important;
+  }
+
+  .zc-pu {
+    opacity: 0.5;
+  }
+}
+
+@media print {
+  .zc-side {
+    display: none !important;
+  }
+}

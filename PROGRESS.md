@@ -108,3 +108,10 @@
 - No API routes
 - All data is static (no CMS dependency)
 - Build outputs to `out/` directory ready for `surge` upload
+## feat: animated side circuit-trace decor (branch project-finalisations)
+
+### Step 1 - Config, generators, component, CSS (complete)
+- `config/decor.ts` (repo has no `src/`, adapted to root): `decorConfig { left: "rail", right: "spine", hiddenRoutes: [] }`, seeded deterministic trace generators (`railTraces`, `spineTraces`, mulberry-style PRNG, isometric projection) - no `Math.random`, build-time/server only.
+- `app/components/decor/SideCircuits.tsx`: server component, mounted once in `app/[locale]/layout.tsx`; static SVG markup, zero client JS.
+- CSS in `app/styles/globals.css`: `zc-*` classes, `--zm-line: #27b173` / `--zm-dot: #27b173` (hero cube stroke color) with `--zm-o: 0.8` opacity multiplier (matching hero cubes at strokeOpacity 0.6), top/bottom 8% container mask + inner content-side fade mask (-webkit- prefixed), `@media (min-width: 1520px)` show gate (contentMax 1280 + 2 x 120 gutter), print hidden, reduced-motion off.
+- Measured: content max width 1280px (`max-w-7xl`), padding 64px (`md:px-16`), header z-30 transparent, page transition overlay z-[90].
