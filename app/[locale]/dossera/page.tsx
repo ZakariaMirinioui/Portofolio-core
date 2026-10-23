@@ -131,13 +131,13 @@ export default async function Dossera({
       {/* Product identity */}
       <Slide delay={0.1}>
         <div className="relative mb-12">
-          <div className="z-chip-zone hidden xl:block absolute right-0 top-1/2 h-72 w-72 -translate-y-1/2" aria-hidden="true">
+          <div className="z-chip-zone hidden xl:block absolute right-[-1rem] top-[45%] h-[21rem] w-[21rem] -translate-y-1/2" aria-hidden="true">
             <Circuit
               variant="chip"
               uid="dossera-chip"
               draw
               fade
-              className="inset-0 z-drift"
+              className="inset-0 z-drift z-chip-artwork"
               style={{ "--z-draw-delay": "0.55s" } as React.CSSProperties}
             />
           </div>

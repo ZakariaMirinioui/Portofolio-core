@@ -153,6 +153,16 @@ h4 {
   height: 100%;
 }
 
+.z-chip-artwork {
+  overflow: visible;
+}
+
+.z-chip-artwork > svg {
+  inset: -12.5%;
+  width: 125%;
+  height: 125%;
+}
+
 .z-host.z-natural > svg {
   position: static;
   width: 100%;
