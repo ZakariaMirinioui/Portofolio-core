@@ -126,3 +126,20 @@
 - Performance (4x CPU throttle, headless/SwiftShader - numbers noisy): decor roughly 2x frame time vs no-decor under throttle. Mitigation ladder executed: 22 animated paths removed (spine mini-branches are now static faint traces + pulsing dots, merged into the zc-c base path), layer promotion tested (no gain), contain unnecessary (fixed + overflow-hidden + mask already isolates). Real-GPU browsers have far cheaper compositing; recommend a quick manual check on hardware.
 - Budgets (static export, per page): +20.3 KB uncompressed HTML, 184 SVG elements (rail ~71, spine ~113), zero client JS, zero hydration warnings, clean console (only pre-existing GitHub API 403 from react-github-calendar rate limiting, unrelated to decor).
 - `npm run build` (lint + i18n guards + regression guards + next build + static export): pass.
+
+## feat(decor): section-scoped circuit system (branch feat/circuit-system, PLAN.md-driven)
+
+### Step 1 - PLAN.md (commit fe3e994)
+- Full section inventory for Home/About/Projects/Services/Dossera + 30-row placement map, animation system, budget, risks, deviations (no counters -> one-shot stat pulses; nav dot mount/unmount -> one-shot pulse; theme pulse via zm:theme-pulse event).
+
+### Step 2 - System core (this commit)
+- config/decor.ts extended: faithful port of reference generators g2/g5/g6/g7/g9/g10/g11 + derived cornerMicro (card hover) and gapRail (About sticky-column signature, from g3 geometry). All seeded via existing createRng - deterministic, build-time only. enderCircuit(variant, uid) emits SSR SVG strings with uid-namespaced mask ids (safe multi-instance).
+- Node smoke test (temp harness, repo typescript transpile): 9 variants render clean (no NaN/undefined), deterministic, uid-sensitive; headerRoots 4.8KB/svg, chip 5.9KB, routing 5.8KB, all <= ~70 SVG elements/placement (budget 150).
+- pp/components/decor/Circuit.tsx: server component (dangerouslySetInnerHTML svg, aria-hidden, opts io/draw/fade).
+- pp/components/decor/CircuitIsland.tsx: only client JS - IntersectionObserver toggles data-z-live/data-z-drawn on hosts, MutationObserver re-attach (Dossera form remount), visibilitychange pause (html.z-paused), zm:theme-pulse listener (one-shot lap). Shipped minified ~1.6KB (below 2KB budget).
+- CSS engine in globals.css (z-* block after phase-1 zc-*): tokens light #0f9d6b@.42 / dark #22c58a@.5, z-mint (#BFFFE3 for green-gradient surfaces), BASE classes ported 1:1 (+ pathLength=1 on plumb lines for dash draw-in), reveal gating via data attributes (not className - fixes React hydration attr mismatch), draw-in transition (per-host --z-draw-delay/dur), exit fade to .12, z-cc micro-corner hover, z-theme lap, print/reduced-motion blocks.
+- Dev-mode verification (Playwright, services temp strip, reverted): all 9 variants render; draw-in fires on scroll (9/9 drawn), live only while host in band (-12% margins); screenshots: temp amily-strip/v*.png; Fidelity visually matches reference (chip cube + child circuits, corner fade, mirrored crown).
+- Island bug found: initial implementation used marker class .z-obs - StrictMode double-mount observed nothing after cleanup; fixed with idempotent io.observe.
+- 
+pm run build: pass (lint + i18n + CV + regression guards + static export), shared First Load JS unchanged 87.3 kB.
+- Temp verification strip + dev servers removed; artifacts kept in temp dir only.

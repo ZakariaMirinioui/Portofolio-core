@@ -134,7 +134,7 @@ Re-checks: `visibilitychange` pause; `content-visibility:auto` on below-fold hos
 3. **Dossera form success swap remounts section** (`formState` changes the whole block): corner is inside the block → naturally remounts; IO island tolerates re-init (single delegated listener on document, `MutationObserver`-free via event delegation on `.z-root` containers).
 4. **Projects featured grid becomes 3-col with a decorative 3rd child**: on any filter/viewport reflow the decorative child hides or reflows harmlessly (grid child, not absolute); if a future 3rd featured project appears, the component accepts `hideCore` prop.
 5. **i18n keys / lint guards**: no new i18n keys (icons/disc are decorative, `aria-hidden`); `npm run build` gates run (check-i18n, verify-cv, regression-guards).
-6. **`animation-timeline` unsupported in Safari/Firefox <泉16**: fallback path verified by forcing `CSS.supports` false in a Playwright run.
+6. **`animation-timeline` unsupported in older Safari/Firefox**: fallback path verified by forcing `CSS.supports` false in a Playwright run.
 7. **`group-hover` chains on Dossera CTA cards** already use `group` — our hover corners use a distinct `data-cc` selector to avoid coupling.
 
 ## 7. Execution order (each step = build + QA + commit + PROGRESS.md note)

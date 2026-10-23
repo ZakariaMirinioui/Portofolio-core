@@ -251,3 +251,276 @@ h4 {
     display: none !important;
   }
 }
+
+/* Circuit traces family engine (z-*) — section-scoped; see PLAN.md §3.
+   Tokens: light #0f9d6b@.4 / dark #22c58a@.6; z-mint for green-gradient
+   surfaces (#BFFFE3). BASE classes ported 1:1 from the reference. */
+:root {
+  --zm-line: #0f9d6b;
+  --zm-dot: #0b7d54;
+  --zm-o: 0.42;
+}
+
+.dark {
+  --zm-line: #22c58a;
+  --zm-dot: #4df0ae;
+  --zm-o: 0.5;
+}
+
+.z-mint {
+  --zm-line: #bfffe3;
+  --zm-dot: #e7fff1;
+  --zm-o: 0.5;
+}
+
+.z-host {
+  position: absolute;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.z-host > svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.z-host.z-natural > svg {
+  position: static;
+  width: 100%;
+  height: auto;
+}
+
+.z-root {
+  --l: var(--zm-line, #0f9d6b);
+  --d: var(--zm-dot, #0b7d54);
+  opacity: var(--zm-o, 1);
+}
+
+.z-a,
+.z-b,
+.z-c {
+  fill: none;
+  stroke: var(--l);
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.z-a {
+  stroke-opacity: 0.75;
+}
+
+.z-b {
+  stroke-opacity: 0.42;
+}
+
+.z-c {
+  stroke-opacity: 0.18;
+}
+
+.z-d {
+  fill: var(--d);
+}
+
+.z-pad {
+  fill: var(--l);
+  fill-opacity: 0.1;
+  stroke: none;
+}
+
+.z-mv {
+  stroke-dasharray: 0.14 0.86;
+  stroke-width: 1.6;
+  animation: z-mv 5s linear infinite;
+}
+
+.z-rv {
+  animation-direction: reverse;
+}
+
+.z-pu {
+  animation: z-pu 4s ease-in-out infinite;
+}
+
+@keyframes z-mv {
+  to {
+    stroke-dashoffset: -1;
+  }
+}
+
+@keyframes z-pu {
+  0%,
+  100% {
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Reveal gating — CircuitIsland toggles data-z-live while a host
+   intersects and sets data-z-drawn once (first intersection).
+   Data attributes keep React hydration out of the loop. */
+.z-io .z-mv {
+  animation-play-state: paused;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.z-io .z-pu {
+  animation-play-state: paused;
+}
+
+.z-io .z-d {
+  opacity: 0;
+  transition: opacity 0.6s ease var(--z-dot-delay, 0.9s);
+}
+
+.z-io[data-z-live] .z-mv {
+  animation-play-state: running;
+  opacity: 1;
+}
+
+.z-io[data-z-live] .z-pu {
+  animation-play-state: running;
+}
+
+.z-io[data-z-live] .z-d {
+  opacity: 1;
+}
+
+/* Dash draw-in — plain strokes (pathLength=1 normalization). Per-host
+   tuning via --z-draw-delay / --z-draw-dur. */
+.z-draw .z-a:not(.z-mv),
+.z-draw .z-b,
+.z-draw .z-c {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.z-draw[data-z-drawn] .z-a:not(.z-mv),
+.z-draw[data-z-drawn] .z-b,
+.z-draw[data-z-drawn] .z-c {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset var(--z-draw-dur, 1.6s) cubic-bezier(0.22, 0.61, 0.36, 1)
+    var(--z-draw-delay, 0s);
+}
+
+/* Exit fade — placements opt in with .z-fade (rest opacity 0.12). */
+.z-fade {
+  transition: opacity 0.8s ease;
+}
+
+.z-fade:not([data-z-live]) {
+  opacity: 0.12;
+}
+
+/* Micro corner on cards — dormant until hover/focus/wake. */
+.z-cc {
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.z-cc .z-a,
+.z-cc .z-b,
+.z-cc .z-c {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+[data-cc]:hover .z-cc,
+[data-cc]:focus-within .z-cc,
+[data-cc].z-wake .z-cc {
+  opacity: 1;
+}
+
+[data-cc]:hover .z-cc .z-a,
+[data-cc]:hover .z-cc .z-b,
+[data-cc]:hover .z-cc .z-c,
+[data-cc]:focus-within .z-cc .z-a,
+[data-cc]:focus-within .z-cc .z-b,
+[data-cc]:focus-within .z-cc .z-c,
+[data-cc].z-wake .z-cc .z-a,
+[data-cc].z-wake .z-cc .z-b,
+[data-cc].z-wake .z-cc .z-c {
+  animation: z-hd 1s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@keyframes z-hd {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Theme-pulse rail — one lap on the header border, triggered by the
+   "zm:theme-pulse" event via .z-run (added/removed by CircuitIsland). */
+.z-theme {
+  opacity: 0;
+  transition: opacity 0.5s ease 0.9s;
+}
+
+.z-theme .z-lap {
+  stroke-dasharray: 0.1 0.9;
+  animation: z-lap 1.3s cubic-bezier(0.4, 0.15, 0.35, 1) both;
+  animation-play-state: paused;
+}
+
+.z-theme.z-run {
+  opacity: 1;
+  transition: opacity 0s;
+}
+
+.z-theme.z-run .z-lap {
+  animation-play-state: running;
+}
+
+@keyframes z-lap {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -1;
+  }
+}
+
+/* Global pause (visibilitychange) */
+.z-paused .z-host * {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .z-host * {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .z-io .z-mv {
+    opacity: 1;
+  }
+
+  .z-io .z-d {
+    opacity: 1;
+  }
+
+  .z-draw .z-a:not(.z-mv),
+  .z-draw .z-b,
+  .z-draw .z-c {
+    stroke-dashoffset: 0;
+  }
+
+  .z-fade:not([data-z-live]) {
+    opacity: 1;
+  }
+}
+
+@media print {
+  .z-host {
+    display: none !important;
+  }
+}
