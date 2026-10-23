@@ -19,8 +19,13 @@ export default async function Navbar({ locale }: { locale?: string }) {
       >
         {t("skipToContent")}
       </a>
-      <header className="text-sm py-6 md:px-16 px-6 border-b dark:border-zinc-800 border-zinc-200 z-30 md:mb-28 mb-10">
+      <header className="text-sm py-6 md:px-16 px-6 border-b dark:border-zinc-800 border-zinc-200 z-30 md:mb-28 mb-10 relative">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
+          <div className="z-theme absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-0.5" aria-hidden="true">
+            <svg viewBox="0 0 1280 4" preserveAspectRatio="none" className="w-full h-full">
+              <path className="z-root z-lap" d="M0,2 L1280,2" stroke-width="1" stroke-linecap="round" />
+            </svg>
+          </div>
           <Link href="/" locale={loc} aria-label={t("homeAriaLabel")}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/logo.svg" width={48} height={48} alt="" className="dark:invert" aria-hidden="true" />

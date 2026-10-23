@@ -17,7 +17,7 @@ export default function NavLinks() {
   ];
 
   return (
-    <nav className="md:block hidden" aria-label={t("menuAriaLabel")}>
+    <nav className="nav-links md:block hidden" aria-label={t("menuAriaLabel")}>
       <ul className="flex items-center gap-x-8">
         {links.map((link) => {
           const active = pathname === link.href;

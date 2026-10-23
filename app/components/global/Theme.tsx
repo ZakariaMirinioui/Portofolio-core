@@ -12,7 +12,10 @@ export default function Theme() {
   const currentTheme = theme === "system" ? systemTheme : theme;
 
   function toggleTheme() {
-    return currentTheme === "light" ? setTheme("dark") : setTheme("light");
+    const next = currentTheme === "light" ? "dark" : "light";
+    setTheme(next);
+    document.dispatchEvent(new CustomEvent("zm:theme-pulse"));
+    return next;
   }
   useEffect(() => setHasMounted(true), []);
 

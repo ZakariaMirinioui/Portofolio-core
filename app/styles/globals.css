@@ -478,6 +478,26 @@ h4 {
   }
 }
 
+/* NavLinks active dot: one-shot pulse on becoming the active route. */
+.nav-links [aria-current="page"] > span:first-child {
+  animation: z-nav-pulse 0.9s ease-out;
+}
+
+@keyframes z-nav-pulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--zm-line) 45%, transparent);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 8px color-mix(in srgb, var(--zm-line) 0%, transparent);
+    transform: scale(1.3);
+  }
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--zm-line) 0%, transparent);
+    transform: scale(1);
+  }
+}
+
 /* Category remount: one-shot staggered corner flash. The cards grid re-mounts
    its children on every activeCategory change (React keys), so a CSS
    animation declared on .z-cc replays per fresh key, staggered via
@@ -538,7 +558,8 @@ h4 {
   .z-burst[data-z-live] .stat-burst,
   .z-jobtrace > svg *,
   .z-remount .z-cc,
-  .z-pills [aria-selected="true"] {
+  .z-pills [aria-selected="true"],
+  .nav-links [aria-current="page"] > span:first-child {
     animation: none !important;
     transition: none !important;
   }
