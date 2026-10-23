@@ -20,13 +20,15 @@ function TraceMark({ t }: { t: CircuitTrace }) {
   const start = t.pts[0];
   const end = t.pts[t.pts.length - 1];
   return (
-    <g>
-      <path
-        className="zc-a zc-mv"
-        d={pathData(t.pts)}
-        pathLength={1}
-        style={{ animationDuration: `${t.dur.toFixed(3)}s`, animationDelay: `${t.delay.toFixed(3)}s` }}
-      />
+    <>
+      {t.mini ? null : (
+        <path
+          className="zc-a zc-mv"
+          d={pathData(t.pts)}
+          pathLength={1}
+          style={{ animationDuration: `${t.dur.toFixed(3)}s`, animationDelay: `${t.delay.toFixed(3)}s` }}
+        />
+      )}
       <circle className="zc-b" cx={start[0]} cy={start[1]} r={3.4} />
       <circle
         className="zc-d zc-pu"
@@ -35,13 +37,13 @@ function TraceMark({ t }: { t: CircuitTrace }) {
         r={2.4}
         style={{ animationDelay: `${t.delay.toFixed(3)}s` }}
       />
-    </g>
+    </>
   );
 }
 
 function TrunkLine({ d }: { d: string }) {
   return (
-    <g>
+    <>
       <path className="zc-c" d={d} />
       <path
         className="zc-a zc-mv"
@@ -57,7 +59,7 @@ function TrunkLine({ d }: { d: string }) {
         strokeDasharray={trunkDash}
         style={{ animationDuration: trunkCycle, animationDelay: `-${(H / 200).toFixed(1)}s` }}
       />
-    </g>
+    </>
   );
 }
 

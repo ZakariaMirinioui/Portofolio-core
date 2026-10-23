@@ -65,6 +65,7 @@ export type CircuitTrace = {
   pts: Pt2[];
   dur: number;
   delay: number;
+  mini?: boolean;
 };
 
 type Step = [number, number];
@@ -97,10 +98,11 @@ const walk = (
   return pts;
 };
 
-const makeTrace = (r: () => number, pts: [number, number][], dur?: number): CircuitTrace => ({
+const makeTrace = (r: () => number, pts: [number, number][], dur?: number, mini?: boolean): CircuitTrace => ({
   pts,
   dur: dur || 4 + r() * 4,
   delay: -r() * 6,
+  mini,
 });
 
 export const railTraces = (H: number, seed = 13): CircuitTrace[] => {
@@ -139,7 +141,7 @@ export const spineTraces = (H: number, seed = 6): CircuitTrace[] => {
     const s = q.slice() as Point3;
     s[B] += 1 + Math.floor(r() * 2);
     const pts: [number, number][] = [Q(0, 0, 0), Q(...p), Q(...q), Q(...s)];
-    o.push(makeTrace(r, pts));
+    o.push(makeTrace(r, pts, undefined, false));
     const e = pts[3];
     o.push(
       makeTrace(
@@ -152,7 +154,8 @@ export const spineTraces = (H: number, seed = 6): CircuitTrace[] => {
           () => true,
           [[2, 1], [2, -1], [A, -1], [B, 1]]
         ),
-        3
+        3,
+        true
       )
     );
   }

@@ -115,3 +115,14 @@
 - `app/components/decor/SideCircuits.tsx`: server component, mounted once in `app/[locale]/layout.tsx`; static SVG markup, zero client JS.
 - CSS in `app/styles/globals.css`: `zc-*` classes, `--zm-line: #27b173` / `--zm-dot: #27b173` (hero cube stroke color) with `--zm-o: 0.8` opacity multiplier (matching hero cubes at strokeOpacity 0.6), top/bottom 8% container mask + inner content-side fade mask (-webkit- prefixed), `@media (min-width: 1520px)` show gate (contentMax 1280 + 2 x 120 gutter), print hidden, reduced-motion off.
 - Measured: content max width 1280px (`max-w-7xl`), padding 64px (`md:px-16`), header z-30 transparent, page transition overlay z-[90].
+
+### Step 2 - Visual verification, performance pass, build (complete)
+- Playwright verification vs pre-change worktree (be708b1): 6 routes x light/dark x 1440/1920; screenshots in `docs/decor/` (before-*, after-*).
+- Thresholds (measured, `min-w-7xl` = 1280px content max, min gutter 120px): hidden at 1024/1366/1440; shown at 1536 (128px), 1600 (160px), 1920 (rail 180px / spine 240px), 2560 (rail 180px / spine 240px). At 1440 the after page is pixel-identical to before (PSNR ~102 dB); at 1920 the content area matches before (diff map shows only font-antialiasing noise) - zero layout shift.
+- Overlap audit over all routes x 1536/1920/2560 x both themes: zero content elements intersecting the gutter bands (one flagged testimonial paragraph proved to be an offscreen slide inside an overflow-hidden carousel - visually clean, see verify-testimonials-scroll-1920-dark.png).
+- Theme vars: `--zm-line/--zm-dot: #27b173` (hero cube stroke + node color) with `--zm-o: 0.8` so traveler stroke lands at 0.6 effective opacity, matching the hero cubes; verified visually in both themes.
+- Reduced motion: `zc-mv`/`zc-pu` animations go to `none`; dot rests at 0.5 opacity. Print: decor hidden (verified via print-media emulation).
+- Keyboard: tab order unchanged (skip link first); decor is aria-hidden + pointer-events:none.
+- Performance (4x CPU throttle, headless/SwiftShader - numbers noisy): decor roughly 2x frame time vs no-decor under throttle. Mitigation ladder executed: 22 animated paths removed (spine mini-branches are now static faint traces + pulsing dots, merged into the zc-c base path), layer promotion tested (no gain), contain unnecessary (fixed + overflow-hidden + mask already isolates). Real-GPU browsers have far cheaper compositing; recommend a quick manual check on hardware.
+- Budgets (static export, per page): +20.3 KB uncompressed HTML, 184 SVG elements (rail ~71, spine ~113), zero client JS, zero hydration warnings, clean console (only pre-existing GitHub API 403 from react-github-calendar rate limiting, unrelated to decor).
+- `npm run build` (lint + i18n guards + regression guards + next build + static export): pass.
