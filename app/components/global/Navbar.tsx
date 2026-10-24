@@ -23,7 +23,7 @@ export default async function Navbar({ locale }: { locale?: string }) {
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="z-theme absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-0.5" aria-hidden="true">
             <svg viewBox="0 0 1280 4" preserveAspectRatio="none" className="w-full h-full">
-              <path className="z-root z-lap" d="M0,2 L1280,2" stroke-width="1" stroke-linecap="round" />
+              <path className="z-root z-lap" d="M0,2 L1280,2" strokeWidth="1" strokeLinecap="round" />
             </svg>
           </div>
           <Link href="/" locale={loc} aria-label={t("homeAriaLabel")}>
