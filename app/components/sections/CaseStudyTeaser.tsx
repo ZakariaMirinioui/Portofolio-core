@@ -75,29 +75,29 @@ export default async function CaseStudyTeaser({ locale }: { locale: string }) {
             </div>
 
             <h2 className="mb-3 font-sans text-3xl font-bold leading-tight tracking-tight text-white lg:text-5xl">
-              {featured.name}
+              {featured.displayName[locale === "fr" ? "fr" : "en"] || featured.displayName.en}
             </h2>
 
             <p className="mx-auto mb-5 max-w-[420px] text-base leading-relaxed text-white/75">
-              {featured.tagline}
+              {featured.summary[locale === "fr" ? "fr" : "en"] || featured.summary.en}
             </p>
 
             <p className="mx-auto mb-8 max-w-[420px] text-[13px] leading-relaxed text-white/80 font-montserrat">
               {t("deploymentText")}
             </p>
 
-            {featured.metrics && featured.metrics.length > 0 && (
+            {featured.keyMetrics && featured.keyMetrics.length > 0 && (
               <div className="mb-8 grid w-full max-w-[440px] grid-cols-2 gap-3">
-                {featured.metrics.slice(0, 4).map((metric) => (
+                {featured.keyMetrics.slice(0, 4).map((metric, idx) => (
                   <div
-                    key={metric.label}
+                    key={idx}
                     className="group relative rounded-xl border border-white/10 bg-white/5 p-3 backdrop-blur-sm transition-all duration-300 hover:border-dossera-color/50 hover:shadow-[0_0_20px_rgba(5,109,78,0.3)]"
                   >
                     <span className="text-[10px] font-medium uppercase leading-none tracking-wider text-white/70 font-montserrat">
-                      {metric.label}
+                      {metric.label[locale === "fr" ? "fr" : "en"] || metric.label.en}
                     </span>
                     <span className="mt-1.5 block text-lg font-bold leading-none text-white">
-                      {metric.value}
+                      {metric.value[locale === "fr" ? "fr" : "en"] || metric.value.en}
                     </span>
                   </div>
                 ))}
@@ -115,9 +115,9 @@ export default async function CaseStudyTeaser({ locale }: { locale: string }) {
                   →
                 </span>
               </Link>
-              {featured.projectUrl && (
+              {featured.links.live && (
                 <a
-                  href={featured.projectUrl}
+                  href={featured.links.live}
                   target="_blank"
                   rel="noreferrer noopener"
                   className="group relative inline-flex items-center justify-center gap-2 rounded-lg border border-white/40 bg-white/5 px-6 py-3 text-sm font-bold tracking-tight text-white/90 backdrop-blur-sm transition-all duration-300 hover:bg-white/10"

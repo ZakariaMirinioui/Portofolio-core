@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { Star } from "@phosphor-icons/react";
-import type { ProjectType } from "@/types";
+import type { Project } from "@/types";
 import EmptyState from "../../components/shared/EmptyState";
 import ProjectLogo from "../../components/shared/ProjectLogo";
 import { STATIC_CHIP, STATIC_CARD_CORNER, STATIC_RHOMBI } from "../../components/decor/circuitStatics";
@@ -21,12 +21,16 @@ const CATEGORIES = [
   { value: "wellness", labelKey: "categories.wellness" },
   { value: "ecommerce", labelKey: "categories.ecommerce" },
   { value: "mobile", labelKey: "categoriesMobile" },
+  { value: "automation", labelKey: "categoriesAutomation" },
   { value: "enterprise", labelKey: "categories.enterprise" },
   { value: "open-source", labelKey: "categories.open-source" },
   { value: "rd", labelKey: "categories.rd" },
 ] as const;
 
 const STATUS_DOT: Record<string, string> = {
+  live: "bg-green-500",
+  delivered: "bg-blue-500",
+  built: "bg-blue-500",
   production: "bg-green-500",
   active: "bg-blue-500",
   maintenance: "bg-amber-500",
@@ -42,6 +46,7 @@ const CATEGORY_LABEL_KEYS: Record<string, string> = {
   wellness: "wellness",
   ecommerce: "ecommerce",
   mobile: "mobile",
+  automation: "automation",
   enterprise: "enterprise",
   "open-source": "openSource",
   rd: "rd",
@@ -51,10 +56,11 @@ export default function ProjectsClient({
   projects,
   featuredProjects,
 }: {
-  projects: ProjectType[];
-  featuredProjects: ProjectType[];
+  projects: Project[];
+  featuredProjects: Project[];
 }) {
   const t = useTranslations("projects");
+  const tDetail = useTranslations("projectDetail");
   return (
     <>
       {featuredProjects.length > 0 && (
@@ -65,7 +71,7 @@ export default function ProjectsClient({
             </h2>
             <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
               {featuredProjects.map((project) => (
-                <FeaturedProjectCard key={project._id} project={project} />
+                <FeaturedProjectCard key={project.slug} project={project} />
               ))}
               {featuredProjects.length < 3 && (
                 <div aria-hidden="true" className="relative hidden xl:flex items-center justify-center">
@@ -88,15 +94,18 @@ export default function ProjectsClient({
   );
 }
 
-function FeaturedProjectCard({ project }: { project: ProjectType }) {
+function FeaturedProjectCard({ project }: { project: Project }) {
   const router = useRouter();
+  const locale = useLocale();
+  const loc = locale === "fr" ? "fr" : "en";
   const t = useTranslations("projects");
   const tDetail = useTranslations("projectDetail");
   const statusLabels = t.raw("status") as Record<string, string>;
   const shortCategoryLabels = t.raw("categoryLabels") as Record<string, string>;
-  const hasCaseStudy = !!project.caseStudy;
   const status = project.status || "production";
   const category = project.category || "enterprise";
+  const displayName = project.displayName[loc] || project.displayName.en;
+  const summary = project.summary[loc] || project.summary.en;
 
   const goToDetails = () => {
     trackProjectViewed({ project_slug: project.slug, source_page: "/projects" });
@@ -111,7 +120,7 @@ function FeaturedProjectCard({ project }: { project: ProjectType }) {
       }}
       tabIndex={0}
       role="link"
-      aria-label={t("viewDetails", { name: project.name })}
+      aria-label={t("viewDetails", { name: displayName })}
       className="group relative cursor-pointer dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-xl p-6 hover:dark:border-zinc-600 hover:border-zinc-300 focus:outline-none focus:ring-2 focus:ring-primary-color focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-zinc-900 transition-colors h-full flex flex-col"
     >
       <span
@@ -122,8 +131,8 @@ function FeaturedProjectCard({ project }: { project: ProjectType }) {
       <div className="flex items-start justify-between gap-3 mb-4">
         <div className="flex items-center gap-3 min-w-0">
           <ProjectLogo
-            src={project.logo}
-            name={project.name}
+            src={project.assets.logo}
+            name={displayName}
             category={category}
             slug={project.slug}
             wellClassName="h-14 max-w-[11rem]"
@@ -134,7 +143,7 @@ function FeaturedProjectCard({ project }: { project: ProjectType }) {
               {project.featured && (
                 <Star size={16} weight="fill" className="text-amber-500 shrink-0" aria-label={t("featuredAriaLabel")} />
               )}
-              {project.name}
+              {displayName}
             </h3>
             <p className="flex items-center gap-2 mt-1 text-xs">
               <span className={`h-1.5 w-1.5 rounded-full shrink-0 ${STATUS_DOT[status] || "bg-zinc-500"}`} aria-hidden="true" />
@@ -151,31 +160,34 @@ function FeaturedProjectCard({ project }: { project: ProjectType }) {
       </div>
 
       <p className="text-sm dark:text-zinc-400 text-zinc-600 leading-relaxed mb-4 flex-1">
-        {project.tagline}
+        {summary}
       </p>
 
-      {project.techStack && project.techStack.length > 0 && (
+      {project.stack && project.stack.length > 0 && (
         <div className="flex flex-wrap gap-1.5 mb-4">
-          {project.techStack.slice(0, 6).map((tech) => (
-            <span
-              key={tech}
-              className="px-2 py-0.5 rounded text-xs font-medium dark:bg-zinc-800 bg-zinc-100 dark:text-zinc-300 text-zinc-700"
-            >
-              {tech}
-            </span>
-          ))}
-          {project.techStack.length > 6 && (
+          {project.stack
+            .flatMap((layer) => layer.items)
+            .slice(0, 6)
+            .map((tech) => (
+              <span
+                key={tech}
+                className="px-2 py-0.5 rounded text-xs font-medium dark:bg-zinc-800 bg-zinc-100 dark:text-zinc-300 text-zinc-700"
+              >
+                {tech}
+              </span>
+            ))}
+          {project.stack.flatMap((layer) => layer.items).length > 6 && (
             <span className="px-2 py-0.5 rounded text-xs font-medium dark:bg-zinc-800 bg-zinc-100 dark:text-zinc-500 text-zinc-500">
-              +{project.techStack.length - 6}
+              +{project.stack.flatMap((layer) => layer.items).length - 6}
             </span>
           )}
         </div>
       )}
 
       <div className="flex items-center gap-3 pt-4 border-t dark:border-zinc-700 border-zinc-200">
-        {project.projectUrl && (
+        {project.access === "live" && project.links.live && (
           <a
-            href={project.projectUrl}
+            href={project.links.live}
             target="_blank"
             rel="noreferrer noopener"
             onClick={(e) => {
@@ -188,14 +200,14 @@ function FeaturedProjectCard({ project }: { project: ProjectType }) {
             {tDetail("live")}
           </a>
         )}
-        {project.repository && (
+        {project.access === "repo" && project.links.repo && (
           <a
-            href={project.repository}
+            href={project.links.repo}
             target="_blank"
             rel="noreferrer noopener"
             onClick={(e) => {
               e.stopPropagation();
-              trackGithubLinkClicked({ repo: project.name });
+              trackGithubLinkClicked({ repo: displayName });
             }}
             className="inline-flex items-center gap-1.5 text-sm font-medium dark:text-zinc-400 text-zinc-600 hover:dark:text-white hover:text-zinc-900"
           >
@@ -203,23 +215,10 @@ function FeaturedProjectCard({ project }: { project: ProjectType }) {
             {tDetail("code")}
           </a>
         )}
-        {hasCaseStudy && (
-          <Link
-            href={`/projects/${project.slug}/case-study`}
-            onClick={(e) => {
-              e.stopPropagation();
-              trackProjectViewed({ project_slug: project.slug, source_page: "/projects" });
-            }}
-            className="inline-flex items-center gap-1.5 text-sm font-medium dark:text-blue-400 text-blue-600 hover:underline"
-          >
-            <BiBookOpen className="text-base" />
-            {tDetail("caseStudy")}
-          </Link>
-        )}
         <button
           onClick={goToDetails}
           className="ml-auto inline-flex items-center gap-1 text-sm font-medium dark:text-zinc-400 text-zinc-600 hover:dark:text-white hover:text-zinc-900 hover:underline"
-          aria-label={t("viewDetails", { name: project.name })}
+          aria-label={t("viewDetails", { name: displayName })}
         >
           {t("detailsArrow")}
         </button>
@@ -228,24 +227,27 @@ function FeaturedProjectCard({ project }: { project: ProjectType }) {
   );
 }
 
-function ProjectsList({ projects }: { projects: ProjectType[] }) {
+function ProjectsList({ projects }: { projects: Project[] }) {
   const [activeCategory, setActiveCategory] = useState("all");
   const t = useTranslations("projects");
   const tNav = useTranslations("navigation");
+  const tDetail = useTranslations("projectDetail");
+
+  const publicProjects = projects.filter((p) => p.visibility === "public");
 
   const filteredProjects = useMemo(() => {
-    if (activeCategory === "all") return projects;
-    return projects.filter((p) => p.category === activeCategory);
-  }, [projects, activeCategory]);
+    if (activeCategory === "all") return publicProjects;
+    return publicProjects.filter((p) => p.category === activeCategory);
+  }, [publicProjects, activeCategory]);
 
   const categoriesWithCounts = useMemo(() => {
-    const counts: Record<string, number> = { all: projects.length };
-    projects.forEach((p) => {
+    const counts: Record<string, number> = { all: publicProjects.length };
+    publicProjects.forEach((p) => {
       const cat = p.category || "enterprise";
       counts[cat] = (counts[cat] || 0) + 1;
     });
     return CATEGORIES.map((c) => ({ ...c, count: counts[c.value] || 0 })).filter((c) => c.count > 0);
-  }, [projects]);
+  }, [publicProjects]);
 
   const activeCategoryLabel = t(
     CATEGORIES.find((c) => c.value === activeCategory)?.labelKey ?? "categories.all"
@@ -272,19 +274,87 @@ function ProjectsList({ projects }: { projects: ProjectType[] }) {
       </div>
 
       {filteredProjects.length > 0 ? (
-        <div className="z-remount grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
-          {filteredProjects.map((project, i) => (
-            <ProjectCard key={project._id} project={project} idx={i} />
-          ))}
-          {filteredProjects.length % 3 !== 0 && (
-            <div aria-hidden="true" className="relative hidden xl:flex items-center justify-center min-h-56">
-              <span
-                className="z-host z-sleep h-64 w-80"
-                dangerouslySetInnerHTML={{ __html: STATIC_RHOMBI }}
-              />
+        activeCategory === "all" ? (
+          <div className="space-y-16">
+            {/* Main Products Grid */}
+            <div className="z-remount grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
+              {publicProjects
+                .filter(
+                  (p) =>
+                    !["autodeal", "courier-go", "ride-link", "secudrive-mobile", "evolution-agent", "whatsapp-sales-bot", "n8n-templates-library"].includes(
+                      p.slug
+                    )
+                )
+                .map((project, i) => (
+                  <ProjectCard key={project.slug} project={project} idx={i} />
+                ))}
             </div>
-          )}
-        </div>
+
+            {/* Also Built Group */}
+            {publicProjects.some((p) =>
+              ["autodeal", "courier-go", "ride-link", "secudrive-mobile"].includes(p.slug)
+            ) && (
+              <section className="pt-8 border-t dark:border-zinc-800/80 border-zinc-200">
+                <div className="mb-6">
+                  <h3 className="text-xl font-incognito font-bold tracking-tight mb-1">
+                    {t("alsoBuiltTitle")}
+                  </h3>
+                  <p className="text-sm dark:text-zinc-400 text-zinc-600">
+                    {t("alsoBuiltSubtitle")}
+                  </p>
+                </div>
+                <div className="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5">
+                  {publicProjects
+                    .filter((p) =>
+                      ["autodeal", "courier-go", "ride-link", "secudrive-mobile"].includes(p.slug)
+                    )
+                    .map((project, i) => (
+                      <ProjectCard key={project.slug} project={project} idx={i} />
+                    ))}
+                </div>
+              </section>
+            )}
+
+            {/* Automation Group */}
+            {publicProjects.some((p) =>
+              ["evolution-agent", "whatsapp-sales-bot", "n8n-templates-library"].includes(p.slug)
+            ) && (
+              <section className="pt-8 border-t dark:border-zinc-800/80 border-zinc-200">
+                <div className="mb-6">
+                  <h3 className="text-xl font-incognito font-bold tracking-tight mb-1">
+                    {t("automationTitle")}
+                  </h3>
+                  <p className="text-sm dark:text-zinc-400 text-zinc-600">
+                    {t("automationSubtitle")}
+                  </p>
+                </div>
+                <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
+                  {publicProjects
+                    .filter((p) =>
+                      ["evolution-agent", "whatsapp-sales-bot", "n8n-templates-library"].includes(p.slug)
+                    )
+                    .map((project, i) => (
+                      <ProjectCard key={project.slug} project={project} idx={i} />
+                    ))}
+                </div>
+              </section>
+            )}
+          </div>
+        ) : (
+          <div className="z-remount grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
+            {filteredProjects.map((project, i) => (
+              <ProjectCard key={project.slug} project={project} idx={i} />
+            ))}
+            {filteredProjects.length % 3 !== 0 && (
+              <div aria-hidden="true" className="relative hidden xl:flex items-center justify-center min-h-56">
+                <span
+                  className="z-host z-sleep h-64 w-80"
+                  dangerouslySetInnerHTML={{ __html: STATIC_RHOMBI }}
+                />
+              </div>
+            )}
+          </div>
+        )
       ) : (
         <EmptyState
           value={
@@ -298,14 +368,17 @@ function ProjectsList({ projects }: { projects: ProjectType[] }) {
   );
 }
 
-function ProjectCard({ project, idx = 0 }: { project: ProjectType; idx?: number }) {
+function ProjectCard({ project, idx = 0 }: { project: Project; idx?: number }) {
   const router = useRouter();
+  const locale = useLocale();
+  const loc = locale === "fr" ? "fr" : "en";
   const t = useTranslations("projects");
   const tDetail = useTranslations("projectDetail");
   const statusLabels = t.raw("status") as Record<string, string>;
-  const hasCaseStudy = !!project.caseStudy;
   const status = project.status || "production";
   const category = project.category || "enterprise";
+  const displayName = project.displayName[loc] || project.displayName.en;
+  const summary = project.summary[loc] || project.summary.en;
 
   const goToDetails = () => {
     trackProjectViewed({ project_slug: project.slug, source_page: "/projects" });
@@ -320,7 +393,7 @@ function ProjectCard({ project, idx = 0 }: { project: ProjectType; idx?: number 
       }}
       tabIndex={0}
       role="link"
-      aria-label={t("viewDetails", { name: project.name })}
+      aria-label={t("viewDetails", { name: displayName })}
       className="group relative cursor-pointer dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-lg p-4 hover:dark:border-zinc-600 hover:border-zinc-300 focus:outline-none focus:ring-2 focus:ring-primary-color focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-zinc-900 transition-colors flex flex-col h-full"
     >
       <span
@@ -331,15 +404,15 @@ function ProjectCard({ project, idx = 0 }: { project: ProjectType; idx?: number 
       />
       <div className="flex items-center gap-3 mb-3">
         <ProjectLogo
-          src={project.logo}
-          name={project.name}
+          src={project.assets.logo}
+          name={displayName}
           category={category}
           slug={project.slug}
           wellClassName="h-11 max-w-[9rem]"
           iconSize={22}
         />
         <div className="min-w-0">
-          <h3 className="font-incognito font-semibold text-base group-hover:underline truncate">{project.name}</h3>
+          <h3 className="font-incognito font-semibold text-base group-hover:underline truncate">{displayName}</h3>
           <p className="flex items-center gap-1.5 text-[11px]">
             <span className={`h-1.5 w-1.5 rounded-full shrink-0 ${STATUS_DOT[status] || "bg-zinc-500"}`} aria-hidden="true" />
             <span className="font-medium dark:text-zinc-300 text-zinc-700">
@@ -349,30 +422,35 @@ function ProjectCard({ project, idx = 0 }: { project: ProjectType; idx?: number 
         </div>
       </div>
 
-      <p className="text-xs dark:text-zinc-400 text-zinc-600 leading-relaxed mb-3 flex-1">{project.tagline}</p>
+      <p className="text-xs dark:text-zinc-400 text-zinc-600 leading-relaxed mb-3 flex-1">
+        {summary}
+      </p>
 
-      {project.techStack && project.techStack.length > 0 && (
+      {project.stack && project.stack.length > 0 && (
         <div className="flex flex-wrap gap-1 mb-3">
-          {project.techStack.slice(0, 4).map((tech) => (
-            <span
-              key={tech}
-              className="px-1.5 py-0.5 rounded text-[11px] font-medium dark:bg-zinc-800 bg-zinc-100 dark:text-zinc-400 text-zinc-600"
-            >
-              {tech}
-            </span>
-          ))}
-          {project.techStack.length > 4 && (
+          {project.stack
+            .flatMap((layer) => layer.items)
+            .slice(0, 4)
+            .map((tech) => (
+              <span
+                key={tech}
+                className="px-1.5 py-0.5 rounded text-[11px] font-medium dark:bg-zinc-800 bg-zinc-100 dark:text-zinc-400 text-zinc-600"
+              >
+                {tech}
+              </span>
+            ))}
+          {project.stack.flatMap((layer) => layer.items).length > 4 && (
             <span className="px-1.5 py-0.5 rounded text-[11px] font-medium dark:bg-zinc-800 bg-zinc-100 dark:text-zinc-500 text-zinc-500">
-              +{project.techStack.length - 4}
+              +{project.stack.flatMap((layer) => layer.items).length - 4}
             </span>
           )}
         </div>
       )}
 
       <div className="flex items-center gap-2 pt-3 border-t dark:border-zinc-700 border-zinc-200">
-        {project.projectUrl && (
+        {project.access === "live" && project.links.live && (
           <a
-            href={project.projectUrl}
+            href={project.links.live}
             target="_blank"
             rel="noreferrer noopener"
             onClick={(e) => {
@@ -385,14 +463,14 @@ function ProjectCard({ project, idx = 0 }: { project: ProjectType; idx?: number 
             {tDetail("live")}
           </a>
         )}
-        {project.repository && (
+        {project.access === "repo" && project.links.repo && (
           <a
-            href={project.repository}
+            href={project.links.repo}
             target="_blank"
             rel="noreferrer noopener"
             onClick={(e) => {
               e.stopPropagation();
-              trackGithubLinkClicked({ repo: project.name });
+              trackGithubLinkClicked({ repo: displayName });
             }}
             className="inline-flex items-center gap-1 text-xs font-medium dark:text-zinc-400 text-zinc-600 hover:dark:text-white hover:text-zinc-900"
           >
@@ -400,19 +478,13 @@ function ProjectCard({ project, idx = 0 }: { project: ProjectType; idx?: number 
             {tDetail("code")}
           </a>
         )}
-        {hasCaseStudy && (
-          <Link
-            href={`/projects/${project.slug}/case-study`}
-            onClick={(e) => {
-              e.stopPropagation();
-              trackProjectViewed({ project_slug: project.slug, source_page: "/projects" });
-            }}
-            className="inline-flex items-center gap-1 text-xs font-medium dark:text-blue-400 text-blue-600 hover:underline"
-          >
-            <BiBookOpen className="text-sm" />
-            {tDetail("caseStudy")}
-          </Link>
-        )}
+        <button
+          onClick={goToDetails}
+          className="ml-auto inline-flex items-center gap-1 text-xs font-medium dark:text-zinc-400 text-zinc-600 hover:dark:text-white hover:text-zinc-900 hover:underline"
+          aria-label={t("viewDetails", { name: displayName })}
+        >
+          {t("detailsArrow")}
+        </button>
       </div>
     </article>
   );

@@ -34,50 +34,74 @@ export type JobType = {
   endDate: string | null;
 };
 
-export type ProjectType = {
-  _id: string;
-  name: string;
-  slug: string;
-  tagline: string;
-  projectUrl: string;
-  repository: string;
-  logo: string;
-  coverImage: {
-    image: string;
-    alt: string | null;
-    lqip: string;
-  };
-  description: PortableTextBlock[];
-  category?: string;
-  status?: string;
-  featured?: boolean;
-  clientType?: string;
-  role?: string;
-  teamSize?: number;
+export type Bilingual = { en: string; fr: string };
+
+export type AccessState = "live" | "repo" | "private" | "demo-on-request" | "coming-soon";
+export type ProjectStatus = "Live" | "Delivered" | "Built" | "Archived" | "Production";
+export type Platform = "Web" | "Android" | "Cross-platform" | "Automation";
+export type Visibility = "public" | "draft";
+
+export type Glance = {
+  role?: Bilingual;
+  client?: Bilingual;
+  team?: number;
   duration?: string;
-  techStack?: string[];
-  metrics?: Array<{
-    label: string;
-    value: string;
-    description?: string;
-  }>;
-  gallery?: Array<{
-    image: string;
-    alt?: string;
-    caption?: string;
-    lqip?: string;
-  }>;
-  caseStudy?: {
-    _ref: string;
-    _type: "reference";
-  };
-  architectureDiagram?: {
-    image: string;
-    alt?: string;
-    caption?: string;
-    lqip?: string;
-  };
 };
+
+export type KeyMetric = {
+  label: Bilingual;
+  value: Bilingual;
+  description?: Bilingual;
+};
+
+export type GroupedLabel = { label: Bilingual; items: Bilingual[] };
+
+export type StackLayer = { layer: Bilingual; items: string[] };
+
+export type Integration = { name: Bilingual; state: "dependency-present" | "configured-and-verified" };
+
+export type RoleItem = { label: Bilingual };
+
+export type BilingualParagraphs = { en: string | string[]; fr: string | string[] };
+
+export type ProjectAsset = {
+  logo: string;
+  hero?: string;
+  screenshots?: Array<{ image: string; alt: Bilingual; caption?: Bilingual }>;
+};
+
+export type Project = {
+  slug: string;
+  displayName: Bilingual;
+  category: string;
+  platform: Platform;
+  access: AccessState;
+  status: ProjectStatus;
+  statusConfirmed: boolean;
+  visibility: Visibility;
+  context?: Bilingual;
+  summary: Bilingual;
+  overview: BilingualParagraphs;
+  glance?: Glance;
+  keyMetrics?: KeyMetric[];
+  myRole?: Bilingual;
+  capabilities: GroupedLabel[];
+  roles: RoleItem[];
+  stack: StackLayer[];
+  architectureNotes?: Bilingual;
+  integrations: Integration[];
+  evidenceNotes: Bilingual;
+  setup?: { steps: string[] };
+  links: { live?: string; repo?: string; demo?: string };
+  relatedSlugs: string[];
+  relatedExperience?: string[];
+  variantNote?: Bilingual;
+  assets: ProjectAsset;
+  unconfirmed: string[];
+  featured?: boolean;
+};
+
+export type ProjectType = Project;
 
 export type CaseStudyType = {
   _id: string;

@@ -5,8 +5,15 @@ import RefLink from "../shared/RefLink";
 import EmptyState from "../shared/EmptyState";
 import { RiBriefcase3Fill } from "react-icons/ri";
 import { jobs } from "../../data/jobs";
+import { Link } from "@/i18n/navigation";
 
-export default async function Job() {
+const RELATED_PROJECTS: Record<string, { slug: string; name: string }> = {
+  "job-1": { slug: "dossera", name: "Dossera JAMS" },
+  "job-2": { slug: "bluevision", name: "BlueVision" },
+  "job-4": { slug: "pwadc-marketplace", name: "PWADC Marketplace" },
+};
+
+export default async function Job({ locale }: { locale?: string }) {
   const jobsData: JobType[] = jobs;
 
   return (
@@ -22,8 +29,10 @@ export default async function Job() {
       {jobsData.length > 0 ? (
         <Slide delay={0.18}>
           <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-12 gap-y-10">
-            {jobsData.map((job, index) => {
+            {jobsData.map((job) => {
               const initial = job.name.charAt(0).toUpperCase();
+              const related = RELATED_PROJECTS[job._id];
+
               return (
                 <div
                   key={job._id}
@@ -53,6 +62,20 @@ export default async function Job() {
                     <p className="tracking-tight dark:text-zinc-400 text-zinc-600 my-4">
                       {job.description}
                     </p>
+                    {related && (
+                      <div className="mt-1 flex items-center gap-1.5 text-xs">
+                        <span className="dark:text-zinc-500 text-zinc-500">
+                          {locale === "fr" ? "Projet associé :" : "Related project:"}
+                        </span>
+                        <Link
+                          locale={locale}
+                          href={`/projects/${related.slug}`}
+                          className="inline-flex items-center gap-1 font-medium dark:text-primary-color text-secondary-color hover:underline"
+                        >
+                          {related.name} →
+                        </Link>
+                      </div>
+                    )}
                   </div>
                 </div>
               );

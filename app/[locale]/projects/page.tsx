@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { getAlternateUrls, getCanonicalUrl, SITE_URL } from "@/lib/metadata";
-import type { ProjectType } from "@/types";
+import type { Project } from "@/types";
 import PageHeading from "../../components/shared/PageHeading";
 import Circuit from "../../components/decor/Circuit";
 import NextPageTeaser from "../../components/sections/NextPageTeaser";
