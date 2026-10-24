@@ -7,6 +7,7 @@ import { routing } from "@/i18n/routing";
 import { getAlternateUrls, getCanonicalUrl, SITE_URL } from "@/lib/metadata";
 import { BiLinkExternal, BiLogoGithub, BiLock } from "react-icons/bi";
 import ProjectLogo from "@/app/components/shared/ProjectLogo";
+import SetupSteps from "./SetupSteps";
 import { Link } from "@/i18n/navigation";
 import { projects } from "../../../data/projects";
 
@@ -399,29 +400,20 @@ export default async function Project({ params }: Props) {
           )}
 
           {/* === 14. Run it locally === */}
-          {project.setup && (
-            <section className="mt-10">
-              <div className="flex items-center justify-between mb-3">
-                <h2 className="text-sm font-incognito font-semibold uppercase tracking-wider dark:text-zinc-300 text-zinc-700">
-                  {t("sectionRunLocally")}
-                </h2>
-                <button
-                  id="run-locally-toggle"
-                  className="text-xs font-medium dark:text-zinc-400 text-zinc-500 hover:underline"
-                  aria-expanded="false"
-                  aria-controls="run-locally-content"
-                >
-                  {t("sectionRunLocallyCollapse")}
-                </button>
-              </div>
-              <div id="run-locally-content" className="hidden dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-lg p-4 dark:text-zinc-300 text-zinc-600 leading-relaxed">
-                <ol className="list-decimal list-inside space-y-2 text-sm">
-                  {project.setup.steps.map((step, i) => (
-                    <li key={i}>{step}</li>
-                  ))}
-                </ol>
-              </div>
-            </section>
+          {((project.setup && project.setup.steps && project.setup.steps.length > 0) || project.slug === "dossera") && (
+            <SetupSteps
+              slug={project.slug}
+              steps={project.setup?.steps}
+              locale={locale}
+              labels={{
+                runLocally: t("sectionRunLocally"),
+                collapse: t("sectionRunLocallyCollapse"),
+                expand: t("sectionRunLocallyExpand"),
+                availableTooltip: t("setupAvailableTooltip"),
+                dosseraCta: t("setupDosseraCta"),
+                dosseraHover: t("setupDosseraHover"),
+              }}
+            />
           )}
 
           {/* === 15. Previous / next + CTA === */}

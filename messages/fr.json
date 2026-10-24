@@ -280,8 +280,8 @@
     "sectionLinks": "Liens",
     "sectionRelated": "Projets liés",
     "sectionRunLocally": "Lancer en local",
-    "sectionRunLocallyCollapse": "Afficher les étapes d'installation",
-    "sectionRunLocallyExpand": "Masquer les étapes d'installation",
+    "sectionRunLocallyCollapse": "Masquer les étapes de configuration",
+    "sectionRunLocallyExpand": "Afficher les étapes de configuration",
     "sectionPrevious": "Projet précédent",
     "sectionNext": "Projet suivant",
     "ctaContinue": "Continuer vers {title}",
@@ -291,7 +291,10 @@
     "roleTitle": "Mon rôle",
     "noClient": "Non divulgué",
     "noTeam": "Non divulgué",
-    "noDuration": "Non divulgué"
+    "noDuration": "Non divulgué",
+    "setupAvailableTooltip": "Instructions de configuration locale disponibles",
+    "setupDosseraCta": "Consulter l'étude de cas sur site",
+    "setupDosseraHover": "Redirige vers l'étude de cas complète du déploiement judiciaire souverain"
   },
   "caseStudy": {
     "backToProject": "← Retour au projet",

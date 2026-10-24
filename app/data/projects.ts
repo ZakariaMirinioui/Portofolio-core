@@ -680,7 +680,7 @@ export const projects: Project[] = [
     relatedSlugs: [],
     relatedExperience: [],
     variantNote: undefined,
-    assets: { logo: "/project.png", hero: "/project.png" },
+    assets: { logo: "", hero: "/project.png" },
     unconfirmed: ["mapping", "car-specific features"],
   },
   {
@@ -736,7 +736,7 @@ export const projects: Project[] = [
     relatedSlugs: [],
     relatedExperience: [],
     variantNote: undefined,
-    assets: { logo: "/project.png", hero: "/project.png" },
+    assets: { logo: "", hero: "/project.png" },
     unconfirmed: ["mapping"],
   },
   {
@@ -799,7 +799,7 @@ export const projects: Project[] = [
     relatedSlugs: [],
     relatedExperience: [],
     variantNote: undefined,
-    assets: { logo: "/project.png", hero: "/project.png" },
+    assets: { logo: "", hero: "/project.png" },
     unconfirmed: ["mapping"],
   },
   {
@@ -880,7 +880,7 @@ export const projects: Project[] = [
     relatedSlugs: [],
     relatedExperience: ["brinks-morocco"],
     variantNote: undefined,
-    assets: { logo: "/project.png", hero: "/project.png" },
+    assets: { logo: "", hero: "/project.png" },
     unconfirmed: [],
   },
   {
@@ -968,7 +968,7 @@ export const projects: Project[] = [
     relatedSlugs: ["whatsapp-sales-bot", "n8n-templates-library"],
     relatedExperience: [],
     variantNote: undefined,
-    assets: { logo: "/project.png", hero: "/project.png" },
+    assets: { logo: "", hero: "/project.png" },
     unconfirmed: []
   },
   {
@@ -1050,7 +1050,7 @@ export const projects: Project[] = [
     relatedSlugs: ["evolution-agent", "n8n-templates-library"],
     relatedExperience: [],
     variantNote: undefined,
-    assets: { logo: "/project.png", hero: "/project.png" },
+    assets: { logo: "", hero: "/project.png" },
     unconfirmed: []
   },
   {
@@ -1121,7 +1121,7 @@ export const projects: Project[] = [
     relatedSlugs: ["evolution-agent", "whatsapp-sales-bot"],
     relatedExperience: [],
     variantNote: undefined,
-    assets: { logo: "/project.png", hero: "/project.png" },
+    assets: { logo: "", hero: "/project.png" },
     unconfirmed: []
   },
 ];

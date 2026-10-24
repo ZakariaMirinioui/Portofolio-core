@@ -61,3 +61,23 @@ Rebuilt the portfolio Projects ecosystem to deliver complete, credible, informat
 - Playwright captured 24 full-resolution screenshots covering Projects, KombatSushi, SECUDRIVE, ClinicFlow, AutoDeal, and BlueVision across 1440px and 390px in both Light and Dark themes.
 - Zero layout shift, full keyboard accessibility, AA contrast, and preserved circuit animations.
 - Production static export (`next build`) builds 49 static pages with zero errors.
+
+### 8. Phosphor Project Icons, Setup Steps Transfer & Redesigned Mobile Sidebar
+- **Phosphor Project Logos**: Replaced generic `/project.png` in logo tiles across directory and detail headers with dedicated, curated Phosphor icons matching each domain:
+  - AutoDeal: `Car` (Automotive marketplace)
+  - CourierGo: `Package` (Courier delivery worker)
+  - RideLink: `Taxi` (Ride-sharing and parcel)
+  - BlueVision: `Monitor` (Digital signage management)
+  - EvolutionAgent: `WhatsappLogo` (Conversational WhatsApp agent)
+  - SalesBot: `ChatCircleDots` (AI sales bot)
+  - N8nLibrary: `TreeStructure` (Workflow blueprints library)
+- **Interactive SetupSteps Component**:
+  - Implemented [app/[locale]/projects/[project]/SetupSteps.tsx](file:///C:/Users/ziko9/Desktop/Projects/Web%20Dev/Portofolio%20example/app/[locale]/projects/[project]/SetupSteps.tsx) with floating hover tooltip message on *"Show setup steps"*.
+  - For Dossera (`/projects/dossera`), renders *"View on-premise case study →"* with hover guidance and direct transfer to `/dossera`.
+- **Mobile Sidebar Drawer Redesign**:
+  - Completely redesigned [app/components/global/MobileMenu.tsx](file:///C:/Users/ziko9/Desktop/Projects/Web%20Dev/Portofolio%20example/app/components/global/MobileMenu.tsx).
+  - High-end glassmorphism right-aligned drawer with dimmed backdrop blur.
+  - Active route highlighting with emerald pill tint and glowing pulse indicator.
+  - Seamless language switcher segmented control (`English` / `Français`) embedded directly inside the drawer.
+  - Live availability badge with animated pulse dot and direct quick-contact icons.
+- **Surge.sh Deployment Ready**: Full production export (`npm run build`) validated with 49 static pages, 89 denylist-scanned files, zero errors.

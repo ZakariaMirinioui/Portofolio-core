@@ -280,8 +280,8 @@
     "sectionLinks": "Links",
     "sectionRelated": "Related",
     "sectionRunLocally": "Run it locally",
-    "sectionRunLocallyCollapse": "Show setup steps",
-    "sectionRunLocallyExpand": "Hide setup steps",
+    "sectionRunLocallyCollapse": "Hide setup steps",
+    "sectionRunLocallyExpand": "Show setup steps",
     "sectionPrevious": "Previous project",
     "sectionNext": "Next project",
     "ctaContinue": "Continue to {title}",
@@ -291,7 +291,10 @@
     "roleTitle": "My role",
     "noClient": "Not disclosed",
     "noTeam": "Not disclosed",
-    "noDuration": "Not disclosed"
+    "noDuration": "Not disclosed",
+    "setupAvailableTooltip": "Verified local development and execution steps available",
+    "setupDosseraCta": "View on-premise case study",
+    "setupDosseraHover": "Transfers to the full sovereign judicial deployment case study"
   },
   "caseStudy": {
     "backToProject": "← Back to Project",
