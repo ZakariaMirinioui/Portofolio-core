@@ -10,6 +10,7 @@ import FeaturedWork from "@/app/components/sections/FeaturedWork";
 import StackGrid from "@/app/components/sections/StackGrid";
 import ClosingBand from "@/app/components/sections/ClosingBand";
 import AboutSidebar from "@/app/components/sections/AboutSidebar";
+import Circuit from "@/app/components/decor/Circuit";
 import { Slide } from "@/app/animation/Slide";
 import { profile } from "../../data/profile";
 
@@ -52,7 +53,15 @@ export default async function About({
   return (
     <main className="relative lg:max-w-7xl mx-auto max-w-3xl md:px-16 px-6 lg:mt-20 mt-12">
       <Slide>
-        <div className="grid gap-y-12 lg:gap-x-10 lg:grid-cols-[1.55fr_1fr]">
+        <div className="relative grid gap-y-12 lg:gap-x-10 lg:grid-cols-[1.55fr_1fr]">
+          <Circuit
+            variant="gapRail"
+            uid="about-disc"
+            walls={[40, 2200, 64]}
+            draw
+            className="hidden lg:block absolute top-24 h-[2200px] w-10 left-[calc((100%-2.5rem)*0.6078)] z-thick"
+            style={{ "--z-draw-delay": "0.5s" } as React.CSSProperties}
+          />
           <div className="lg:col-start-1">
             <AboutHero
               profile={profile}
@@ -62,7 +71,17 @@ export default async function About({
             <KpiStrip locale={locale} className="mb-12 lg:mb-16" />
             <ExperienceTimeline locale={locale} className="mb-12 lg:mb-16" />
             <FeaturedWork locale={locale} className="mb-12 lg:mb-16" />
-            <StackGrid className="mb-12 lg:mb-16" />
+            <div className="relative mb-12 lg:mb-16">
+              <Circuit
+                variant="routing"
+                uid="about-stack"
+                walls={[400, 300, 4]}
+                draw
+                fade
+                className="hidden lg:block absolute inset-x-2 top-2 bottom-2"
+              />
+              <StackGrid />
+            </div>
             <ClosingBand locale={locale} className="mb-12 lg:mb-16" />
           </div>
           <aside

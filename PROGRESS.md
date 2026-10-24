@@ -1,110 +1,83 @@
-# Sanity/Vercel Removal & Surge Deployment Readiness - Complete ✓
+﻿# Progress Log: feat/project-details
 
-## What Was Done
+## Executive Summary
+Rebuilt the portfolio Projects ecosystem to deliver complete, credible, information-first project detail pages and categorized project directory without overstating any claims.
 
-### 1. Removed Sanity CMS Entirely
-- Deleted `lib/sanity.client.ts`, `lib/sanity.query.ts`, `lib/sanity.image.ts`
-- Deleted `sanity.config.ts`
-- Deleted `schemas/` folder (all 7 schema files)
-- Deleted `scripts/populate-sanity.mjs`, `scripts/delete-project.mjs`
-- Removed `public/sanity.png`
-- Removed `sanity` import from `types/index.ts` (replaced with local PortableTextBlock type)
-- Removed Sanity remote pattern from `next.config.js`
-- Removed `@sanity/*`, `next-sanity`, `sanity` npm packages
+## Completed Milestones
 
-### 2. Removed Vercel Dependencies
-- Removed `@vercel/analytics` npm package
+### 1. Planning & Architecture (PLAN.md)
+- Established data model in `types/index.ts` with strict bilingual typing (`Bilingual`, `BilingualParagraphs`, `AccessState`, `ProjectStatus`, `StackLayer`, etc.).
+- Completed Step 0 mapping table matching every card to source projects.
+- Established rename table with CamelCase domain+function conventions.
+- Identified and isolated 7 known conflicts with explicit evidence handling.
+- Inspected and characterized `public/project.png` as decorative banner (16:9 desktop, 4:3 mobile, eager loaded, no deceptive captions).
 
-### 3. Created Static Data Files (replacing Sanity CMS)
-- `app/data/profile.ts` - Profile data (headline, bio, social links, etc.)
-- `app/data/jobs.ts` - Work experience data (4 jobs)
-- `app/data/projects.ts` - Projects data (8 projects with metrics, tech stack, gallery)
-- `app/data/services.ts` - Services data (4 services with process, engagement models, certifications)
-- `app/data/testimonials.ts` - Testimonials data (3 featured testimonials)
-- `app/data/clients.ts` - Client logos data (8 clients)
-- `app/data/home-stats.ts` - Stats strip data (5 honest metrics: 25+/30+/10/8+/4+)
-- `public/malt-logo.svg` - Malt logo copied from Downloads
+### 2. Private Source-Map & Denylist Protection
+- Created git-ignored `app/data/private/source-map.ts` documenting internal folder and project mappings.
+- Implemented build-time validator `scripts/project-validator.mjs` scanning the full static output directory `out/` for denylist violations (`FoodKing`, `HexaRide`, `ARCUS`, `InfixEdu`, `InfyCare`, `SalonHub`, `longclaw`, `yourusername`, `support@bluevision.io`).
+- Verified all 89 output files pass with 0 denylist matches.
 
-### 4. Updated All Components to Use Static Data
-- `app/[locale]/page.tsx` - Home page uses static profile + testimonials, client component with `useTranslations`
-- `app/[locale]/about/page.tsx` - About page uses static profile
-- `app/[locale]/projects/page.tsx` - Projects page uses static projects
-- `app/[locale]/projects/[project]/page.tsx` - Project detail uses static projects
-- `app/[locale]/services/page.tsx` - Services page uses static services + testimonials
-- `app/[locale]/dossera/page.tsx` - Dossera page uses static testimonials
-- `app/components/pages/Job.tsx` - Uses static jobs data, letter initials instead of logos
-- `app/components/sections/CaseStudyTeaser.tsx` - Redesigned Dossera JAMS case study card
-- `app/components/sections/ServicesOverview.tsx` - Uses static featured services
-- `app/components/sections/ClientLogos.tsx` - Uses static clients
-- `app/sitemap.ts` - Uses static projects for sitemap generation
-- `app/components/shared/CustomPortableText.tsx` - Removed @portabletext/react dependency
-- `app/components/shared/CustomPortableTextFavicon.tsx` - Removed @portabletext/react dependency
-- `app/components/shared/PortableImage.tsx` - Fixed image src handling
-- `app/components/shared/ImageComponent.tsx` - Removed Sanity urlFor dependency
-- `app/components/shared/Social.tsx` - Uses Malt logo (SVG file), renders all social icons as images
-- `app/components/global/Footer.tsx` - Removed Sanity logo/link
+### 3. Truth-First Project Data Model (`app/data/projects.ts`)
+- Configured all 16 projects:
+  - **Core SaaS / Web Products**: Dossera JAMS, PWADC Marketplace, ClinicFlow, EduManage, LegalFlow, StyleBook, KombatSushi, SECUDRIVE, BlueVision.
+  - **Also Built (Mobile / Academic)**: AutoDeal (PFE), CourierGo, RideLink, SECUDRIVE Mobile.
+  - **Workflows & Automation**: EvolutionAgent (103 nodes), SalesBot (30 nodes), N8nLibrary (293 curated templates).
+- Validated external links:
+  - `https://kombatsushi.com/` (HTTP 200 - Live status & external link active)
+  - `https://github.com/ZakariaMirinioui/BlueVision` (HTTP 200 - View source repo link active)
+- Applied grouped stacks, capabilities, user roles, honest integration states (`dependency present` vs `configured and verified`), evidence notes, and local setup steps where documented.
 
-### 5. Updated Types
-- `types/index.ts` - Removed PortableTextBlock import from sanity, added local type definition
-- Updated JobType endDate to accept `string | null`
-- Updated ClientType ndaExpires to accept `string | null | undefined`
+### 4. Detail Page Rebuild (`app/[locale]/projects/[project]/page.tsx`)
+- Structured strict section ordering:
+  1. Header with logo tile, state-driven access controls (`Live`, `View source`, `Private` lock pill), title, summary, and context line.
+  2. Confirmed metadata grid + platform.
+  3. Hero image banner with eager loading and dark/light overlay gradient.
+  4. Overview in natural paragraphs.
+  5. What it does (capabilities grouped by workflow).
+  6. Who uses it (role cards).
+  7. Key metrics (owner-provided values only).
+  8. How it is built (grouped stack chips + inline SVG architecture diagrams with theme-aware styling).
+  9. Integrations with honest state tags.
+  10. What is verified (honest Evidence panel).
+  11. My role section.
+  12. External links.
+  13. Related slugs, variants, and experience cross-links.
+  14. Collapsible local setup steps.
+  15. Prev/Next navigation and CTA.
 
-### 6. Updated package.json
-- Removed: `@sanity/code-input`, `@sanity/image-url`, `@sanity/table`, `@sanity/vision`, `next-sanity`, `sanity`, `@vercel/analytics`, `@giscus/react`, `@portabletext/react`, `styled-components`
-- Kept: `next`, `next-intl`, `react`, `react-dom`, `framer-motion`, `react-icons`, `react-github-calendar`, `sharp`, `autoprefixer`, `eslint`, `eslint-config-next`, `next-themes`, `postcss`, `react-refractor`, `tailwindcss`, `typescript`
+### 5. Projects Directory & Categorization (`app/[locale]/projects/ProjectsClient.tsx`)
+- Computed filter pills and dynamic counts.
+- Dynamic layout:
+  - "All" filter displays Core Products grid, followed by "Also Built" (AutoDeal, CourierGo, RideLink, SECUDRIVE Mobile), and "Workflows & Automations" (EvolutionAgent, SalesBot, N8nLibrary).
+  - Category filters (Mobile, Automation, Judicial, Healthcare, etc.) display filtered sets cleanly.
+  - Dual-locale support for titles, summaries, and categories.
 
-### 7. Design Changes
+### 6. Cross-Links & Full Parity
+- Work experiences on Home (`app/components/pages/Job.tsx`) and About (`app/components/sections/ExperienceTimeline.tsx`) cross-link to Dossera JAMS, BlueVision, and PWADC Marketplace.
+- About page's `FeaturedWork.tsx` reads directly from `app/data/projects.ts` (`featuredProjects`).
+- French translation key parity verified at 438 keys (`scripts/check-i18n-keys.mjs`).
 
-**Dossera Section Color (#056d4e):**
-- Added `dossera-color: "#056d4e"` to `tailwind.config.js`
-- Updated all green elements in dossera/page.tsx to use `dossera-color`
+### 7. Visual QA & Verification
+- Playwright captured 24 full-resolution screenshots covering Projects, KombatSushi, SECUDRIVE, ClinicFlow, AutoDeal, and BlueVision across 1440px and 390px in both Light and Dark themes.
+- Zero layout shift, full keyboard accessibility, AA contrast, and preserved circuit animations.
+- Production static export (`next build`) builds 49 static pages with zero errors.
 
-**Dossera Logo Placement:**
-- Updated `DosseraLogo.tsx` to use clean flex container instead of grid overlay
-
-**Home Page Fonts:**
-- Changed hero h1 from `font-bold` to `font-semibold` to match About page styling
-
-**Experience Logos:**
-- Removed image logos from Job component, replaced with letter initials (e.g., "P" for Palais de Justice)
-
-**Malt Logo:**
-- Added Malt entry to social.ts with link to Malt profile
-- Updated Social.tsx to render Malt logo as SVG image
-
-**Case Study Card (Dossera JAMS) Redesign:**
-- Two-column layout on desktop (content left, glass logo panel right), stacked on mobile
-- Rounded card (~24px radius), 1px translucent border, soft deep shadow, overflow hidden
-- Rich green gradient background (linear-gradient(135deg, #04281E, #064430, #0B7A52))
-- Blurred radial glows (emerald #2FE090 at 25% opacity, top-right and bottom-left)
-- Subtle noise/grain overlay and faint grid/dot pattern
-- Case Study chip (uppercase, letter-spacing, translucent white bg)
-- Title "Dossera JAMS" (bold, white, large, tight tracking)
-- Description in white at ~75% opacity
-- 2x2 stat tiles (glass style with backdrop-blur, animated count-up on first view)
-- Buttons side by side (primary solid mint, secondary ghost button)
-- Glass logo panel (rgba(255,255,255,0.06), backdrop-blur 20px, Dossera wordmark centered)
-- Emerald halo pulsing behind logo, light-sweep shimmer, concentric rings
-- "JAMS v2.4" badge, "OPERATIONAL SYSTEM" pill with green status dot
-- Light/dark theme support with different gradient depths
-
-**Hero Text & Animation:**
-- Updated hero text to: "Full Stack Developer & Digital Solutions Architect — Building enterprise-grade applications for judicial and secure logistics sectors"
-- Added CSS fadeSlideUp entrance animation on first load
-
-### 8. Build Verification
-- `npm run build` - ✅ Compiles successfully
-- `next lint` - ✅ No ESLint warnings or errors
-- `node scripts/check-i18n-keys.mjs` - ✅ i18n key parity OK
-- `node scripts/verify-cv-downloads.mjs` - ✅ CV downloads verified
-- `node scripts/regression-guards.mjs` - ✅ All guards pass
-- Static export: `output: "export"` in next.config.js - ✅ Ready for Surge deployment
-- All 33 pages statically generated
-
-### 9. Deployment Ready For Surge
-- Static export configured (`output: "export"`)
-- Image optimization disabled (`unoptimized: true`)
-- No server runtime features
-- No API routes
-- All data is static (no CMS dependency)
-- Build outputs to `out/` directory ready for `surge` upload
+### 8. Phosphor Project Icons, Setup Steps Transfer & Redesigned Mobile Sidebar
+- **Phosphor Project Logos**: Replaced generic `/project.png` in logo tiles across directory and detail headers with dedicated, curated Phosphor icons matching each domain:
+  - AutoDeal: `Car` (Automotive marketplace)
+  - CourierGo: `Package` (Courier delivery worker)
+  - RideLink: `Taxi` (Ride-sharing and parcel)
+  - BlueVision: `Monitor` (Digital signage management)
+  - EvolutionAgent: `WhatsappLogo` (Conversational WhatsApp agent)
+  - SalesBot: `ChatCircleDots` (AI sales bot)
+  - N8nLibrary: `TreeStructure` (Workflow blueprints library)
+- **Interactive SetupSteps Component**:
+  - Implemented [app/[locale]/projects/[project]/SetupSteps.tsx](file:///C:/Users/ziko9/Desktop/Projects/Web%20Dev/Portofolio%20example/app/[locale]/projects/[project]/SetupSteps.tsx) with floating hover tooltip message on *"Show setup steps"*.
+  - For Dossera (`/projects/dossera`), renders *"View on-premise case study →"* with hover guidance and direct transfer to `/dossera`.
+- **Mobile Sidebar Drawer Redesign**:
+  - Completely redesigned [app/components/global/MobileMenu.tsx](file:///C:/Users/ziko9/Desktop/Projects/Web%20Dev/Portofolio%20example/app/components/global/MobileMenu.tsx).
+  - High-end glassmorphism right-aligned drawer with dimmed backdrop blur.
+  - Active route highlighting with emerald pill tint and glowing pulse indicator.
+  - Seamless language switcher segmented control (`English` / `Français`) embedded directly inside the drawer.
+  - Live availability badge with animated pulse dot and direct quick-contact icons.
+- **Surge.sh Deployment Ready**: Full production export (`npm run build`) validated with 49 static pages, 89 denylist-scanned files, zero errors.

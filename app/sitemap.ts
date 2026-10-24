@@ -18,7 +18,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }))
   );
 
-  const projectUrls: MetadataRoute.Sitemap = projects.flatMap((project) =>
+  const projectUrls: MetadataRoute.Sitemap = projects
+    .filter((project) => project.visibility === "public")
+    .flatMap((project) =>
     routing.locales.map((locale) => {
       const path = `/projects/${project.slug}`;
       return {

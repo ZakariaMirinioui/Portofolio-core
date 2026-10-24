@@ -3,6 +3,8 @@ import { Link } from "@/i18n/navigation";
 import { BiLinkExternal } from "react-icons/bi";
 import type { ProjectType } from "@/types";
 import { projects } from "../../data/projects";
+import Circuit from "../decor/Circuit";
+import { STATIC_MICRO_CORNER } from "../decor/circuitStatics";
 
 const emeraldGlow = `
   radial-gradient(600px circle at 25% 25%,
@@ -51,6 +53,21 @@ export default async function CaseStudyTeaser({ locale }: { locale: string }) {
           }}
         />
 
+        <Circuit
+          variant="corner"
+          uid="doss-tl"
+          draw
+          className="z-mint left-3 top-3 h-44 w-44"
+          style={{ "--z-draw-delay": "0.7s" } as React.CSSProperties}
+        />
+        <Circuit
+          variant="corner"
+          uid="doss-br"
+          draw
+          className="z-mint right-3 bottom-3 h-44 w-44 rotate-180"
+          style={{ "--z-draw-delay": "0.85s" } as React.CSSProperties}
+        />
+
         <div className="relative z-10 grid gap-8 p-6 lg:grid-cols-2 lg:gap-10 lg:p-12">
           <div className="flex flex-col items-center justify-center text-center">
             <div className="mb-6 inline-flex items-center gap-2 rounded-[6px] border border-white/20 bg-white/8 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.12em] text-white/90 backdrop-blur-sm font-montserrat">
@@ -58,29 +75,29 @@ export default async function CaseStudyTeaser({ locale }: { locale: string }) {
             </div>
 
             <h2 className="mb-3 font-sans text-3xl font-bold leading-tight tracking-tight text-white lg:text-5xl">
-              {featured.name}
+              {featured.displayName[locale === "fr" ? "fr" : "en"] || featured.displayName.en}
             </h2>
 
             <p className="mx-auto mb-5 max-w-[420px] text-base leading-relaxed text-white/75">
-              {featured.tagline}
+              {featured.summary[locale === "fr" ? "fr" : "en"] || featured.summary.en}
             </p>
 
             <p className="mx-auto mb-8 max-w-[420px] text-[13px] leading-relaxed text-white/80 font-montserrat">
               {t("deploymentText")}
             </p>
 
-            {featured.metrics && featured.metrics.length > 0 && (
+            {featured.keyMetrics && featured.keyMetrics.length > 0 && (
               <div className="mb-8 grid w-full max-w-[440px] grid-cols-2 gap-3">
-                {featured.metrics.slice(0, 4).map((metric) => (
+                {featured.keyMetrics.slice(0, 4).map((metric, idx) => (
                   <div
-                    key={metric.label}
+                    key={idx}
                     className="group relative rounded-xl border border-white/10 bg-white/5 p-3 backdrop-blur-sm transition-all duration-300 hover:border-dossera-color/50 hover:shadow-[0_0_20px_rgba(5,109,78,0.3)]"
                   >
                     <span className="text-[10px] font-medium uppercase leading-none tracking-wider text-white/70 font-montserrat">
-                      {metric.label}
+                      {metric.label[locale === "fr" ? "fr" : "en"] || metric.label.en}
                     </span>
                     <span className="mt-1.5 block text-lg font-bold leading-none text-white">
-                      {metric.value}
+                      {metric.value[locale === "fr" ? "fr" : "en"] || metric.value.en}
                     </span>
                   </div>
                 ))}
@@ -98,9 +115,9 @@ export default async function CaseStudyTeaser({ locale }: { locale: string }) {
                   →
                 </span>
               </Link>
-              {featured.projectUrl && (
+              {featured.links.live && (
                 <a
-                  href={featured.projectUrl}
+                  href={featured.links.live}
                   target="_blank"
                   rel="noreferrer noopener"
                   className="group relative inline-flex items-center justify-center gap-2 rounded-lg border border-white/40 bg-white/5 px-6 py-3 text-sm font-bold tracking-tight text-white/90 backdrop-blur-sm transition-all duration-300 hover:bg-white/10"
@@ -112,7 +129,19 @@ export default async function CaseStudyTeaser({ locale }: { locale: string }) {
             </div>
           </div>
 
-          <div className="flex flex-col items-center justify-center">
+          <div className="z-mint relative flex flex-col items-center justify-center" data-cc>
+            <Circuit
+              variant="cornerMicro"
+              uid="doss-logo-tl"
+              className="z-cc left-1/2 top-1/2 h-20 w-20"
+              style={{ transform: "translate(-70%, -70%)" } as React.CSSProperties}
+            />
+            <Circuit
+              variant="cornerMicro"
+              uid="doss-logo-br"
+              className="z-cc left-1/2 top-1/2 h-20 w-20"
+              style={{ transform: "translate(70%, 70%) rotate(180deg)" } as React.CSSProperties}
+            />
             <img
               src="/dossera-darkmode.png"
               alt="Dossera JAMS"

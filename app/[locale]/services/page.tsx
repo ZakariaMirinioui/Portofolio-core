@@ -3,6 +3,8 @@ import { getTranslations } from "next-intl/server";
 import { getAlternateUrls, getCanonicalUrl, SITE_URL } from "@/lib/metadata";
 import type { ServiceType, TestimonialType } from "@/types";
 import PageHeading from "../../components/shared/PageHeading";
+import Circuit from "../../components/decor/Circuit";
+import { STATIC_MICRO_CORNER } from "../../components/decor/circuitStatics";
 import { Slide } from "../../animation/Slide";
 import {
   HiOutlineShieldCheck,
@@ -73,10 +75,20 @@ export default async function ServicesPage({
 
   return (
     <main className="max-w-7xl mx-auto md:px-16 px-6">
-      <PageHeading
-        title={t("title")}
-        description={t("description")}
-      />
+      <div className="relative">
+        <Circuit
+          variant="headerRoots"
+          uid="services-head"
+          draw
+          fade
+          className="hidden lg:block left-1 right-1 -top-[104px] h-44"
+          style={{ "--z-draw-delay": "0.35s" } as React.CSSProperties}
+        />
+        <PageHeading
+          title={t("title")}
+          description={t("description")}
+        />
+      </div>
 
       {/* Service Cards */}
       <div className="space-y-8">
@@ -85,6 +97,17 @@ export default async function ServicesPage({
           return (
             <Slide key={service._id} delay={0.1 + index * 0.05}>
               <ServiceCard service={service} IconComponent={IconComponent} locale={locale} />
+              {index < services.length - 1 && (
+                <div aria-hidden="true" className="relative h-8 -my-2 pointer-events-none hidden md:block">
+                  <Circuit
+                    variant="pipeline"
+                    uid={`svc-gap-${index}`}
+                    draw
+                    fade
+                    className="absolute left-0 right-0 inset-y-0"
+                  />
+                </div>
+              )}
             </Slide>
           );
         })}
@@ -103,7 +126,20 @@ export default async function ServicesPage({
       {/* CTA Section */}
       <Slide delay={0.4}>
         <section className="mt-16 mb-20">
-          <div className="dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-lg p-8 text-center">
+          <div
+            data-cc=""
+            className="relative dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-lg p-8 text-center"
+          >
+            <span
+              aria-hidden="true"
+              className="z-cc left-0 top-0 h-16 w-16 hidden md:block"
+              dangerouslySetInnerHTML={{ __html: STATIC_MICRO_CORNER }}
+            />
+            <span
+              aria-hidden="true"
+              className="z-cc right-0 bottom-0 h-16 w-16 rotate-180 hidden md:block"
+              dangerouslySetInnerHTML={{ __html: STATIC_MICRO_CORNER }}
+            />
             <h2 className="text-2xl font-incognito font-bold tracking-tight mb-4">
               {t("cta.title")}
             </h2>
@@ -227,7 +263,17 @@ async function ServiceCard({
           <h3 className="text-sm font-incognito font-semibold uppercase tracking-wider dark:text-zinc-300 text-zinc-700 mb-6">
             {t("sections.process")}
           </h3>
-          <div className="space-y-4">
+          <div className="relative space-y-4">
+            {service.process!.length > 1 && (
+              <Circuit
+                variant="pipelineV"
+                uid={`svc-rail-${service._id}`}
+                walls={[64, 480, 6]}
+                draw
+                className="z-thick hidden lg:block absolute right-0 top-2 h-[300px] w-10"
+                style={{ "--z-draw-delay": "0.5s", "--zm-o": "0.6", zIndex: 0 } as React.CSSProperties}
+              />
+            )}
             {service.process.map((step) => (
               <div key={step.step} className="flex gap-4">
                 <div className="flex flex-col items-center">

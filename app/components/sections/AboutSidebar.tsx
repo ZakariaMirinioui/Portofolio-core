@@ -4,6 +4,7 @@ import { BiEnvelope, BiLogoLinkedinSquare } from "react-icons/bi";
 import { FiGithub } from "react-icons/fi";
 import type { ProfileType } from "@/types";
 import CvDownload from "@/app/components/cv-download/CvDownload";
+import Circuit from "../decor/Circuit";
 
 export default async function AboutSidebar({
   profile,
@@ -20,17 +21,25 @@ export default async function AboutSidebar({
   return (
     <>
       <section className="mb-8">
-        <Image
-          src="/personal-img-formal.webp"
-          width={400}
-          height={400}
-          alt={t("portraitAlt", {
-            name: profile.fullName ?? "Zakaria Mirinioui",
-          })}
-          className="rounded-xl mb-4 object-cover w-full max-w-[260px] mx-auto"
-          sizes="(max-width: 768px) 100vw, 260px"
-          priority
-        />
+        <div className="relative w-fit mx-auto mb-4">
+          <Circuit
+            variant="cornerMicro"
+            uid="about-portrait"
+            draw
+            className="absolute -right-4 -top-4 h-24 w-24 rotate-90"
+          />
+          <Image
+            src="/personal-img-formal.webp"
+            width={400}
+            height={400}
+            alt={t("portraitAlt", {
+              name: profile.fullName ?? "Zakaria Mirinioui",
+            })}
+            className="rounded-xl object-cover w-full max-w-[260px]"
+            sizes="(max-width: 768px) 100vw, 260px"
+            priority
+          />
+        </div>
         <div className="text-center space-y-2">
           <h2 className="font-incognito font-semibold text-zinc-900 dark:text-zinc-100">
             {profile.fullName ?? "Zakaria Mirinioui"}

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Slide } from "../../animation/Slide";
+import { STATIC_MICRO_CORNER } from "../decor/circuitStatics";
 import { BiCheckCircle, BiErrorCircle } from "react-icons/bi";
 import { trackDemoRequested, trackContactFormSubmitted } from "../../lib/analytics";
 
@@ -167,7 +168,15 @@ export default function DosseraContactForm() {
 
   return (
     <Slide delay={0.5}>
-      <div className="dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-lg p-8">
+      <div
+        data-formcc=""
+        className="relative dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-lg p-8"
+      >
+        <span
+          aria-hidden="true"
+          className="z-cc left-0 top-0 h-16 w-16 hidden md:block"
+          dangerouslySetInnerHTML={{ __html: STATIC_MICRO_CORNER }}
+        />
           <h2 className="text-2xl font-incognito font-bold tracking-tight mb-2">
             {t("title")}
           </h2>

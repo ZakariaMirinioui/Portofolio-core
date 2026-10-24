@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import Circuit from "../decor/Circuit";
 
 export default async function KpiStrip({
   locale,
@@ -11,7 +12,16 @@ export default async function KpiStrip({
   const kpis = t.raw("kpiStrip") as Array<{ value: string; label: string }>;
 
   return (
-    <section className={className}>
+    <section className={`relative ${className}`}>
+      <Circuit
+        variant="pipeline"
+        uid="about-kpi"
+        draw
+        fade
+        preserve="xMidYMid meet"
+        className="hidden lg:block absolute left-1 right-1 top-[-5rem] h-24"
+        style={{ "--z-draw-delay": "0.2s" } as React.CSSProperties}
+      />
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {kpis.map((kpi, index) => (
           <div

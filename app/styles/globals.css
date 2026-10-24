@@ -1,4 +1,4 @@
-@tailwind base;
+﻿@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -116,4 +116,485 @@ h4 {
 @keyframes countUp {
   from { content: "0"; }
   to { content: attr(data-target); }
+}
+
+/* Circuit traces family engine (z-*) â€” section-scoped; see PLAN.md Â§3.
+   Tokens: light #0f9d6b@.4 / dark #22c58a@.6; z-mint for green-gradient
+   surfaces (#BFFFE3). BASE classes ported 1:1 from the reference. */
+:root {
+  --zm-line: #0f9d6b;
+  --zm-dot: #0b7d54;
+  --zm-o: 0.42;
+}
+
+.dark {
+  --zm-line: #22c58a;
+  --zm-dot: #4df0ae;
+  --zm-o: 0.5;
+}
+
+.z-mint {
+  --zm-line: #bfffe3;
+  --zm-dot: #e7fff1;
+  --zm-o: 0.5;
+}
+
+.z-host {
+  position: absolute;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.z-host > svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.z-chip-artwork {
+  overflow: visible;
+}
+
+.z-chip-artwork > svg {
+  inset: -12.5%;
+  width: 125%;
+  height: 125%;
+}
+
+.z-host.z-natural > svg {
+  position: static;
+  width: 100%;
+  height: auto;
+}
+
+.z-root {
+  --l: var(--zm-line, #0f9d6b);
+  --d: var(--zm-dot, #0b7d54);
+  opacity: var(--zm-o, 1);
+}
+
+.z-a,
+.z-b,
+.z-c {
+  fill: none;
+  stroke: var(--l);
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.z-a {
+  stroke-opacity: 0.75;
+}
+
+.z-b {
+  stroke-opacity: 0.42;
+}
+
+.z-c {
+  stroke-opacity: 0.18;
+}
+
+.z-d {
+  fill: var(--d);
+}
+
+.z-pad {
+  fill: var(--l);
+  fill-opacity: 0.1;
+  stroke: none;
+}
+
+.z-mv {
+  stroke-dasharray: 0.14 0.86;
+  stroke-width: 1.6;
+  animation: z-mv 5s linear infinite;
+}
+
+.z-rv {
+  animation-direction: reverse;
+}
+
+.z-pu {
+  animation: z-pu 4s ease-in-out infinite;
+}
+
+/* Signature rails (gap rail / timeline rail) — heavier strokes so a
+   narrow strip still reads against the page texture. */
+.z-thick .z-a,
+.z-thick .z-b,
+.z-thick .z-c {
+  stroke-width: 2.2;
+}
+
+.z-thick .z-b {
+  stroke-opacity: 0.55;
+}
+
+.z-thick .z-c {
+  stroke-opacity: 0.26;
+}
+
+@keyframes z-mv {
+  to {
+    stroke-dashoffset: -1;
+  }
+}
+
+@keyframes z-pu {
+  0%,
+  100% {
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Reveal gating â€” CircuitIsland toggles data-z-live while a host
+   intersects and sets data-z-drawn once (first intersection).
+   Data attributes keep React hydration out of the loop. */
+.z-io .z-mv {
+  animation-play-state: paused;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.z-io .z-pu {
+  animation-play-state: paused;
+}
+
+.z-io .z-d {
+  opacity: 0;
+  transition: opacity 0.6s ease var(--z-dot-delay, 0.9s);
+}
+
+.z-io[data-z-live] .z-mv {
+  animation-play-state: running;
+  opacity: 1;
+}
+
+.z-io[data-z-live] .z-pu {
+  animation-play-state: running;
+}
+
+.z-io[data-z-live] .z-d {
+  opacity: 1;
+}
+
+/* Dash draw-in â€” plain strokes (pathLength=1 normalization). Per-host
+   tuning via --z-draw-delay / --z-draw-dur. */
+.z-draw .z-a:not(.z-mv),
+.z-draw .z-b,
+.z-draw .z-c {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.z-draw[data-z-drawn] .z-a:not(.z-mv),
+.z-draw[data-z-drawn] .z-b,
+.z-draw[data-z-drawn] .z-c {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset var(--z-draw-dur, 1.6s) cubic-bezier(0.22, 0.61, 0.36, 1)
+    var(--z-draw-delay, 0s);
+}
+
+/* Exit fade â€” placements opt in with .z-fade (rest opacity 0.12). */
+.z-fade {
+  transition: opacity 0.8s ease;
+}
+
+.z-fade:not([data-z-live]) {
+  opacity: 0.12;
+}
+
+/* Micro corner on cards â€” dormant until hover/focus/wake. */
+.z-cc {
+  position: absolute;
+  opacity: 0;
+  z-index: 0;
+  transition: opacity 0.25s ease;
+}
+
+.z-cc[data-z-live] {
+  opacity: 1;
+}
+
+.z-cc .z-a,
+.z-cc .z-b,
+.z-cc .z-c {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+[data-cc]:hover .z-cc,
+[data-cc]:focus-within .z-cc,
+[data-cc].z-wake .z-cc {
+  opacity: 1;
+}
+
+[data-cc]:hover .z-cc .z-a,
+[data-cc]:hover .z-cc .z-b,
+[data-cc]:hover .z-cc .z-c,
+[data-cc]:focus-within .z-cc .z-a,
+[data-cc]:focus-within .z-cc .z-b,
+[data-cc]:focus-within .z-cc .z-c,
+[data-cc].z-wake .z-cc .z-a,
+[data-cc].z-wake .z-cc .z-b,
+[data-cc].z-wake .z-cc .z-c {
+  animation: z-hd 1s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@keyframes z-hd {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Theme-pulse rail â€” one lap on the header border, triggered by the
+   "zm:theme-pulse" event via .z-run (added/removed by CircuitIsland). */
+.z-theme {
+  opacity: 0;
+  transition: opacity 0.5s ease 0.9s;
+}
+
+.z-theme .z-lap {
+  stroke-dasharray: 0.1 0.9;
+  animation: z-lap 1.3s cubic-bezier(0.4, 0.15, 0.35, 1) both;
+  animation-play-state: paused;
+}
+
+.z-theme.z-run {
+  opacity: 1;
+  transition: opacity 0s;
+}
+
+.z-theme.z-run .z-lap {
+  animation-play-state: running;
+}
+
+@keyframes z-lap {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -1;
+  }
+}
+
+/* Placement utilities (Home pass — see PLAN.md §2) */
+
+/* Hero chip: gentle drift + cursor-proximity lift (pointer:fine only). */
+.z-drift {
+  animation: z-drift 9s ease-in-out infinite alternate;
+}
+
+@keyframes z-drift {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-10px);
+  }
+}
+
+.z-chip-zone {
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .z-chip-zone {
+    pointer-events: auto;
+  }
+
+  .z-chip-zone:hover .z-root {
+    --zm-o: 0.78;
+  }
+
+  .z-chip-zone:hover .z-pu {
+    animation-duration: 2.4s;
+  }
+}
+
+/* Stats one-shot pulse burst (replaces the count-finish trigger). */
+.z-burst[data-z-live] .stat-burst {
+  animation: z-burst 2.4s ease-in-out both;
+  animation-delay: var(--z-burst-delay, 0s);
+}
+
+@keyframes z-burst {
+  0%,
+  64%,
+  100% {
+    text-shadow: none;
+    opacity: 1;
+  }
+  22% {
+    text-shadow: 0 0 16px var(--zm-line);
+    opacity: 1;
+  }
+  40% {
+    text-shadow: none;
+    opacity: 0.72;
+  }
+}
+
+/* Work-experience cards: node lights while the card is live. */
+.z-jnode {
+  transition: border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+.z-io[data-z-live] .z-jnode {
+  border-color: var(--zm-line);
+  box-shadow: 0 0 14px -6px var(--zm-line);
+}
+
+/* Per-card stub trace on the existing line axis (left-9 = 36px). */
+.z-jobtrace {
+  position: absolute;
+  left: calc(2.25rem - 0.5px);
+  top: 3.5rem;
+  width: 10px;
+  height: 96px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.z-jobtrace > svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Placement utilities (Projects pass — see PLAN.md §2) */
+
+/* Active filter pill: one-shot ring pulse on becoming selected
+   (starts when aria-selected flips, then falls back to the class shadow). */
+.z-pills [aria-selected="true"] {
+  animation: z-ring 0.9s ease-out;
+}
+
+@keyframes z-ring {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--zm-line) 45%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 12px color-mix(in srgb, var(--zm-line) 0%, transparent);
+  }
+}
+
+/* NavLinks active dot: one-shot pulse on becoming the active route. */
+.nav-links [aria-current="page"] > span:first-child {
+  animation: z-nav-pulse 0.9s ease-out;
+}
+
+@keyframes z-nav-pulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--zm-line) 45%, transparent);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 8px color-mix(in srgb, var(--zm-line) 0%, transparent);
+    transform: scale(1.3);
+  }
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--zm-line) 0%, transparent);
+    transform: scale(1);
+  }
+}
+
+/* Category remount: one-shot staggered corner flash. The cards grid re-mounts
+   its children on every activeCategory change (React keys), so a CSS
+   animation declared on .z-cc replays per fresh key, staggered via
+   --z-cc-delay set from the card index. */
+.z-remount .z-cc {
+  animation: z-ccfl 1.05s ease-out;
+  animation-delay: var(--z-cc-delay, 0s);
+}
+
+.z-remount .z-cc .z-a,
+.z-remount .z-cc .z-b,
+.z-remount .z-cc .z-c {
+  animation: z-hd 1.05s cubic-bezier(0.22, 0.61, 0.36, 1);
+  animation-delay: var(--z-cc-delay, 0s);
+}
+
+@keyframes z-ccfl {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  66% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Demo-request form corner: low rest presence (0.12), fully crops while
+   any form field has focus. */
+[data-formcc] .z-cc {
+  opacity: 0.12;
+}
+
+[data-formcc]:focus-within .z-cc {
+  opacity: 0;
+}
+
+/* Empty last grid cell: dormant nested rhombi — frozen mid-glide. */
+.z-sleep .z-a,
+.z-sleep .z-b,
+.z-sleep .z-c,
+.z-sleep .z-pu {
+  animation-play-state: paused;
+}
+
+/* Global pause (visibilitychange) */
+.z-paused .z-host * {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .z-host *,
+  .z-drift,
+  .z-burst[data-z-live] .stat-burst,
+  .z-jobtrace > svg *,
+  .z-remount .z-cc,
+  .z-pills [aria-selected="true"],
+  .nav-links [aria-current="page"] > span:first-child {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .z-io .z-mv {
+    opacity: 1;
+  }
+
+  .z-io .z-d {
+    opacity: 1;
+  }
+
+  .z-draw .z-a:not(.z-mv),
+  .z-draw .z-b,
+  .z-draw .z-c {
+    stroke-dashoffset: 0;
+  }
+
+  .z-fade:not([data-z-live]) {
+    opacity: 1;
+  }
+}
+
+@media print {
+  .z-host {
+    display: none !important;
+  }
 }
