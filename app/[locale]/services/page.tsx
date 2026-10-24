@@ -1,9 +1,7 @@
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { getAlternateUrls, getCanonicalUrl, SITE_URL } from "@/lib/metadata";
-import { servicesQuery, testimonialsQuery } from "@/lib/sanity.query";
 import type { ServiceType, TestimonialType } from "@/types";
-import { sanityFetch } from "@/lib/sanity.client";
 import PageHeading from "../../components/shared/PageHeading";
 import { Slide } from "../../animation/Slide";
 import {
@@ -13,11 +11,13 @@ import {
   HiOutlineChartBar,
   HiOutlineCheckCircle,
   HiOutlineArrowRight,
+  HiOutlineMail,
 } from "react-icons/hi";
 import { Link } from "@/i18n/navigation";
 import TestimonialsCarousel from "../../components/sections/TestimonialsCarousel";
-import ClientLogos from "../../components/sections/ClientLogos";
 import NextPageTeaser from "../../components/sections/NextPageTeaser";
+import { services, featuredServices } from "../../data/services";
+import { featuredTestimonials } from "../../data/testimonials";
 
 export async function generateMetadata({
   params,
@@ -70,10 +70,6 @@ export default async function ServicesPage({
   const { locale } = params;
   const t = await getTranslations({ locale, namespace: "services" });
   const tNav = await getTranslations({ locale, namespace: "navigation" });
-  const [services, testimonials] = await Promise.all([
-    sanityFetch({ query: servicesQuery, tags: ["service"] }) as Promise<ServiceType[]>,
-    sanityFetch({ query: testimonialsQuery, tags: ["testimonial"] }) as Promise<TestimonialType[]>,
-  ]);
 
   return (
     <main className="max-w-7xl mx-auto md:px-16 px-6">
@@ -100,12 +96,9 @@ export default async function ServicesPage({
           <h2 className="text-2xl font-incognito font-bold tracking-tight mb-8 text-center">
             {t("testimonials.title")}
           </h2>
-          <TestimonialsCarousel testimonials={testimonials} />
+          <TestimonialsCarousel testimonials={featuredTestimonials} />
         </section>
       </Slide>
-
-      {/* Client Logos */}
-      <ClientLogos locale={locale} featuredOnly={false} title={t("clientLogos.title")} />
 
       {/* CTA Section */}
       <Slide delay={0.4}>
@@ -124,14 +117,21 @@ export default async function ServicesPage({
               >
                 {t("cta.startConversation")}
               </a>
+              <a
+                href="https://www.malt.fr/profile/zakariamirinioui"
+                target="_blank"
+                rel="noreferrer noopener"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-md dark:bg-zinc-800 bg-white dark:text-white text-zinc-900 font-semibold border dark:border-zinc-700 border-zinc-300 hover:dark:border-zinc-500 hover:border-zinc-400 transition-colors"
+              >
+                {t("cta.malt")}
+              </a>
                <Link
                  locale={locale}
-
-                href="/projects"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-md dark:bg-zinc-800 bg-zinc-200 dark:text-white text-zinc-900 font-semibold border dark:border-zinc-700 border-zinc-300 hover:dark:border-zinc-500 hover:border-zinc-400 transition-colors"
-              >
-                {t("cta.viewWork")}
-              </Link>
+                 href="/projects"
+                 className="inline-flex items-center gap-2 px-6 py-3 rounded-md dark:bg-zinc-800 bg-zinc-200 dark:text-white text-zinc-900 font-semibold border dark:border-zinc-700 border-zinc-300 hover:dark:border-zinc-500 hover:border-zinc-400 transition-colors"
+               >
+                 {t("cta.viewWork")}
+               </Link>
             </div>
           </div>
         </section>
@@ -193,6 +193,13 @@ async function ServiceCard({
             <p className="dark:text-zinc-400 text-zinc-600 leading-relaxed">
               {service.shortDescription}
             </p>
+            <a
+              href={`mailto:zakmirinioui@gmail.com?subject=${encodeURIComponent(service.name)}`}
+              className="mt-4 inline-flex items-center gap-2 rounded-md border border-zinc-300 bg-white px-4 py-2 text-sm font-semibold text-zinc-900 transition-colors hover:border-zinc-400 hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:border-zinc-500 dark:hover:bg-zinc-800"
+            >
+              <HiOutlineMail className="text-base" aria-hidden="true" />
+              {t("emailAbout")}
+            </a>
           </div>
         </div>
       </div>

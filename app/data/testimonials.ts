@@ -1,0 +1,55 @@
+export const testimonials = [
+  {
+    _id: "testimonial-1",
+    quote: "Dossera JAMS has completely transformed how our court manages judicial archives. What used to take hours of manual searching now takes seconds. The system's reliability and security give us complete confidence in handling sensitive legal documents.",
+    authorName: "Anonymous Client",
+    authorRole: "Chief Magistrate",
+    authorOrganization: "Court of First Instance - Khouribga",
+    authorImage: {
+      image: "",
+      alt: "",
+    },
+    authorLinkedIn: "",
+    isAnonymous: true,
+    rating: 5,
+    featured: true,
+    dateReceived: "2025-10-15",
+    permissionToPublish: true,
+  },
+  {
+    _id: "testimonial-2",
+    quote: "As a law firm managing hundreds of cases, document retrieval was our biggest pain point. This platform's OCR and search capabilities have reduced our document lookup time from minutes to seconds. The audit trail feature ensures we meet all compliance requirements.",
+    authorName: "Fatima Zahra El Amrani",
+    authorRole: "Managing Partner",
+    authorOrganization: "Law Firm - Marrakech",
+    authorImage: {
+      image: "",
+      alt: "",
+    },
+    authorLinkedIn: "",
+    isAnonymous: false,
+    rating: 5,
+    featured: true,
+    dateReceived: "2025-09-20",
+    permissionToPublish: true,
+  },
+  {
+    _id: "testimonial-3",
+    quote: "The clinic management platform has streamlined our entire appointment workflow. Our staff productivity increased by 40% in the first month. The multi-tenant architecture means each clinic operates independently while we maintain centralized oversight.",
+    authorName: "Dr. Amina Benali",
+    authorRole: "Medical Director",
+    authorOrganization: "Healthcare Network - Casablanca",
+    authorImage: {
+      image: "",
+      alt: "",
+    },
+    authorLinkedIn: "",
+    isAnonymous: false,
+    rating: 5,
+    featured: true,
+    dateReceived: "2025-08-10",
+    permissionToPublish: true,
+  },
+];
+
+export const featuredTestimonials = testimonials.filter((t) => t.featured);

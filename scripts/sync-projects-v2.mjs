@@ -62,7 +62,7 @@ async function run() {
 
   // 2. Upload + attach real logos
   const logoMap = [
-    { slug: "dossera-jams", file: "dossera-logo.png" },
+    { slug: "dossera", file: "dossera-logo.png" },
     { slug: "edumanage", file: "PWADCTEAMSCHOOL-logo.webp" },
     { slug: "stylebook", file: "PWADCSalon-logo.png" },
     { slug: "kombatsushi", file: "kombat-sushi logo.jpg" },

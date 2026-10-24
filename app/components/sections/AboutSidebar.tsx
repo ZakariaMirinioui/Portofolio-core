@@ -93,6 +93,24 @@ export default async function AboutSidebar({
               <span className="dark:text-zinc-200 text-zinc-800">github.com/ZakariaMirinioui</span>
             </a>
           </li>
+          <li>
+            <a
+              href="https://www.malt.fr/profile/zakariamirinioui"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="flex items-center gap-x-3 hover:underline"
+            >
+              <Image
+                src="/malt-logo.svg"
+                width={20}
+                height={20}
+                alt=""
+                aria-hidden="true"
+                className="shrink-0"
+              />
+              <span className="dark:text-zinc-200 text-zinc-800">malt.fr/profile/zakariamirinioui</span>
+            </a>
+          </li>
         </ul>
       </section>
 

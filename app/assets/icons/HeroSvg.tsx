@@ -1,10 +1,16 @@
-export default function HeroSvg() {
+interface HeroSvgProps {
+  className?: string;
+  "aria-hidden"?: boolean;
+}
+
+export default function HeroSvg({ className, "aria-hidden": ariaHidden }: HeroSvgProps) {
   return (
     <svg
       viewBox="0 0 1273 906"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="lg:w-[450px] w-full h-full"
+      className={`lg:w-[450px] w-full h-full ${className ?? ""}`}
+      aria-hidden={ariaHidden}
     >
       <g>
         <path

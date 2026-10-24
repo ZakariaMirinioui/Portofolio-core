@@ -57,16 +57,15 @@
   },
   "home": {
     "hero": {
-      "headline": "Architecte de solutions & Fondateur d'agence",
-      "subheadline": "J'aide les institutions et les entreprises à se numériser avec des systèmes souverains et sécurisés — des archives judiciaires aux plateformes SaaS multi-locataires."
+      "headline": "Développeur full stack.",
+      "subheadline": "Je construis des logiciels de gestion pour tribunaux, restaurants, cliniques et entreprises en croissance.\n\n15+ projets livrés pour 10+ clients. 4 produits prêts à déployer. 8+ automatisations n8n en production."
     },
     "stats": {
       "projectsDelivered": "Projets livrés",
-      "businessesServed": "Entreprises servies",
-      "endUsers": "Utilisateurs finaux",
-      "uptimeSLA": "SLA Disponibilité",
-      "efficiencyGain": "Gain d'efficacité moyen",
-      "countriesDeployed": "Pays déployés"
+      "clients": "Clients",
+      "readyToDeployProducts": "Produits prêts à déployer",
+      "n8nAutomations": "Automatisations n8n en production",
+      "yearsFreelance": "Années en freelance"
     },
     "valueProps": {
       "title": "Ce que je construis",
@@ -105,7 +104,9 @@
     "caseStudyTeaser": {
       "label": "Étude de cas en vedette",
       "readCaseStudy": "Lire l'étude de cas complète",
-      "viewLive": "Voir en ligne"
+      "viewLive": "Voir en ligne",
+      "status": "Système opérationnel",
+      "deploymentText": "Déployé avec succès au Tribunal de Première Instance de Khouribga. Des dizaines d'utilisateurs bénéficient quotidiennement de la puissance et de la fiabilité de JAMS."
     },
     "servicesOverview": {
       "title": "Comment je peux aider",
@@ -271,11 +272,13 @@
     "title": "Services",
     "description": "De la transformation numérique souveraine pour les institutions gouvernementales aux plateformes SaaS multi-locataires et engagements CTO fractionnés — j'apporte une expérience éprouvée sur des systèmes en production servant de vrais utilisateurs.",
     "cta": {
-      "title": "Prêt à démarrer votre projet ?",
+      "title": "Prêt à démarrer votre projet ?",
       "description": "Que vous ayez besoin d'une transformation numérique complète, d'un nouveau produit SaaS, ou d'un leadership technique senior — discutons de la façon dont je peux aider.",
       "startConversation": "Commencer la conversation",
-      "viewWork": "Voir les réalisations"
+      "viewWork": "Voir les réalisations",
+      "malt": "Voir le profil Malt"
     },
+    "emailAbout": "M'écrire au sujet de ce service",
     "sections": {
       "deliverables": "Ce que nous livrons",
       "process": "Notre processus",

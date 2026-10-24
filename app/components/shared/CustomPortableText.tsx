@@ -1,4 +1,3 @@
-import { PortableTextComponents } from "@portabletext/react";
 import { BiLinkExternal, BiSolidQuoteRight } from "react-icons/bi";
 import PortableImage from "./PortableImage";
 import CodeBlock from "./CodeBlock";
@@ -7,7 +6,14 @@ import getYoutubeId from "@/app/utils/get-youtubeId";
 import YoutubeIframe from "./YoutubeIframe";
 import RefLink from "./RefLink";
 
-export const CustomPortableText: PortableTextComponents = {
+type PortableTextBlock = {
+  _type: string;
+  _key?: string;
+  children?: PortableTextBlock[];
+  [key: string]: unknown;
+};
+
+export const CustomPortableText = {
   types: {
     image: PortableImage,
     code: CodeBlock,
@@ -18,11 +24,12 @@ export const CustomPortableText: PortableTextComponents = {
   },
 
   block: {
-    normal: ({ children }) => <p className="mt-2 mb-6">{children}</p>,
-    h2: ({ children }) => (
+    normal: ({ children }: { children: React.ReactNode }) => (
+      <p className="mt-2 mb-6">{children}</p>
+    ),
+    h2: ({ children }: { children: React.ReactNode }) => (
       <h2
-        id={children // TODO: Export slugify code to reusable function
-          ?.toString()
+        id={String(children)
           .toLowerCase()
           .replaceAll(/[^-\w]+/g, "-")
           .replaceAll(/--+/g, "-")
@@ -32,10 +39,9 @@ export const CustomPortableText: PortableTextComponents = {
         <HashScroll text={children} />
       </h2>
     ),
-    h3: ({ children }) => (
+    h3: ({ children }: { children: React.ReactNode }) => (
       <h3
-        id={children
-          ?.toString()
+        id={String(children)
           .toLowerCase()
           .replaceAll(/[^-\w]+/g, "-")
           .replaceAll(/--+/g, "-")
@@ -45,10 +51,9 @@ export const CustomPortableText: PortableTextComponents = {
         <HashScroll text={children} />
       </h3>
     ),
-    h4: ({ children }) => (
+    h4: ({ children }: { children: React.ReactNode }) => (
       <h4
-        id={children
-          ?.toString()
+        id={String(children)
           .toLowerCase()
           .replaceAll(/[^-\w]+/g, "-")
           .replaceAll(/--+/g, "-")
@@ -58,7 +63,7 @@ export const CustomPortableText: PortableTextComponents = {
         <HashScroll text={children} />
       </h4>
     ),
-    blockquote: ({ children }) => (
+    blockquote: ({ children }: { children: React.ReactNode }) => (
       <blockquote className="relative overflow-hidden tracking-tight text-lg my-8 lg:py-6 lg:pl-6 pr-12 p-4 border dark:border-zinc-800 border-zinc-200 rounded-md">
         <BiSolidQuoteRight
           className="text-7xl absolute -top-7 -right-5 -rotate-12 dark:text-zinc-800 text-zinc-200"
@@ -69,40 +74,42 @@ export const CustomPortableText: PortableTextComponents = {
     ),
   },
   marks: {
-    em: ({ children }) => (
+    em: ({ children }: { children: React.ReactNode }) => (
       <em className="font-incognito font-medium italic">{children}</em>
     ),
-    strong: ({ children }) => (
+    strong: ({ children }: { children: React.ReactNode }) => (
       <strong className="font-bold dark:text-zinc-300 text-zinc-700">
         {children}
       </strong>
     ),
-    link: ({ children, value }) => {
+    link: ({ children, value }: { children: React.ReactNode; value?: { href: string } }) => {
       return (
         <RefLink
-          href={value?.href}
+          href={value?.href ?? ""}
           className="dark:text-blue-400 text-blue-500 hover:underline"
         >
           {children} <BiLinkExternal className="inline" aria-hidden="true" />
         </RefLink>
       );
     },
-    code: ({ children }) => (
+    code: ({ children }: { children: React.ReactNode }) => (
       <code className="font-incognito py-[0.15rem] px-1 rounded-sm font-medium dark:bg-primary-bg bg-secondary-bg dark:text-zinc-200 text-pink-500">
         {children}
       </code>
     ),
   },
   list: {
-    bullet: ({ children }) => (
+    bullet: ({ children }: { children: React.ReactNode }) => (
       <ul className="list-[square] mt-5 ml-5">{children}</ul>
     ),
-    number: ({ children }) => (
+    number: ({ children }: { children: React.ReactNode }) => (
       <ol className="list-decimal mt-5 ml-5">{children}</ol>
     ),
   },
   listItem: {
-    bullet: ({ children }) => <li className="mb-4">{children}</li>,
-    number: ({ children }) => <li className="mb-4">{children}</li>,
+    bullet: ({ children }: { children: React.ReactNode }) => <li className="mb-4">{children}</li>,
+    number: ({ children }: { children: React.ReactNode }) => <li className="mb-4">{children}</li>,
   },
 };
+
+export type { PortableTextBlock };

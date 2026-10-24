@@ -16,7 +16,7 @@ export default async function ValueProps({ locale }: { locale: string }) {
       title: t("enterpriseSystems.title"),
       description: t("enterpriseSystems.description"),
       highlights: t.raw("enterpriseSystems.highlights") as string[],
-      link: "/projects/dossera-jams",
+      link: "/projects/dossera",
       linkText: t("enterpriseSystems.cta"),
     },
     {

@@ -7,8 +7,16 @@ import { useTranslations, useLocale } from "next-intl";
 import cvSizes from "@/app/data/cv-sizes.json";
 
 const CV_FILES = [
-  { lang: "English", key: "en", href: "/downloads/MiriniouiZakaria-CV-EN.pdf" },
-  { lang: "Français", key: "fr", href: "/downloads/MiriniouiZakaria-CV-FR.pdf" },
+  {
+    lang: "English",
+    key: "en",
+    href: "https://raw.githubusercontent.com/ZakariaMirinioui/Portofolio-core/main/public/downloads/MiriniouiZakaria-CV-EN.pdf",
+  },
+  {
+    lang: "Français",
+    key: "fr",
+    href: "https://raw.githubusercontent.com/ZakariaMirinioui/Portofolio-core/main/public/downloads/MiriniouiZakaria-CV-FR.pdf",
+  },
 ] as const;
 
 type CvDownloadVariant = "full" | "compact" | "sticky";

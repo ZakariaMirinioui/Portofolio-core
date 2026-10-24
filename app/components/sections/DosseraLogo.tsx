@@ -1,24 +1,12 @@
 export default function DosseraLogo({ heightClassName = "h-8" }: { heightClassName?: string }) {
   return (
-    <span
-      className="grid shrink-0 items-center overflow-hidden rounded-md"
-      role="img"
-      aria-label="Dossera JAMS logo"
-    >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
+    <div className="flex w-fit items-center overflow-hidden rounded-lg border border-zinc-200 bg-white px-3 py-2">
       <img
         src="/dossera-lightmode.png"
-        alt=""
+        alt="Dossera JAMS"
         aria-hidden="true"
-        className={`col-start-1 row-start-1 w-auto opacity-100 transition-opacity duration-300 dark:opacity-0 ${heightClassName}`}
+        className={`w-auto ${heightClassName}`}
       />
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="/dossera-darkmode.png"
-        alt=""
-        aria-hidden="true"
-        className={`col-start-1 row-start-1 w-auto opacity-0 transition-opacity duration-300 dark:opacity-100 ${heightClassName}`}
-      />
-    </span>
+    </div>
   );
 }

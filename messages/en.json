@@ -57,16 +57,15 @@
   },
   "home": {
     "hero": {
-      "headline": "Solutions Architect & Agency Founder",
-      "subheadline": "I help institutions and businesses digitize with sovereign, secure systems — from judicial archives to multi-tenant SaaS platforms."
+      "headline": "Full stack developer.",
+      "subheadline": "I build management software for courts, restaurants, clinics and growing businesses.\n\n15+ projects delivered across 10+ clients. 4 ready-to-deploy products. 8+ n8n automations running in production."
     },
     "stats": {
       "projectsDelivered": "Projects Delivered",
-      "businessesServed": "Businesses Served",
-      "endUsers": "End Users",
-      "uptimeSLA": "Uptime SLA",
-      "efficiencyGain": "Avg. Efficiency Gain",
-      "countriesDeployed": "Countries Deployed"
+      "clients": "Clients",
+      "readyToDeployProducts": "Ready-to-deploy Products",
+      "n8nAutomations": "n8n Automations in Production",
+      "yearsFreelance": "Years Freelance"
     },
     "valueProps": {
       "title": "What I Build",
@@ -105,7 +104,9 @@
     "caseStudyTeaser": {
       "label": "Featured Case Study",
       "readCaseStudy": "Read Full Case Study",
-      "viewLive": "View Live"
+      "viewLive": "View Live",
+      "status": "Operational System",
+      "deploymentText": "Successfully deployed at the Court of First Instance of Khouribga. Dozens of users benefit daily from JAMS's power and reliability."
     },
     "servicesOverview": {
       "title": "How I Can Help",
@@ -274,8 +275,10 @@
       "title": "Ready to Start Your Project?",
       "description": "Whether you need a complete digital transformation, a new SaaS product, or senior technical leadership — let's discuss how I can help.",
       "startConversation": "Start a Conversation",
-      "viewWork": "View Past Work"
+      "viewWork": "View Past Work",
+      "malt": "View Malt Profile"
     },
+    "emailAbout": "Email me about this service",
     "sections": {
       "deliverables": "What We Deliver",
       "process": "Our Process",

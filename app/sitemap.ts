@@ -1,15 +1,9 @@
 import { MetadataRoute } from "next";
-import { sanityFetch } from "@/lib/sanity.client";
-import { projectsQuery } from "@/lib/sanity.query";
 import { routing } from "@/i18n/routing";
 import { getAlternateUrls, SITE_URL } from "@/lib/metadata";
+import { projects } from "./data/projects";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const projects = (await sanityFetch({
-    query: projectsQuery,
-    tags: ["project"],
-  })) as Array<{ slug: string; _updatedAt: string }>;
-
   const staticPaths = ["/", "/about", "/projects", "/services", "/dossera"];
 
   const staticUrls: MetadataRoute.Sitemap = staticPaths.flatMap((path) =>
@@ -29,7 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const path = `/projects/${project.slug}`;
       return {
         url: `${SITE_URL}/${locale}${path}/`,
-        lastModified: project._updatedAt ? new Date(project._updatedAt) : new Date(),
+        lastModified: new Date(),
         changeFrequency: "monthly" as const,
         priority: 0.8,
         alternates: { languages: getAlternateUrls(path) },

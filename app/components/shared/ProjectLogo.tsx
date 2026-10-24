@@ -42,6 +42,8 @@ type ProjectLogoProps = {
   /** well height + max width, e.g. "h-11 max-w-[9rem]" */
   wellClassName?: string;
   iconSize?: number;
+  /** Force white background on the logo well in both light and dark themes */
+  forceWhiteBg?: boolean;
 };
 
 export default function ProjectLogo({
@@ -51,6 +53,7 @@ export default function ProjectLogo({
   slug,
   wellClassName = "h-14 max-w-[11rem]",
   iconSize = 28,
+  forceWhiteBg = false,
 }: ProjectLogoProps) {
   const FallbackIcon = (category && CATEGORY_ICONS[category]) || Cube;
   const midTone = slug ? MID_TONE_SLUGS.includes(slug) : false;
@@ -58,9 +61,11 @@ export default function ProjectLogo({
   return (
     <span
       className={`flex min-w-[3.5rem] items-center justify-center rounded-lg p-2 ring-1 ${
-        midTone
-          ? "bg-zinc-400 ring-zinc-500 dark:bg-zinc-500 dark:ring-zinc-400"
-          : "bg-white ring-zinc-200 dark:ring-zinc-700"
+        forceWhiteBg
+          ? "bg-white ring-zinc-200 dark:bg-white dark:ring-zinc-200"
+          : midTone
+            ? "bg-zinc-400 ring-zinc-500 dark:bg-zinc-500 dark:ring-zinc-400"
+            : "bg-white ring-zinc-200 dark:ring-zinc-700"
       } ${wellClassName}`}
       role="img"
       aria-label={`${name} logo`}

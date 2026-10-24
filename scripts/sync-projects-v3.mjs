@@ -64,7 +64,7 @@ async function run() {
 
   // 3. Dossera -> trimmed tight logo (readable at card size)
   const dossera = await client.fetch(
-    `*[_type == "project" && slug.current == "dossera-jams"][0]{ _id, name }`
+    `*[_type == "project" && slug.current == "dossera"][0]{ _id, name }`
   );
   if (dossera) {
     const assetId = await uploadImage(`${TEMP}/dossera-logo-trimmed.png`, "dossera-logo-trimmed.png");

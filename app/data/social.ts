@@ -29,6 +29,13 @@ export const socialLinks = [
   },
   {
     id: 4,
+    name: "Malt",
+    url: "https://www.malt.fr/profile/zakariamirinioui",
+    icon: "/malt-logo.svg",
+    status: "social",
+  },
+  {
+    id: 5,
     name: "Email",
     url: "mailto:zakmirinioui@gmail.com",
     icon: BiLinkExternal,
