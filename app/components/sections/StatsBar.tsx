@@ -1,4 +1,4 @@
-import { Slide } from "../../animation/Slide";
+﻿import { Slide } from "../../animation/Slide";
 import { getTranslations } from "next-intl/server";
 import { homeStats } from "../../data/home-stats";
 import Circuit from "../decor/Circuit";
@@ -11,15 +11,15 @@ export default async function StatsBar({ locale }: { locale: string }) {
   return (
     <section className="relative mb-16">
       <Slide delay={0.12}>
-        <div className="z-io relative dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-lg p-8">
+        <div className="z-io relative dark:bg-primary-bg bg-zinc-50 border dark:border-zinc-800 border-zinc-200 rounded-lg p-8 overflow-hidden">
           <Circuit
             variant="routing"
             uid="home-stats"
             draw
-            className="hidden lg:block inset-3 top-6 bottom-6"
+            className="hidden lg:block inset-3 top-6 bottom-6 z-0"
             style={{ "--z-draw-delay": "0.75s" } as React.CSSProperties}
           />
-          <div className="relative grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          <div className="relative z-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
                 <div

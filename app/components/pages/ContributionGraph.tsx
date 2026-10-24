@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useTheme } from "next-themes";
 import GitHubCalendar from "react-github-calendar";
 import { github } from "@/app/data/contribution-graph-theme";
@@ -34,13 +34,15 @@ export default function ContributionGraph() {
     );
 
   return (
-    <div className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-8 rounded-lg max-w-fit max-h-fit">
-      <GitHubCalendar
-        username={username}
-        theme={github}
-        colorScheme={serverTheme}
-        blockSize={13}
-      />
+    <div className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-8 rounded-lg flex items-center justify-center overflow-x-auto">
+      <div className="mx-auto flex justify-center">
+        <GitHubCalendar
+          username={username}
+          theme={github}
+          colorScheme={serverTheme}
+          blockSize={13}
+        />
+      </div>
     </div>
   );
 }

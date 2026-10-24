@@ -122,9 +122,9 @@ h4 {
    Tokens: light #0f9d6b@.4 / dark #22c58a@.6; z-mint for green-gradient
    surfaces (#BFFFE3). BASE classes ported 1:1 from the reference. */
 :root {
-  --zm-line: #0f9d6b;
-  --zm-dot: #0b7d54;
-  --zm-o: 0.42;
+  --zm-line: #059669;
+  --zm-dot: #047857;
+  --zm-o: 0.65;
 }
 
 .dark {
